@@ -9,6 +9,7 @@ import { LogoComponent } from './components/logo/logo.component';
 import { CoursesListComponent } from './components/courses-list/courses-list.component';
 import { CourseComponent } from './components/courses-list/course/course.component';
 import { ManageCourseComponent } from './components/courses-list/manage-course/manage-course.component';
+import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ManageCourseComponent } from './components/courses-list/manage-course/m
     CoursesListComponent,
     CourseComponent,
     ManageCourseComponent,
+    LoginComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
