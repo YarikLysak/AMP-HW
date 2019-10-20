@@ -10,6 +10,7 @@ import { CoursesListComponent } from './components/courses-list/courses-list.com
 import { CourseComponent } from './components/courses-list/course/course.component';
 import { ManageCourseComponent } from './components/courses-list/manage-course/manage-course.component';
 import { LoginComponent } from './components/login/login.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { LoginComponent } from './components/login/login.component';
     CourseComponent,
     ManageCourseComponent,
     LoginComponent,
+    SearchBarComponent,
   ],
   imports: [BrowserModule, AppRoutingModule],
   providers: [],
