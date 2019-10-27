@@ -1,0 +1,23 @@
+@import '../../shared/styles/mixins'
+@import '../../shared/styles/variables'
+
+.search-form
+    display: flex
+    align-items: center
+    jstify-content: center
+    margin-bottom: 20px
+
+.search-field
+    position: relative
+    margin-right: 5px
+    >i
+        position: absolute
+        top: 10px
+        left: 10px
+        font-size: 24px
+        color: $cloudy-blue
+        transform: rotate(90deg)
+
+.search-btn
+    @include accept-btn
+    font-size: 18px

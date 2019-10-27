@@ -1,2 +1,12 @@
-<input type="text" placeholder="Text to search" />
-<button type="button">Search</button>
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="search-form">
+  <label class="search-field">
+    <i class="fas fa-search"></i>
+    <input
+      formControlName="searchField"
+      type="text"
+      placeholder="Text to search"
+      class="common-input"
+    />
+  </label>
+  <button type="submit" class="accept-btn search-btn">Search</button>
+</form>
