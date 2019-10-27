@@ -12,6 +12,9 @@ import { ManageCourseComponent } from './components/courses-list/manage-course/m
 import { LoginComponent } from './components/login/login.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
+import { UserToolsComponent } from './components/header/user-tools/user-tools.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoadMoreComponent } from './components/courses-list/load-more/load-more.component';
 
 @NgModule({
   declarations: [
@@ -25,8 +28,10 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
     LoginComponent,
     SearchBarComponent,
     BreadcrumbsComponent,
+    UserToolsComponent,
+    LoadMoreComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule],
+  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })
