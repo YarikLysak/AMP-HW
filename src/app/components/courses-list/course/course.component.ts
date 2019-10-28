@@ -4,13 +4,13 @@ import {
   Input,
   EventEmitter,
   Output,
-  OnDestroy,
+  // OnChanges,
+  //DoCheck,
   AfterContentInit,
+  AfterContentChecked,
   AfterViewInit,
   AfterViewChecked,
-  AfterContentChecked,
-  OnChanges,
-  DoCheck,
+  OnDestroy,
 } from '@angular/core';
 
 @Component({
@@ -20,9 +20,9 @@ import {
 })
 export class CourseComponent
   implements
-    OnChanges,
     OnInit,
-    DoCheck,
+ // OnChanges,
+ // DoCheck,
     AfterViewInit,
     AfterViewChecked,
     AfterContentInit,
@@ -36,28 +36,29 @@ export class CourseComponent
 
   constructor() {}
 
-  OnChanges() {
-    console.log('OnChanges');
-  }
+  // ngOnChanges() {
+  //   console.log('OnChanges'); // commented because of lint error
+  // }
+  // ngDoCheck() {
+  //   console.log('DoCheck'); // commented because of lint error
+  // }
   ngOnInit() {
     console.log('ngOnInit');
   }
-  ngDoCheck() {
-    console.log('ngDoCheck');
-  }
-  AfterContentInit() {
+ 
+  ngAfterContentInit() {
     console.log('AfterContentInit');
   }
-  AfterContentChecked() {
+  ngAfterContentChecked() {
     console.log('AfterContentChecked');
   }
-  AfterViewInit() {
+  ngAfterViewInit() {
     console.log('AfterViewInit');
   }
-  AfterViewChecked() {
+  ngAfterViewChecked() {
     console.log('AfterViewChecked');
   }
-  OnDestroy() {
+  ngOnDestroy() {
     console.log('OnDestroy');
   }
 
