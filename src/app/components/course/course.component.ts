@@ -5,7 +5,7 @@ import {
   EventEmitter,
   Output,
   // OnChanges,
-  //DoCheck,
+  // DoCheck,
   AfterContentInit,
   AfterContentChecked,
   AfterViewInit,
@@ -18,11 +18,11 @@ import {
   templateUrl: './course.component.html',
   styleUrls: ['./course.component.sass'],
 })
+// OnChanges,
+// DoCheck,
 export class CourseComponent
   implements
     OnInit,
- // OnChanges,
- // DoCheck,
     AfterViewInit,
     AfterViewChecked,
     AfterContentInit,
@@ -45,7 +45,7 @@ export class CourseComponent
   ngOnInit() {
     console.log('ngOnInit');
   }
- 
+
   ngAfterContentInit() {
     console.log('AfterContentInit');
   }
