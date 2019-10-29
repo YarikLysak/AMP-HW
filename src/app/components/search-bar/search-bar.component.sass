@@ -1,7 +1,7 @@
 @import '../../shared/styles/mixins'
 @import '../../shared/styles/variables'
 
-.search-form
+.search-container
     display: flex
     align-items: center
     jstify-content: center
@@ -10,13 +10,12 @@
 .search-field
     position: relative
     margin-right: 5px
-    >i
+
+    & > .ic_search
         position: absolute
-        top: 10px
-        left: 10px
-        font-size: 24px
-        color: $cloudy-blue
-        transform: rotate(90deg)
+        top: 12px
+        left: 12px
+
 
 .search-btn
     @include accept-btn

@@ -24,7 +24,18 @@
 
 @mixin input
     width: 300px
-    line-height: 2.57
+    line-height: 2.45
     padding: 5px 15px 5px 40px
     border-radius: 3px
     border: solid 1px #d9dbe3
+    @include placeholder-color($silver)
+
+@mixin placeholder-color($color)
+    &::-webkit-input-placeholder
+        color: $color
+    &:-moz-placeholder
+        color: $color
+    &::-moz-placeholder
+        color: $color
+    &:-ms-input-placeholder
+        color: $color

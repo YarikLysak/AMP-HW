@@ -1,12 +1,18 @@
-<form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="search-form">
+<div class="search-container">
   <label class="search-field">
-    <i class="fas fa-search"></i>
+    <img
+      src="assets/ic-search.png"
+      srcset="assets/ic-search@2x.png 2x, assets/ic-search@3x.png 3x"
+      class="ic_search"
+    />
     <input
-      formControlName="searchField"
+      [formControl]="searchField"
       type="text"
       placeholder="Text to search"
       class="common-input"
     />
   </label>
-  <button type="submit" class="accept-btn search-btn">Search</button>
-</form>
+  <button type="button" class="accept-btn search-btn" (click)="searchCourse()">
+    Search
+  </button>
+</div>

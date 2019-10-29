@@ -7,7 +7,6 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CoursesListComponent implements OnInit {
   public courseList = [];
-  constructor() {}
 
   ngOnInit() {
     for (let i = 0; i < 4; i++) {
@@ -15,8 +14,8 @@ export class CoursesListComponent implements OnInit {
         id: i,
         title: `Video Course ${i}. Name tag`,
         description: `
-        Learn about where you can find course descriptions, 
-        what information they include, 
+        Learn about where you can find course descriptions,
+        what information they include,
         how they work, and details about various components of a course description.
         Course descriptions report information about a university or college's classes.
         They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions 

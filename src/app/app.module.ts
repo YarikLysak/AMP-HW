@@ -12,8 +12,8 @@ import { ManageCourseComponent } from './components/manage-course/manage-course.
 import { LoginComponent } from './components/login/login.component';
 import { SearchBarComponent } from './components/search-bar/search-bar.component';
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
-import { UserToolsComponent } from './components/header/user-tools/user-tools.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { UserToolsComponent } from './components/user-tools/user-tools.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { LoadMoreComponent } from './components/load-more/load-more.component';
 
 @NgModule({
@@ -31,7 +31,7 @@ import { LoadMoreComponent } from './components/load-more/load-more.component';
     UserToolsComponent,
     LoadMoreComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
+  imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

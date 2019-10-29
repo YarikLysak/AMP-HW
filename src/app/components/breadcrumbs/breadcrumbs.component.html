@@ -1,6 +1,6 @@
 <div class="container">
   <div class="breadcrumbs">
-    <div *ngFor="let page of crumbsArray; index as i" class="crumb">
+    <div *ngFor="let page of crumbsArray" class="crumb">
       <a href="#" *ngIf="page !== currentPage">{{ page }}</a>
       <span class="active" *ngIf="page == currentPage">{{ page }}</span>
     </div>
