@@ -29,10 +29,10 @@ import { LoadMoreComponent } from './components/load-more/load-more.component';
     SearchBarComponent,
     BreadcrumbsComponent,
     UserToolsComponent,
-    LoadMoreComponent,
+    LoadMoreComponent
   ],
   imports: [BrowserModule, AppRoutingModule, ReactiveFormsModule],
   providers: [],
-  bootstrap: [AppComponent],
+  bootstrap: [AppComponent]
 })
 export class AppModule {}

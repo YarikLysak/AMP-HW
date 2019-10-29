@@ -8,7 +8,7 @@ describe('UserToolsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UserToolsComponent],
+      declarations: [UserToolsComponent]
     }).compileComponents();
   }));
 

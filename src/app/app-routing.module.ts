@@ -6,11 +6,11 @@ import { ManageCourseComponent } from './components/manage-course/manage-course.
 const routes: Routes = [
   { path: '', redirectTo: '/course-list', pathMatch: 'full' },
   { path: 'course-list', component: CoursesListComponent },
-  { path: 'course/:id', component: ManageCourseComponent },
+  { path: 'course/:id', component: ManageCourseComponent }
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  exports: [RouterModule]
 })
 export class AppRoutingModule {}

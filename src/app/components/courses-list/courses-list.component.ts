@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-courses-list',
   templateUrl: './courses-list.component.html',
-  styleUrls: ['./courses-list.component.sass'],
+  styleUrls: ['./courses-list.component.sass']
 })
 export class CoursesListComponent implements OnInit {
   public courseList = [];
@@ -21,7 +21,7 @@ export class CoursesListComponent implements OnInit {
         They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions 
         for all courses offered during a particular semester.`,
         creationDate: '9 Nov.2018',
-        duration: '1h 55 min',
+        duration: '1h 55 min'
       });
     }
   }
