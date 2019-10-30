@@ -1,3 +1,12 @@
-<app-header></app-header>
-<app-courses-list></app-courses-list>
-<app-footer></app-footer>
+<div class="main-root">
+  <header>
+    <app-header></app-header>
+  </header>
+  <main>
+    <app-breadcrumbs></app-breadcrumbs>
+    <router-outlet></router-outlet>
+  </main>
+  <footer>
+    <app-footer></app-footer>
+  </footer>
+</div>

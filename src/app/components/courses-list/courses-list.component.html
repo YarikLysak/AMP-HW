@@ -1,8 +1,18 @@
-<p>courses-list works!</p>
-<app-breadcrumbs></app-breadcrumbs>
-<app-search-bar></app-search-bar>
-<button type="button"><i class="fas fa-plus"></i>Add course</button>
-<app-manage-course></app-manage-course>
-<app-course></app-course>
-<app-course></app-course>
-<app-course></app-course>
+<div class="course-list-wrapper">
+  <div class="container">
+    <div class="courses-list">
+      <app-search-bar></app-search-bar>
+      <button type="button" class="common-btn add-course-btn">
+        <i class="fa fa-plus"></i>
+        Add course
+      </button>
+      <app-course
+        *ngFor="let course of courseList"
+        [course]="course"
+        (deleted)="onDelete($event)"
+      >
+      </app-course>
+      <app-load-more></app-load-more>
+    </div>
+  </div>
+</div>
