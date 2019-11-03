@@ -1,10 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-user-tools',
   templateUrl: './user-tools.component.html',
   styleUrls: ['./user-tools.component.sass']
 })
-export class UserToolsComponent {
-  public userLogin = 'User Login';
+export class UserToolsComponent implements OnInit {
+  public userLogin: string;
+
+  ngOnInit() {
+    this.userLogin = 'User Login';
+  }
 }

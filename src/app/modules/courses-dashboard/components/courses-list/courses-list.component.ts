@@ -9,6 +9,10 @@ export class CoursesListComponent implements OnInit {
   public courseList = [];
 
   ngOnInit() {
+    this.createCourseList();
+  }
+
+  createCourseList() {
     for (let i = 0; i < 4; i++) {
       this.courseList.push({
         id: i,
@@ -28,5 +32,6 @@ export class CoursesListComponent implements OnInit {
 
   onDelete(id: number) {
     console.log(id, 'delete');
+    return id;
   }
 }

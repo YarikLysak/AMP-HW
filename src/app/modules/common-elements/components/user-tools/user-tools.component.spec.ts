@@ -21,4 +21,11 @@ describe('UserToolsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set User Login', () => {
+    const userLogin = component.userLogin;
+    component.ngOnInit();
+
+    expect(userLogin).toBe('User Login');
+  });
 });

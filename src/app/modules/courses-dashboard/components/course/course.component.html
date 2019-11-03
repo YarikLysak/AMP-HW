@@ -14,10 +14,14 @@
     <p>{{ course.description }}</p>
   </div>
   <div class="course-manage-tools">
-    <button type="button" class="common-btn">
+    <button type="button" class="common-btn edit-btn">
       <i class="fas fa-pen"></i>Edit
     </button>
-    <button (click)="onDelete()" class="common-btn">
+    <button
+      (click)="onDelete()"
+      class="common-btn delete-btn"
+      id="{{ course.id }}"
+    >
       <i class="fas fa-trash"></i>Delete
     </button>
   </div>

@@ -18,13 +18,13 @@ import { LoadMoreComponent } from './components/load-more/load-more.component';
     SearchBarComponent,
     LoadMoreComponent
   ],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule],
   exports: [
     CoursesListComponent,
     CourseComponent,
     ManageCourseComponent,
     SearchBarComponent,
     LoadMoreComponent
-  ],
-  imports: [CommonModule, RouterModule, ReactiveFormsModule]
+  ]
 })
 export class CoursesDashboardModule {}

@@ -15,13 +15,13 @@ import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.compo
     FooterComponent,
     BreadcrumbsComponent
   ],
+  imports: [CommonModule],
   exports: [
     HeaderComponent,
     LogoComponent,
     UserToolsComponent,
     FooterComponent,
     BreadcrumbsComponent
-  ],
-  imports: [CommonModule]
+  ]
 })
 export class CommonElementsModule {}

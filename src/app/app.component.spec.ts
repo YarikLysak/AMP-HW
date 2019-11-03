@@ -1,12 +1,27 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { HeaderComponent } from './modules/common-elements/components/header/header.component';
+import { SearchBarComponent } from './modules/courses-dashboard/components/search-bar/search-bar.component';
+import { FooterComponent } from './modules/common-elements/components/footer/footer.component';
+import { LogoComponent } from './modules/common-elements/components/logo/logo.component';
+import { UserToolsComponent } from './modules/common-elements/components/user-tools/user-tools.component';
+import { BreadcrumbsComponent } from './modules/common-elements/components/breadcrumbs/breadcrumbs.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
-      declarations: [AppComponent]
+      imports: [RouterTestingModule, ReactiveFormsModule],
+      declarations: [
+        AppComponent,
+        HeaderComponent,
+        LogoComponent,
+        UserToolsComponent,
+        FooterComponent,
+        BreadcrumbsComponent,
+        SearchBarComponent
+      ]
     }).compileComponents();
   }));
 
@@ -20,14 +35,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app.title).toEqual('AMP-HW');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain(
-      'AMP-HW app is running!'
-    );
   });
 });

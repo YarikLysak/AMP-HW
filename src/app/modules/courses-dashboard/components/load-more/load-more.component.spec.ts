@@ -21,4 +21,21 @@ describe('LoadMoreComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit loadMore click', () => {
+    const spy = spyOn(component, 'loadMore');
+    const debugEl = fixture.debugElement.nativeElement;
+    const loadMoreBtn = debugEl.querySelector('.load-more');
+
+    loadMoreBtn.click();
+
+    expect(spy).toHaveBeenCalled();
+  });
+
+  it('should log message', () => {
+    const consoleSpy = spyOn(console, 'log');
+    component.loadMore();
+
+    expect(consoleSpy).toHaveBeenCalled();
+  });
 });
