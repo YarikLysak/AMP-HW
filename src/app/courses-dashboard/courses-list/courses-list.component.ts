@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Course } from 'src/app/shared/models/course.model';
 
 @Component({
   selector: 'app-courses-list',
@@ -6,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./courses-list.component.sass']
 })
 export class CoursesListComponent implements OnInit {
-  public courseList = [];
+  public courseList: Array<Course> = [];
 
   ngOnInit() {
     this.createCourseList();

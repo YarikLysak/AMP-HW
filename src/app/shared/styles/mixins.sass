@@ -2,32 +2,41 @@
 
 @mixin btn
     padding: 0 15px
-    border: none
+    border: 1px solid transparent
     border-radius: 3px
     font-weight: 600
+    font-size: 12px
     font-stretch: normal
     font-style: normal
-    line-height: 2.57
-    letter-spacing: -0.1px
+    line-height: 1.83
+    letter-spacing: -0.09px
     cursor: pointer
     &:hover
         opacity: 0.75
 
 @mixin common-btn
     @include btn
+    border-color: $dark-sky-blue
     background: $dark-sky-blue
     color: $white
 
 @mixin accept-btn
     @include common-btn
+    padding: 0 10px
+    font-size: 14px
+    line-height: 2.43
+    letter-spacing: -0.1px
     background: $sick-green
+    border-color: $sick-green
+
+@mixin accept-btn-big
+    @include accept-btn
+    padding: 0 18px
+    line-height: 2.43
+    letter-spacing: -0.1px
 
 @mixin input
-    width: 300px
-    line-height: 2.45
-    padding: 5px 15px 5px 40px
-    border-radius: 3px
-    border: solid 1px #d9dbe3
+    line-height: 1.71
     @include placeholder-color($silver)
 
 @mixin placeholder-color($color)

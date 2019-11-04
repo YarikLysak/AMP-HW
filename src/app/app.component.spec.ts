@@ -1,12 +1,12 @@
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
-import { HeaderComponent } from './modules/common-elements/components/header/header.component';
-import { SearchBarComponent } from './modules/courses-dashboard/components/search-bar/search-bar.component';
-import { FooterComponent } from './modules/common-elements/components/footer/footer.component';
-import { LogoComponent } from './modules/common-elements/components/logo/logo.component';
-import { UserToolsComponent } from './modules/common-elements/components/user-tools/user-tools.component';
-import { BreadcrumbsComponent } from './modules/common-elements/components/breadcrumbs/breadcrumbs.component';
+import { HeaderComponent } from './common-elements/header/header.component';
+import { SearchBarComponent } from './common-elements/search-bar/search-bar.component';
+import { FooterComponent } from './common-elements/footer/footer.component';
+import { LogoComponent } from './common-elements/logo/logo.component';
+import { UserToolsComponent } from './common-elements/user-tools/user-tools.component';
+import { BreadcrumbsComponent } from './common-elements/breadcrumbs/breadcrumbs.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 describe('AppComponent', () => {
