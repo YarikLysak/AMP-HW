@@ -1,0 +1,33 @@
+@import '../../../../shared/styles'
+
+.course
+    display: flex
+    justify-content: space-between
+    background: $white
+    padding: 10px 25px
+    border-radius: 8px
+    box-shadow: 0 1px 24px 0 rgba(18, 21, 35, 0.08)
+    margin: 20px 0
+
+    &-content
+        max-width: 70%
+
+    &-manage-tools
+        display: flex
+        align-items: center
+        &>button
+            margin-left: 15px
+
+    .course-head
+        display: flex
+        align-items: center
+        justify-content: space-between
+
+        &-sub__info
+            color: $cloudy-blue
+            & span
+                font-size: 12px
+
+            & i
+                font-size: 16px
+                margin: 0 5px 0 15px

@@ -8,11 +8,12 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prettier": "prettier --write **/*.{ts,html}"
+    "prettier": "prettier --write **/*.{ts,html}",
+    "test:coverage": "ng test --watch=false --code-coverage"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged && npm run prettier && ng lint"
+      "pre-commit": "npm run prettier && pretty-quick --staged && ng lint"
     }
   },
   "private": true,
