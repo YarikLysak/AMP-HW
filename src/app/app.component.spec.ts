@@ -3,12 +3,12 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { HeaderComponent } from './common-elements/header/header.component';
-import { SearchBarComponent } from './common-elements/search-bar/search-bar.component';
-import { FooterComponent } from './common-elements/footer/footer.component';
-import { LogoComponent } from './common-elements/logo/logo.component';
-import { UserToolsComponent } from './common-elements/user-tools/user-tools.component';
-import { BreadcrumbsComponent } from './common-elements/breadcrumbs/breadcrumbs.component';
+import { HeaderComponent } from './components/header/header.component';
+import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { LogoComponent } from './components/logo/logo.component';
+import { UserToolsComponent } from './components/user-tools/user-tools.component';
+import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
