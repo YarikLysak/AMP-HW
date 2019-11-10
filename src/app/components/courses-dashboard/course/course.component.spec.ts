@@ -7,6 +7,14 @@ import { RouterTestingModule } from '@angular/router/testing';
 describe('CourseComponent', () => {
   let component: CourseComponent;
   let fixture: ComponentFixture<CourseComponent>;
+  const mockCourse = {
+    id: 2,
+    title: `Video Course 2. Name tag`,
+    description: `Learn about where you can find course descriptions,what information they include,
+    how they work, and details about various components of a course description.`,
+    creationDate: '9 Nov.2018',
+    duration: '1h 55 min'
+  };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
@@ -23,7 +31,7 @@ describe('CourseComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CourseComponent);
     component = fixture.componentInstance;
-    component.course = { id: 1 };
+    component.course = mockCourse;
     fixture.detectChanges();
   });
 

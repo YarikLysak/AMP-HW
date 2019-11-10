@@ -1,4 +1,5 @@
 import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { Course } from 'src/app/shared/models/course.model';
 
 @Component({
   selector: 'app-course',
@@ -7,7 +8,7 @@ import { Component, Input, EventEmitter, Output } from '@angular/core';
 })
 export class CourseComponent {
   @Input()
-  course;
+  course: Course;
 
   @Output()
   deleted = new EventEmitter<number>();

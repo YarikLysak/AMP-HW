@@ -1,8 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
-import { CoursesListComponent } from './modules/courses-dashboard/components/courses-list/courses-list.component';
-import { ManageCourseComponent } from './modules/courses-dashboard/components/manage-course/manage-course.component';
+import { CoursesListComponent } from './components/courses-dashboard/courses-list/courses-list.component';
+import { ManageCourseComponent } from './components/courses-dashboard/manage-course/manage-course.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/course-list', pathMatch: 'full' },
