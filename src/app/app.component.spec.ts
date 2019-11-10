@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { HeaderComponent } from './components/header/header.component';
-import { SearchBarComponent } from './components/search-bar/search-bar.component';
+import { SearchBarComponent } from './components/courses-dashboard/search-bar/search-bar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { UserToolsComponent } from './components/user-tools/user-tools.component';

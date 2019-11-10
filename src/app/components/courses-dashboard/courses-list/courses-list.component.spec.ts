@@ -3,9 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoursesListComponent } from './courses-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { SearchBarComponent } from '../../search-bar/search-bar.component';
+import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { CourseComponent } from '../course/course.component';
-import { LoadMoreComponent } from '../../load-more/load-more.component';
+import { LoadMoreComponent } from '../load-more/load-more.component';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
