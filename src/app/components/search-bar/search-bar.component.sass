@@ -1,0 +1,31 @@
+@import '../../shared/styles'
+
+.search-container
+    display: flex
+    align-items: center
+    jstify-content: center
+    margin-bottom: 20px
+
+.search-field
+    position: relative
+    margin-right: 5px
+
+    & > .ic_search
+        position: absolute
+        top: 12px
+        left: 12px
+
+.search-input
+    @include input
+    width: 300px
+    padding: 11px 15px 12px 40px
+    letter-spacing: 0.22px
+    border-radius: 3px
+    border: 1px solid #d9dbe3
+
+.search-btn
+    @include accept-btn-big
+    font-size: 18px
+    padding: 0 23px
+    line-height: 2.56
+    letter-spacing: -0.13px
