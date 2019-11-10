@@ -1,14 +1,26 @@
-<div class="course">
+<div
+  class="course"
+  [appIsFreshStatus]="course.creationDate"
+  [ngClass]="{ 'top-rate': course.isTopRated }"
+>
   <div class="course-content">
     <div class="course-head">
-      <a routerLink="/course/{{ course.id }}">
-        <h2 class="course-head-title">
-          {{ course.title }}
-        </h2>
-      </a>
-      <div class="course-head-sub__info">
-        <span><i class="fa fa-clock-o"></i>{{ course.creationDate }}</span>
-        <span><i class="fa fa-calendar"></i>{{ course.duration }}</span>
+      <div class="left-part">
+        <a routerLink="/course/{{ course.id }}">
+          <h2 class="course-head-title">
+            {{ course.title | uppercase }}
+          </h2>
+        </a>
+        <i class="fas fa-star fa-lg" *ngIf="course.isTopRated"></i>
+      </div>
+      <div class="right-part course-head-sub__info">
+        <span
+          ><i class="fa fa-clock-o"></i
+          >{{ course.creationDate | dateStyle }}</span
+        >
+        <span
+          ><i class="fa fa-calendar"></i>{{ course.duration | duration }}</span
+        >
       </div>
     </div>
     <p>{{ course.description }}</p>

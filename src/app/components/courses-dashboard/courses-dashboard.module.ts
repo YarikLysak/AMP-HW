@@ -9,15 +9,25 @@ import { ManageCourseComponent } from './manage-course/manage-course.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { LoadMoreComponent } from './load-more/load-more.component';
 
+import { IsFreshStatusDirective } from './shared/directives/isFreshStatus.directive';
+import { DurationPipe } from './shared/pipes/duration/duration.pipe';
+import { DateStylePipe } from './shared/pipes/dateStyle/date.pipe';
+import { OrderByPipe } from './shared/pipes/orderBy/order-by.pipe';
+
 @NgModule({
   declarations: [
     CoursesListComponent,
     CourseComponent,
     ManageCourseComponent,
     SearchBarComponent,
-    LoadMoreComponent
+    LoadMoreComponent,
+    IsFreshStatusDirective,
+    DurationPipe,
+    DateStylePipe,
+    OrderByPipe
   ],
   imports: [CommonModule, RouterModule, ReactiveFormsModule],
-  exports: [CoursesListComponent, CourseComponent, ManageCourseComponent]
+  exports: [CoursesListComponent, CourseComponent, ManageCourseComponent],
+  providers: [OrderByPipe]
 })
 export class CoursesDashboardModule {}
