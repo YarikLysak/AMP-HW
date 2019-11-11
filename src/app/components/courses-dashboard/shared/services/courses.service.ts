@@ -16,12 +16,12 @@ export class CoursesService {
     return this.courseList;
   }
 
-  filterCourses(searchStr) {
-    this.courseList = this.createdCourses.filter(item => {
-      return item.title.toLowerCase().includes(searchStr.toLowerCase());
-    });
-    console.log('hello', this.courseList);
-  }
+  // filterCourses(searchStr) {
+  //   this.courseList = this.createdCourses.filter(item => {
+  //     return item.title.toLowerCase().includes(searchStr.toLowerCase());
+  //   });
+  //   console.log('hello', this.courseList);
+  // }
 
   createCourseList() {
     this.createdCourses = [];

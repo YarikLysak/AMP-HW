@@ -3,6 +3,9 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CourseComponent } from './course.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { IsFreshStatusDirective } from '../shared/directives/isFreshStatus.directive';
+import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
+import { DateStylePipe } from '../shared/pipes/dateStyle/date.pipe';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -12,13 +15,19 @@ describe('CourseComponent', () => {
     title: `Video Course 2. Name tag`,
     description: `Learn about where you can find course descriptions,what information they include,
     how they work, and details about various components of a course description.`,
-    creationDate: '9 Nov.2018',
-    duration: '1h 55 min'
+    creationDate: new Date(2019, 8, 1).toLocaleDateString(),
+    duration: '115',
+    isTopRated: true
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [CourseComponent],
+      declarations: [
+        CourseComponent,
+        IsFreshStatusDirective,
+        DurationPipe,
+        DateStylePipe
+      ],
       imports: [RouterTestingModule, ReactiveFormsModule]
     })
       .compileComponents()

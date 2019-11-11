@@ -13,7 +13,7 @@ export class SearchBarComponent {
   constructor(private courceService: CoursesService) {}
 
   searchCourse() {
-    this.courceService.filterCourses(this.searchField.value);
+    // this.courceService.filterCourses(this.searchField.value);
     console.log(this.searchField.value, '/searched data');
   }
 }
