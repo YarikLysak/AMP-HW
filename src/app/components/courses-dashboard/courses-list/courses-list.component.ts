@@ -9,16 +9,18 @@ import { Course } from '../shared/course.model';
   styleUrls: ['./courses-list.component.sass']
 })
 export class CoursesListComponent implements OnInit {
-  public courseList: Array<Course>;
+  public coursesList: Course[];
+  public fromNew = 'new';
+  public fromOld = 'old';
 
-  constructor(
-    private courseService: CoursesService,
-    private orderByPipe: OrderByPipe
-  ) {}
+  constructor(private courseService: CoursesService) {}
 
   ngOnInit() {
-    this.courseList = this.courseService.getCourses();
-    this.orderByPipe.transform(this.courseList);
+    this.coursesList = this.courseService.getCourses();
+  }
+
+  showFiltered(filteredCoursesList: Course[]) {
+    this.coursesList = filteredCoursesList;
   }
 
   onDelete(id: number) {

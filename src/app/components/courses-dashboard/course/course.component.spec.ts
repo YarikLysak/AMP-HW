@@ -5,7 +5,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IsFreshStatusDirective } from '../shared/directives/isFreshStatus.directive';
 import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
-import { DateStylePipe } from '../shared/pipes/dateStyle/date.pipe';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -22,12 +21,7 @@ describe('CourseComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        CourseComponent,
-        IsFreshStatusDirective,
-        DurationPipe,
-        DateStylePipe
-      ],
+      declarations: [CourseComponent, IsFreshStatusDirective, DurationPipe],
       imports: [RouterTestingModule, ReactiveFormsModule]
     })
       .compileComponents()

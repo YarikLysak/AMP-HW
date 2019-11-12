@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { CoursesService } from '../shared/services/courses.service';
+import { Course } from '../shared/course.model';
+import { FilterCoursePipe } from '../shared/pipes/filterCourse/filterCourse.pipe';
 
 @Component({
   selector: 'app-search-bar',
@@ -9,11 +11,21 @@ import { CoursesService } from '../shared/services/courses.service';
 })
 export class SearchBarComponent {
   public searchField = new FormControl('');
+  public filteredCoursesList: Course[] = [];
 
-  constructor(private courceService: CoursesService) {}
+  @Output()
+  filtered = new EventEmitter<any>();
 
-  searchCourse() {
-    // this.courceService.filterCourses(this.searchField.value);
-    console.log(this.searchField.value, '/searched data');
+  constructor(
+    private courceService: CoursesService,
+    private filterCourse: FilterCoursePipe
+  ) {}
+
+  searchCourses() {
+    this.filteredCoursesList = this.filterCourse.transform(
+      this.searchField.value,
+      this.courceService.coursesList
+    );
+    this.filtered.emit(this.filteredCoursesList);
   }
 }

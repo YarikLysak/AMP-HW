@@ -14,8 +14,8 @@ import { LoadMoreComponent } from '../load-more/load-more.component';
 import { CoursesService } from '../shared/services/courses.service';
 import { IsFreshStatusDirective } from '../shared/directives/isFreshStatus.directive';
 import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
-import { DateStylePipe } from '../shared/pipes/dateStyle/date.pipe';
 import { OrderByPipe } from '../shared/pipes/orderBy/order-by.pipe';
+import { FilterCoursePipe } from '../shared/pipes/filterCourse/filterCourse.pipe';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
@@ -41,9 +41,9 @@ describe('CoursesListComponent', () => {
         LoadMoreComponent,
         IsFreshStatusDirective,
         DurationPipe,
-        DateStylePipe
+        OrderByPipe
       ],
-      providers: [CoursesService, OrderByPipe],
+      providers: [CoursesService, FilterCoursePipe],
       imports: [RouterTestingModule, ReactiveFormsModule]
     })
       .compileComponents()
@@ -65,9 +65,9 @@ describe('CoursesListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create a courseList', () => {
-    const courseList = testBedService.getCourses();
-    expect(courseList).toBeTruthy();
+  it('should create a coursesList', () => {
+    const coursesList = testBedService.getCourses();
+    expect(coursesList).toBeTruthy();
   });
 
   it('Service injected via inject(...) and TestBed.get(...) should be the same instance', inject(
@@ -87,6 +87,19 @@ describe('CoursesListComponent', () => {
     });
 
     courseComponent.onDelete();
+  });
+
+  it('should contain showFiltered', done => {
+    const searchComponent = new SearchBarComponent(
+      new CoursesService(),
+      new FilterCoursePipe()
+    );
+
+    searchComponent.filtered.subscribe(data => {
+      expect(data).toBeTruthy();
+      done();
+    });
+    searchComponent.searchCourses();
   });
 
   it('should log message', () => {

@@ -4,9 +4,9 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'duration'
 })
 export class DurationPipe implements PipeTransform {
-  transform(duration: any): any {
-    const hours = Math.floor(duration / 60) || 0;
+  transform(duration: number): string {
     duration = +duration;
+    const hours = Math.floor(duration / 60) || 0;
 
     return duration > 0 && hours < 1
       ? `${duration} min`

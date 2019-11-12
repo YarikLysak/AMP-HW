@@ -13,31 +13,31 @@ export class IsFreshStatusDirective implements OnInit {
 
   constructor(el: ElementRef, private dateService: DateService) {
     this.el = el.nativeElement;
-    this.lastFreshDate = this.dateService.getDate();
     this.currentDate = this.dateService.getDate().toLocaleDateString();
   }
 
   ngOnInit() {
+    this.lastFreshDate = new Date();
     this.lastFreshDate.setDate(this.lastFreshDate.getDate() - 15);
 
-    if (
-      this.dateService.compareDate(
-        new Date(this.currentDate),
-        new Date(this.createdDate)
-      ) === 1 &&
-      this.dateService.compareDate(
-        new Date(this.createdDate),
-        new Date(this.lastFreshDate)
-      ) !== -1
-    ) {
+    this.compareDateStatusClasses(
+      this.currentDate,
+      this.lastFreshDate,
+      this.createdDate
+    );
+  }
+
+  compareDateStatusClasses(today, freshDiapason, courseCreateDate) {
+    const ifFresh = this.dateService.compareDate(today, courseCreateDate) === 1;
+    const isInFreshDiapason =
+      this.dateService.compareDate(courseCreateDate, freshDiapason) !== -1;
+    const isUpcoming =
+      this.dateService.compareDate(today, courseCreateDate) === -1;
+
+    if (ifFresh && isInFreshDiapason) {
       this.el.classList.add('fresh');
     }
-    if (
-      this.dateService.compareDate(
-        new Date(this.createdDate),
-        new Date(this.currentDate)
-      ) === 1
-    ) {
+    if (isUpcoming) {
       this.el.classList.add('upcoming');
     }
   }

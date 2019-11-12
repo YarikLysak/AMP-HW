@@ -2,7 +2,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { SearchBarComponent } from './search-bar.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { By } from '@angular/platform-browser';
+import { FilterCoursePipe } from '../shared/pipes/filterCourse/filterCourse.pipe';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -10,7 +10,8 @@ describe('SearchBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SearchBarComponent],
+      declarations: [SearchBarComponent, FilterCoursePipe],
+      providers: [FilterCoursePipe],
       imports: [ReactiveFormsModule]
     }).compileComponents();
   }));
@@ -26,7 +27,7 @@ describe('SearchBarComponent', () => {
   });
 
   it('should emit search click', () => {
-    const searchSpy = spyOn(component, 'searchCourse');
+    const searchSpy = spyOn(component, 'searchCourses');
     const debugEl = fixture.debugElement.nativeElement;
     const searchBnt = debugEl.querySelector('.search-btn');
 
@@ -34,12 +35,5 @@ describe('SearchBarComponent', () => {
     fixture.detectChanges();
 
     expect(searchSpy).toHaveBeenCalled();
-  });
-
-  it('should log message', () => {
-    const consoleSpy = spyOn(console, 'log');
-    component.searchCourse();
-
-    expect(consoleSpy).toHaveBeenCalled();
   });
 });

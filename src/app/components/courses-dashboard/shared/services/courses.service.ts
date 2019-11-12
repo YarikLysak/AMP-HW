@@ -5,28 +5,17 @@ import { Course } from '../course.model';
   providedIn: 'root'
 })
 export class CoursesService {
-  public courseList: Array<Course> = [];
-  public createdCourses;
-
-  constructor() {}
+  public coursesList: Course[] = [];
 
   getCourses() {
-    this.createCourseList();
-    this.courseList = this.createdCourses.slice('');
-    return this.courseList;
+    this.coursesList = this.createCoursesList();
+    return this.coursesList;
   }
 
-  // filterCourses(searchStr) {
-  //   this.courseList = this.createdCourses.filter(item => {
-  //     return item.title.toLowerCase().includes(searchStr.toLowerCase());
-  //   });
-  //   console.log('hello', this.courseList);
-  // }
-
-  createCourseList() {
-    this.createdCourses = [];
+  createCoursesList() {
+    const coursesArray: Course[] = [];
     for (let i = 0; i < 4; i++) {
-      this.createdCourses.push({
+      coursesArray.push({
         id: i,
         title: `Video Course ${i}. Name tag`,
         description: `
@@ -41,6 +30,7 @@ export class CoursesService {
         isTopRated: false
       });
     }
-    this.createdCourses[1].isTopRated = true;
+    coursesArray[1].isTopRated = true;
+    return [...coursesArray];
   }
 }

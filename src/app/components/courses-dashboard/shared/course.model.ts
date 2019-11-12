@@ -1,7 +1,7 @@
 export interface Course {
   id: number;
   title: string;
-  creationDate: any;
+  creationDate: string;
   duration: number | string;
   description: string;
   isTopRated: boolean;
@@ -10,7 +10,7 @@ export interface Course {
 export class Course implements Course {
   id: number;
   title: string;
-  creationDate: any;
+  creationDate: string;
   duration: number | string;
   description: string;
   isTopRated: boolean;

@@ -13,8 +13,6 @@ export class CourseComponent {
   @Output()
   deleted = new EventEmitter<number>();
 
-  courseDate: string;
-
   onDelete() {
     console.log(this.course);
     this.deleted.emit(this.course.id);
