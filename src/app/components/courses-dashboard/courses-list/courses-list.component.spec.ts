@@ -1,4 +1,9 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  inject
+} from '@angular/core/testing';
 
 import { CoursesListComponent } from './courses-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -6,17 +11,25 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { CourseComponent } from '../course/course.component';
 import { LoadMoreComponent } from '../load-more/load-more.component';
+import { CoursesService } from '../shared/services/courses.service';
+import { IsFreshStatusDirective } from '../shared/directives/isFreshStatus.directive';
+import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
+import { OrderByPipe } from '../shared/pipes/orderBy/order-by.pipe';
+import { FilterCoursePipe } from '../shared/pipes/filterCourse/filterCourse.pipe';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
   let fixture: ComponentFixture<CoursesListComponent>;
+  let testBedService: CoursesService;
+
   const mockCourse = {
     id: 2,
     title: `Video Course 2. Name tag`,
     description: `Learn about where you can find course descriptions,what information they include,
     how they work, and details about various components of a course description.`,
-    creationDate: '9 Nov.2018',
-    duration: '1h 55 min'
+    creationDate: new Date(2019, 8, 1).toLocaleDateString(),
+    duration: '115',
+    isTopRated: false
   };
 
   beforeEach(async(() => {
@@ -25,8 +38,12 @@ describe('CoursesListComponent', () => {
         CoursesListComponent,
         SearchBarComponent,
         CourseComponent,
-        LoadMoreComponent
+        LoadMoreComponent,
+        IsFreshStatusDirective,
+        DurationPipe,
+        OrderByPipe
       ],
+      providers: [CoursesService, FilterCoursePipe],
       imports: [RouterTestingModule, ReactiveFormsModule]
     })
       .compileComponents()
@@ -39,27 +56,7 @@ describe('CoursesListComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CoursesListComponent);
     component = fixture.componentInstance;
-    component.courseList = [
-      {
-        id: 0,
-        title: `Video Course 0. Name tag`,
-        description: `
-      Learn about where you can find course descriptions, what information they include,
-      how they work, and details about various components of a course description.
-      Course descriptions report information about a university or college's classes.`,
-        creationDate: '9 Nov.2018',
-        duration: '1h 55 min'
-      },
-      {
-        id: 1,
-        title: `Video Course 1. Name tag`,
-        description: `
-      Learn about where you can find course descriptions, what information they include,
-      how they work, and details about various components of a course description.`,
-        creationDate: '9 Nov.2018',
-        duration: '1h 55 min'
-      }
-    ];
+    testBedService = TestBed.get(CoursesService);
 
     fixture.detectChanges();
   });
@@ -68,11 +65,17 @@ describe('CoursesListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should create a courseList', () => {
-    const courseListSpy = spyOn(component, 'createCourseList');
-    component.ngOnInit();
-    expect(courseListSpy).toHaveBeenCalled();
+  it('should create a coursesList', () => {
+    const coursesList = testBedService.getCourses();
+    expect(coursesList).toBeTruthy();
   });
+
+  it('Service injected via inject(...) and TestBed.get(...) should be the same instance', inject(
+    [CoursesService],
+    (injectService: CoursesService) => {
+      expect(injectService).toBe(testBedService);
+    }
+  ));
 
   it('should contain onDelete', done => {
     const courseComponent = new CourseComponent();
@@ -84,6 +87,19 @@ describe('CoursesListComponent', () => {
     });
 
     courseComponent.onDelete();
+  });
+
+  it('should contain showFiltered', done => {
+    const searchComponent = new SearchBarComponent(
+      new CoursesService(),
+      new FilterCoursePipe()
+    );
+
+    searchComponent.filtered.subscribe(data => {
+      expect(data).toBeTruthy();
+      done();
+    });
+    searchComponent.searchCourses();
   });
 
   it('should log message', () => {

@@ -4,6 +4,7 @@ export interface Course {
   creationDate: string;
   duration: number | string;
   description: string;
+  isTopRated: boolean;
 }
 
 export class Course implements Course {
@@ -12,4 +13,5 @@ export class Course implements Course {
   creationDate: string;
   duration: number | string;
   description: string;
+  isTopRated: boolean;
 }
