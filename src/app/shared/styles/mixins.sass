@@ -22,12 +22,20 @@
 
 @mixin accept-btn
     @include common-btn
-    padding: 0 10px
     font-size: 14px
     line-height: 2.43
     letter-spacing: -0.1px
     background: $sick-green
     border-color: $sick-green
+
+@mixin accept-btn__disabled
+    @include accept-btn
+    background: $grey
+    color: $dark-grey
+    border-color: $grey
+    &:hover
+        cursor: default
+        opacity: 1
 
 @mixin accept-btn-big
     @include accept-btn
@@ -37,6 +45,9 @@
 
 @mixin input
     line-height: 1.71
+    border-radius: 3px
+    border: 1px solid $grey
+    padding: 5px 10px
     @include placeholder-color($silver)
 
 @mixin placeholder-color($color)

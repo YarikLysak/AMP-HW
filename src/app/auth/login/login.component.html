@@ -1,0 +1,36 @@
+<div class="login-wrapper">
+  <div class="container-white form-container">
+    <div class="login-form-head">
+      <h1>Login</h1>
+      <span class="login-form__error">Wrong e-mail or password</span>
+    </div>
+    <form [formGroup]="loginForm" class="login-form">
+      <label for="email" class="login-form-label">
+        <span class="login-form-label-text">E-mail:</span>
+        <span class="login-form__hint">*required</span>
+      </label>
+      <input
+        class="common-input"
+        type="email"
+        id="email"
+        formControlName="email"
+        placeholder="Enter e-mail"
+      />
+      <label for="password" class="login-form-label">
+        <span class="login-form-label-text">Password</span>
+        <span class="login-form__hint">*required</span>
+      </label>
+      <input
+        class="common-input"
+        type="password"
+        id="password"
+        formControlName="password"
+        placeholder="Enter password"
+      />
+      <div class="login-form-bottom">
+        <a href="#" class="login-form__help">Forgot password?</a>
+        <button type="submit" class="accept-btn" disabled>Login</button>
+      </div>
+    </form>
+  </div>
+</div>
