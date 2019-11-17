@@ -1,0 +1,63 @@
+@import '../../shared/styles'
+
+#password
+  letter-spacing: 10px
+
+  &::-webkit-input-placeholder
+    letter-spacing: 0.22px
+  &:-moz-placeholder
+    letter-spacing: 0.22px
+  &::-moz-placeholder
+    letter-spacing: 0.22px
+  &:-ms-input-placeholder
+    letter-spacing: 0.22px
+
+.login-wrapper
+  display: flex
+  justify-content: center
+  align-items: center
+  height: 100%
+  background: $pale-grey
+
+  & .form-container
+    min-width: 318px
+
+  h1
+    margin: 0
+
+  .login-form
+    display: flex
+    flex-direction: column
+
+    &-head
+      display: flex
+      justify-content: space-between
+      align-items: center
+      margin-bottom: 10px
+
+    &-bottom
+      display: flex
+      justify-content: space-between
+      align-items: center
+      margin-top: 20px
+
+    &-label
+      display: flex
+      justify-content: space-between
+      margin: 10px 0
+      font-weight: 600
+      letter-spacing: 0.22px
+      color: $slate-grey
+
+    &__error
+      color: $error
+      font-size: 12px
+
+    &__hint
+      color: $light-silver
+      font-size: 12px
+
+    &__help
+      color: $soft-blue
+      font-size: 12px
+      margin-left: 15px

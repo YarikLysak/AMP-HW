@@ -1,23 +1,22 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 
-import { CoreModule } from './components/core-module/core.module';
-import { CoursesDashboardModule } from './components/courses-dashboard/courses-dashboard.module';
+import { CoreModule } from './core/core.module';
+import { CoursesDashboardModule } from './courses-dashboard/courses-dashboard.module';
+import { AuthModule } from './auth/auth.module';
 
 import { AppComponent } from './app.component';
-import { LoginComponent } from './components/login/login.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    ReactiveFormsModule,
     CoreModule,
-    CoursesDashboardModule
+    CoursesDashboardModule,
+    AuthModule
   ],
   providers: [],
   bootstrap: [AppComponent]
