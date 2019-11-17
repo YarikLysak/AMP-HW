@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserToolsComponent } from './user-tools.component';
+import { HttpClientModule } from '@angular/common/http';
 
 describe('UserToolsComponent', () => {
   let component: UserToolsComponent;
@@ -8,7 +9,8 @@ describe('UserToolsComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [UserToolsComponent]
+      declarations: [UserToolsComponent],
+      imports: [HttpClientModule]
     }).compileComponents();
   }));
 

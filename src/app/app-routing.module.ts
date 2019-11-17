@@ -6,7 +6,11 @@ import { ManageCourseComponent } from './courses-dashboard/manage-course/manage-
 import { LoginComponent } from './auth/login/login.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/course-list', pathMatch: 'full' },
+  {
+    path: '',
+    redirectTo: '/course-list',
+    pathMatch: 'full'
+  },
   { path: 'login', component: LoginComponent },
   { path: 'course-list', component: CoursesListComponent },
   { path: 'course/:id', component: ManageCourseComponent }

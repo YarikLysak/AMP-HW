@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from 'src/app/auth/shared/services/auth.service';
 
 @Component({
   selector: 'app-user-tools',
@@ -7,8 +8,21 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserToolsComponent implements OnInit {
   public userLogin: string;
+  public isAuth: boolean;
+
+  constructor(private auth: AuthService) {}
 
   ngOnInit() {
-    this.userLogin = 'User Login';
+    this.auth.isAuthenticated().subscribe(isLoggedIn => {
+      this.isAuth = isLoggedIn;
+      if (isLoggedIn) {
+        this.userLogin = this.auth.getUserInfo();
+      }
+    });
+  }
+
+  onLogOff() {
+    this.auth.logout();
+    this.userLogin = '';
   }
 }

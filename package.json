@@ -9,7 +9,8 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prettier": "prettier --write **/*.{ts,html}",
-    "test:coverage": "ng test --watch=false --code-coverage"
+    "test:coverage": "ng test --watch=false --code-coverage",
+    "serve": "json-server --watch ./src/assets/mockUsers.json --port 3001"
   },
   "husky": {
     "hooks": {
@@ -26,6 +27,8 @@
     "@angular/platform-browser": "~8.2.11",
     "@angular/platform-browser-dynamic": "~8.2.11",
     "@angular/router": "~8.2.11",
+    "bootstrap": "^4.3.1",
+    "ngx-bootstrap": "^5.2.0",
     "rxjs": "~6.4.0",
     "tslib": "^1.10.0",
     "zone.js": "~0.9.1"

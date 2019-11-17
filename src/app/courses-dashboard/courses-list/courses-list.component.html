@@ -1,5 +1,5 @@
 <div class="course-list-wrapper">
-  <div class="container">
+  <div class="custom-container">
     <div class="courses-list">
       <app-search-bar (filtered)="showFiltered($event)"></app-search-bar>
       <button type="button" class="common-btn add-course-btn">
@@ -16,3 +16,19 @@
     </div>
   </div>
 </div>
+
+<ng-template #modal>
+  <div class="modal-body text-center">
+    <div class="modal-header">
+      <h4 class="modal-title pull-left">Do you want to confirm?</h4>
+    </div>
+    <div class="modal-buttons">
+      <button type="button" class="accept-btn" (click)="confirm()">
+        Yes
+      </button>
+      <button type="button" class="common-btn" (click)="decline()">
+        No
+      </button>
+    </div>
+  </div>
+</ng-template>

@@ -7,12 +7,31 @@ import { Course } from '../course.model';
 export class CoursesService {
   public coursesList: Course[] = [];
 
-  getCourses() {
+  getCourses(): Course[] {
     this.coursesList = this.createCoursesList();
     return this.coursesList;
   }
 
-  createCoursesList() {
+  addCourse(newCourse: Course) {
+    this.coursesList.push(newCourse);
+  }
+
+  getCourseById(id: number) {
+    return this.coursesList.find(course => course.id === id);
+  }
+
+  updateCourse(updatedCourse: Course) {
+    this.coursesList = [...this.coursesList].map(course =>
+      course.id === updatedCourse.id ? updatedCourse : course
+    );
+  }
+
+  removeCourse(id: number) {
+    this.coursesList = [...this.coursesList].filter(course => course.id !== id);
+    return this.coursesList;
+  }
+
+  createCoursesList(): Course[] {
     const coursesArray: Course[] = [];
     for (let i = 0; i < 4; i++) {
       coursesArray.push({
