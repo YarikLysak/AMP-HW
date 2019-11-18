@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth/shared/services/auth.service';
+import { Observable } from 'rxjs';
+import { AuthService } from '../../auth/shared/services/auth.service';
+import { User } from '../../auth/shared/models/user.model';
 
 @Component({
   selector: 'app-user-tools',
@@ -7,22 +9,19 @@ import { AuthService } from 'src/app/auth/shared/services/auth.service';
   styleUrls: ['./user-tools.component.sass']
 })
 export class UserToolsComponent implements OnInit {
-  public userLogin: string;
-  public isAuth: boolean;
+  public userEmail: string;
+  public currentUser$: Observable<User>;
+  public isAuth: Observable<boolean>;
 
   constructor(private auth: AuthService) {}
 
   ngOnInit() {
-    this.auth.isAuthenticated().subscribe(isLoggedIn => {
-      this.isAuth = isLoggedIn;
-      if (isLoggedIn) {
-        this.userLogin = this.auth.getUserInfo();
-      }
-    });
+    this.isAuth = this.auth.isAuthenticated();
+    this.currentUser$ = this.auth.getUserInfo();
+    console.log(this.currentUser$);
   }
 
   onLogOff() {
     this.auth.logout();
-    this.userLogin = '';
   }
 }

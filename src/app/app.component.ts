@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthService } from './auth/shared/services/auth.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -8,13 +9,11 @@ import { AuthService } from './auth/shared/services/auth.service';
 })
 export class AppComponent implements OnInit {
   title = 'AMP-HW';
-  isAuth: boolean;
+  isAuth$: Observable<boolean>;
 
   constructor(private auth: AuthService) {}
 
   ngOnInit() {
-    this.auth.isAuthenticated().subscribe(isLoggedIn => {
-      this.isAuth = isLoggedIn;
-    });
+    this.isAuth$ = this.auth.isAuthenticated();
   }
 }

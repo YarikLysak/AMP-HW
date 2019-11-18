@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 import { User } from '../models/user.model';
 
@@ -9,7 +9,6 @@ import { User } from '../models/user.model';
 })
 export class AuthService {
   isAuth = new BehaviorSubject<boolean>(false);
-  currentUser: User;
   mockUsers = [
     {
       id: 1,
@@ -19,14 +18,20 @@ export class AuthService {
     }
   ];
 
+  currentUser = new BehaviorSubject<User>(this.mockUsers[0]);
+
   constructor(private httpClient: HttpClient) {}
 
   login(authData) {
     console.log('logged in successfully');
-    this.currentUser = authData;
-    localStorage.clear();
-    localStorage.setItem('user-email', this.currentUser.email);
-    localStorage.setItem('user-token', this.mockUsers[0].token);
+    localStorage.setItem('user-email', '');
+    localStorage.setItem('user-token', '');
+
+    this.currentUser.next(authData);
+    this.currentUser.subscribe(user => {
+      localStorage.setItem('user-email', user.email);
+      localStorage.setItem('user-token', this.mockUsers[0].token);
+    });
     this.isAuth.next(true);
 
     //   const token = localStorage.getItem('user-token') || '';
@@ -61,11 +66,11 @@ export class AuthService {
     this.isAuth.next(false);
   }
 
-  isAuthenticated(): BehaviorSubject<boolean> {
-    return this.isAuth;
+  isAuthenticated(): Observable<boolean> {
+    return this.isAuth.asObservable();
   }
 
-  getUserInfo(): string {
-    return this.currentUser.email;
+  getUserInfo(): Observable<User> {
+    return this.currentUser.asObservable();
   }
 }

@@ -46,18 +46,18 @@ export class CoursesListComponent implements OnInit {
     this.coursesList = this.courseService.removeCourse(id);
   }
 
-  private openModal() {
+  openModal() {
     this.modalRef = this.modalService.show(this.modalTemplateRef, {
       class: 'modal-sm'
     });
   }
 
-  private confirm(): void {
+  confirm(): void {
     this.modalRef.hide();
     this.deleteCourse(this.deleteId);
   }
 
-  private decline(): void {
+  decline(): void {
     this.deleteId = undefined;
     this.modalRef.hide();
   }
