@@ -14,7 +14,6 @@ export class CourseComponent {
   deleted = new EventEmitter<number>();
 
   onDelete() {
-    console.log(this.course);
     this.deleted.emit(this.course.id);
   }
 }

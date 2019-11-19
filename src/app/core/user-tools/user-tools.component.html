@@ -1,4 +1,4 @@
-<div class="user-tools" *ngIf="isAuth">
+<div class="user-tools" *ngIf="isAuth$ | async">
   <span class="user-tools-item"
     ><i class="fas fa-user"></i> {{ userEmail }}</span
   >

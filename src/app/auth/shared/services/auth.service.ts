@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+// import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { User } from '../models/user.model';
@@ -20,7 +20,7 @@ export class AuthService {
 
   currentUser = new BehaviorSubject<User>(this.mockUsers[0]);
 
-  constructor(private httpClient: HttpClient) {}
+  // constructor(private httpClient: HttpClient) {}
 
   login(authData) {
     console.log('logged in successfully');

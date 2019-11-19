@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Observable, Subject, Subscription } from 'rxjs';
 import { AuthService } from '../../auth/shared/services/auth.service';
 import { User } from '../../auth/shared/models/user.model';
 
@@ -8,20 +8,25 @@ import { User } from '../../auth/shared/models/user.model';
   templateUrl: './user-tools.component.html',
   styleUrls: ['./user-tools.component.sass']
 })
-export class UserToolsComponent implements OnInit {
+export class UserToolsComponent implements OnInit, OnDestroy {
   public userEmail: string;
-  public currentUser$: Observable<User>;
-  public isAuth: Observable<boolean>;
+  public subscription: Subscription;
+  public isAuth$: Observable<boolean>;
 
   constructor(private auth: AuthService) {}
 
   ngOnInit() {
-    this.isAuth = this.auth.isAuthenticated();
-    this.currentUser$ = this.auth.getUserInfo();
-    console.log(this.currentUser$);
+    this.isAuth$ = this.auth.isAuthenticated();
+    this.subscription = this.auth
+      .getUserInfo()
+      .subscribe(user => (this.userEmail = user.email));
   }
 
   onLogOff() {
     this.auth.logout();
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }

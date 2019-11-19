@@ -16,6 +16,7 @@ import { IsFreshStatusDirective } from '../shared/directives/isFreshStatus.direc
 import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
 import { OrderByPipe } from '../shared/pipes/orderBy/order-by.pipe';
 import { FilterCoursePipe } from '../shared/pipes/filterCourse/filterCourse.pipe';
+import { ModalModule } from 'ngx-bootstrap';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
@@ -44,7 +45,7 @@ describe('CoursesListComponent', () => {
         OrderByPipe
       ],
       providers: [CoursesService, FilterCoursePipe],
-      imports: [RouterTestingModule, ReactiveFormsModule]
+      imports: [RouterTestingModule, ReactiveFormsModule, ModalModule.forRoot()]
     })
       .compileComponents()
       .then(() => {
@@ -100,12 +101,5 @@ describe('CoursesListComponent', () => {
       done();
     });
     searchComponent.searchCourses();
-  });
-
-  it('should log message', () => {
-    const consoleSpy = spyOn(console, 'log');
-    component.onDelete(1);
-
-    expect(consoleSpy).toHaveBeenCalledWith(1, 'delete');
   });
 });

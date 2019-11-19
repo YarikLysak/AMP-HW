@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnInit,
-  ViewChild,
-  TemplateRef,
-  ElementRef
-} from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { CoursesService } from '../shared/services/courses.service';
 
 import { Course } from '../shared/course.model';
@@ -48,7 +42,8 @@ export class CoursesListComponent implements OnInit {
 
   openModal() {
     this.modalRef = this.modalService.show(this.modalTemplateRef, {
-      class: 'modal-sm'
+      class: 'modal-sm',
+      animated: true
     });
   }
 
