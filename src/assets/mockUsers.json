@@ -1,0 +1,10 @@
+{
+  "users": [
+    {
+      "id": 1,
+      "email": "admin@admin",
+      "password": "12345",
+      "token": "4QhmRwHwwrgFqXULXNtx4d"
+    }
+  ]
+}

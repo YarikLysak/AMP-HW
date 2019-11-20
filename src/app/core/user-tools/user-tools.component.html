@@ -1,4 +1,8 @@
-<div class="user-tools">
-  <a href="#"><i class="fas fa-user"></i> {{ userLogin }}</a>
-  <a href="#"><i class="fas fa-sign-out-alt"></i> Log off </a>
+<div class="user-tools" *ngIf="isAuth$ | async">
+  <span class="user-tools-item"
+    ><i class="fas fa-user"></i> {{ userEmail }}</span
+  >
+  <span class="user-tools-item" (click)="onLogOff()"
+    ><i class="fas fa-sign-out-alt"></i> Log off
+  </span>
 </div>
