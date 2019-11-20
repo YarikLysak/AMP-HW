@@ -18,9 +18,11 @@
 </div>
 
 <ng-template #modal>
-  <div class="modal-body text-center">
+  <div class="modal-body text-center" *ngIf="needToDelete !== null">
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Do you want to confirm?</h4>
+      <h4 class="modal-title pull-left">
+        Do you want to delete {{ needToDelete.title }}?
+      </h4>
     </div>
     <div class="modal-buttons">
       <button type="button" class="accept-btn" (click)="confirm()">
