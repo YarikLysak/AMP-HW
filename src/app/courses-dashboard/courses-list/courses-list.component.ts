@@ -13,7 +13,7 @@ export class CoursesListComponent implements OnInit {
   public coursesList: Course[];
   public fromNew = 'new';
   public fromOld = 'old';
-  private needToDelete: Course = null;
+  public needToDelete: Course = null;
   private modalRef: BsModalRef;
 
   @ViewChild('modal', { static: false }) modalTemplateRef: ElementRef;
