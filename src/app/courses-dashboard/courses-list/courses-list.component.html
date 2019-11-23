@@ -2,7 +2,11 @@
   <div class="custom-container">
     <div class="courses-list">
       <app-search-bar (filtered)="showFiltered($event)"></app-search-bar>
-      <button type="button" class="common-btn add-course-btn">
+      <button
+        routerLink="/course-manage"
+        type="button"
+        class="common-btn add-course-btn"
+      >
         <i class="fa fa-plus fa-lg"></i>
         Add course
       </button>

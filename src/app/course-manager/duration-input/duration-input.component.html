@@ -1,0 +1,16 @@
+<div class="form-input__short" [formGroup]="parentForm">
+  <div class="form-label">
+    <label for="duration">Duration:</label>
+    <span class="form-hint">*required</span>
+  </div>
+  <input
+    formControlName="duration"
+    type="number"
+    id="duration"
+    class="common-input"
+    placeholder="minutes"
+  />
+</div>
+<div class="duration-output">
+  {{ parentForm.value.duration | duration }}
+</div>
