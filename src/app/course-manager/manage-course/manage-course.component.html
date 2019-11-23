@@ -1,8 +1,10 @@
 <div class="manage-course-wrapper">
   <div class="container-white form-container manage-course">
     <div class="manage-form-head">
-      <h2>New Course</h2>
-      <!-- <h2>Edit Course</h2> -->
+      <h2 *ngIf="isNew; else editTemplate">New Course</h2>
+      <ng-template #editTemplate>
+        <h2>Edit Course</h2>
+      </ng-template>
     </div>
     <form
       [formGroup]="manageCourseForm"

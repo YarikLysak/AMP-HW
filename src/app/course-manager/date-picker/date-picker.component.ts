@@ -9,7 +9,7 @@ import { FormGroup } from '@angular/forms';
 export class DatePickerComponent implements OnInit {
   @Input() parentForm: FormGroup;
 
-  constructor() {}
-
-  ngOnInit() {}
+  ngOnInit() {
+    console.log(this.parentForm);
+  }
 }

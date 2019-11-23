@@ -9,8 +9,6 @@ import { FormGroup } from '@angular/forms';
 export class DurationInputComponent implements OnInit {
   @Input() parentForm: FormGroup;
 
-  constructor() {}
-
   ngOnInit() {
     console.log(this.parentForm);
   }
