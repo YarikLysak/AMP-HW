@@ -28,8 +28,11 @@ describe('CoursesListComponent', () => {
     title: `Video Course 2. Name tag`,
     description: `Learn about where you can find course descriptions,what information they include,
     how they work, and details about various components of a course description.`,
-    creationDate: new Date(2019, 8, 1).toLocaleDateString(),
-    duration: '115',
+    creationDate: new Date(2019, 8, 1)
+      .toLocaleDateString()
+      .split('/')
+      .join('-'),
+    duration: 115,
     isTopRated: false
   };
 
