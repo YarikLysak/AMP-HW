@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { CoursesService } from '../shared/services/courses.service';
-
-import { Course } from '../shared/course.model';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+
+import { CoursesService } from '../shared/services/courses.service';
+import { Course } from '../shared/course.model';
 
 @Component({
   selector: 'app-courses-list',
@@ -13,8 +13,8 @@ export class CoursesListComponent implements OnInit {
   public coursesList: Course[];
   public fromNew = 'new';
   public fromOld = 'old';
+  public needToDelete: Course = null;
   private modalRef: BsModalRef;
-  private deleteId: number;
 
   @ViewChild('modal', { static: false }) modalTemplateRef: ElementRef;
 
@@ -31,8 +31,8 @@ export class CoursesListComponent implements OnInit {
     this.coursesList = filteredCoursesList;
   }
 
-  onDelete(id: number) {
-    this.deleteId = id;
+  onDelete(deletedId: number) {
+    this.needToDelete = this.coursesList.find(({ id }) => id === deletedId);
     this.openModal();
   }
 
@@ -42,18 +42,17 @@ export class CoursesListComponent implements OnInit {
 
   openModal() {
     this.modalRef = this.modalService.show(this.modalTemplateRef, {
-      class: 'modal-sm',
-      animated: true
+      class: 'modal-sm'
     });
   }
 
   confirm(): void {
     this.modalRef.hide();
-    this.deleteCourse(this.deleteId);
+    this.deleteCourse(this.needToDelete.id);
   }
 
   decline(): void {
-    this.deleteId = undefined;
+    this.needToDelete = null;
     this.modalRef.hide();
   }
 }

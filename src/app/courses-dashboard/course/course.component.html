@@ -6,7 +6,7 @@
   <div class="course-content">
     <div class="course-head">
       <div class="left-part">
-        <a routerLink="/course/{{ course.id }}">
+        <a [routerLink]="['/course-manage', { id: course.id, isNew: false }]">
           <h2 class="course-head-title">
             {{ course.title | uppercase }}
           </h2>
@@ -26,7 +26,11 @@
     <p>{{ course.description }}</p>
   </div>
   <div class="course-manage-tools">
-    <button type="button" class="common-btn edit-btn">
+    <button
+      [routerLink]="['/course-manage', { id: course.id, isNew: false }]"
+      type="button"
+      class="common-btn edit-btn"
+    >
       <i class="fas fa-pen"></i>Edit
     </button>
     <button

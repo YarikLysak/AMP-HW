@@ -2,7 +2,7 @@ import { Component, Output, EventEmitter } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { CoursesService } from '../shared/services/courses.service';
 import { Course } from '../shared/course.model';
-import { FilterCoursePipe } from '../shared/pipes/filterCourse/filterCourse.pipe';
+import { FilterCoursePipe } from '../../application-pipes/filterCourse/filterCourse.pipe';
 
 @Component({
   selector: 'app-search-bar',

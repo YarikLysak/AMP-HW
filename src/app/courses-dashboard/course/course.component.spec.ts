@@ -4,7 +4,7 @@ import { CourseComponent } from './course.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import { IsFreshStatusDirective } from '../shared/directives/isFreshStatus.directive';
-import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
+import { DurationPipe } from '../../application-pipes/duration/duration.pipe';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;
@@ -14,8 +14,11 @@ describe('CourseComponent', () => {
     title: `Video Course 2. Name tag`,
     description: `Learn about where you can find course descriptions,what information they include,
     how they work, and details about various components of a course description.`,
-    creationDate: new Date(2019, 8, 1).toLocaleDateString(),
-    duration: '115',
+    creationDate: new Date(2019, 8, 1)
+      .toLocaleDateString()
+      .split('/')
+      .join('-'),
+    duration: 115,
     isTopRated: true
   };
 

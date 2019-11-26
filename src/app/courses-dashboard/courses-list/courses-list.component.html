@@ -2,7 +2,11 @@
   <div class="custom-container">
     <div class="courses-list">
       <app-search-bar (filtered)="showFiltered($event)"></app-search-bar>
-      <button type="button" class="common-btn add-course-btn">
+      <button
+        [routerLink]="['/course-manage', { isNew: true }]"
+        type="button"
+        class="common-btn add-course-btn"
+      >
         <i class="fa fa-plus fa-lg"></i>
         Add course
       </button>
@@ -18,9 +22,11 @@
 </div>
 
 <ng-template #modal>
-  <div class="modal-body text-center">
+  <div class="modal-body text-center" *ngIf="needToDelete !== null">
     <div class="modal-header">
-      <h4 class="modal-title pull-left">Do you want to confirm?</h4>
+      <h4 class="modal-title pull-left">
+        Do you want to delete {{ needToDelete.title }}?
+      </h4>
     </div>
     <div class="modal-buttons">
       <button type="button" class="accept-btn" (click)="confirm()">

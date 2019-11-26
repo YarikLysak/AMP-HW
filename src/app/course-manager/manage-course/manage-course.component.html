@@ -1,0 +1,50 @@
+<div class="manage-course-wrapper">
+  <div class="container-white form-container manage-course">
+    <div class="manage-form-head">
+      <h2 *ngIf="isNew; else editTemplate">New Course</h2>
+      <ng-template #editTemplate>
+        <h2>Edit Course</h2>
+      </ng-template>
+    </div>
+    <form
+      [formGroup]="manageCourseForm"
+      class="form-column manage-course-form"
+      (ngSubmit)="onSubmit()"
+    >
+      <div class="form-label">
+        <label for="title">Title:</label>
+        <span class="form-hint">*required</span>
+      </div>
+      <input
+        formControlName="title"
+        type="text"
+        id="title"
+        class="common-input"
+        placeholder="Text nput"
+      />
+      <div class="form-label">
+        <label for="descrition">Descripion:</label>
+        <span class="form-hint">*required</span>
+      </div>
+      <textarea
+        formControlName="descrition"
+        rows="4"
+        cols="45"
+        id="descrition"
+        class="common-input"
+        placeholder="Add description"
+      ></textarea>
+      <app-duration-input [parentForm]="manageCourseForm"></app-duration-input>
+      <app-date-picker [parentForm]="manageCourseForm"></app-date-picker>
+      <app-authors-list [parentForm]="manageCourseForm"></app-authors-list>
+      <div class="manage-course-bottom">
+        <button type="button" class="cancel-btn">
+          Cancel
+        </button>
+        <button type="submit" class="accept-btn">
+          Save
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

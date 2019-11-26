@@ -17,6 +17,7 @@ export class CoursesService {
   }
 
   getCourseById(id: number) {
+    this.getCourses();
     return this.coursesList.find(course => course.id === id);
   }
 
@@ -37,15 +38,16 @@ export class CoursesService {
       coursesArray.push({
         id: i,
         title: `Video Course ${i}. Name tag`,
-        description: `
-        Learn about where you can find course descriptions,
-        what information they include,
+        description: `Learn about where you can find course descriptions, what information they include,
         how they work, and details about various components of a course description.
         Course descriptions report information about a university or college's classes.
         They're published both in course catalogs that outline degree requirements and in course schedules that contain descriptions 
         for all courses offered during a particular semester.`,
-        creationDate: new Date(2019, 8 + i, 1).toLocaleDateString(),
-        duration: '115',
+        creationDate: new Date(2019, 8 + i, 1)
+          .toLocaleDateString()
+          .split('/')
+          .join('-'),
+        duration: 115,
         isTopRated: false
       });
     }

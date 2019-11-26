@@ -13,9 +13,9 @@ import { CourseComponent } from '../course/course.component';
 import { LoadMoreComponent } from '../load-more/load-more.component';
 import { CoursesService } from '../shared/services/courses.service';
 import { IsFreshStatusDirective } from '../shared/directives/isFreshStatus.directive';
-import { DurationPipe } from '../shared/pipes/duration/duration.pipe';
-import { OrderByPipe } from '../shared/pipes/orderBy/order-by.pipe';
-import { FilterCoursePipe } from '../shared/pipes/filterCourse/filterCourse.pipe';
+import { DurationPipe } from '../../application-pipes/duration/duration.pipe';
+import { OrderByPipe } from '../../application-pipes/orderBy/order-by.pipe';
+import { FilterCoursePipe } from '../../application-pipes/filterCourse/filterCourse.pipe';
 import { ModalModule } from 'ngx-bootstrap';
 
 describe('CoursesListComponent', () => {
@@ -28,8 +28,11 @@ describe('CoursesListComponent', () => {
     title: `Video Course 2. Name tag`,
     description: `Learn about where you can find course descriptions,what information they include,
     how they work, and details about various components of a course description.`,
-    creationDate: new Date(2019, 8, 1).toLocaleDateString(),
-    duration: '115',
+    creationDate: new Date(2019, 8, 1)
+      .toLocaleDateString()
+      .split('/')
+      .join('-'),
+    duration: 115,
     isTopRated: false
   };
 

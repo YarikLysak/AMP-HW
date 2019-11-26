@@ -1,13 +1,17 @@
 <div class="login-wrapper">
   <div class="container-white form-container">
     <div class="login-form-head">
-      <h1>Login</h1>
+      <h2>Login</h2>
       <span class="login-form__error">Wrong e-mail or password</span>
     </div>
-    <form [formGroup]="loginForm" class="login-form" (ngSubmit)="onSubmit()">
-      <label for="email" class="login-form-label">
+    <form
+      [formGroup]="loginForm"
+      class="form-column login-form"
+      (ngSubmit)="onSubmit()"
+    >
+      <label for="email" class="form-label">
         <span class="login-form-label-text">E-mail:</span>
-        <span class="login-form__hint">*required</span>
+        <span class="form-hint">*required</span>
       </label>
       <input
         class="common-input"
@@ -16,9 +20,9 @@
         formControlName="email"
         placeholder="Enter e-mail"
       />
-      <label for="password" class="login-form-label">
+      <label for="password" class="form-label">
         <span class="login-form-label-text">Password</span>
-        <span class="login-form__hint">*required</span>
+        <span class="form-hint">*required</span>
       </label>
       <input
         class="common-input"

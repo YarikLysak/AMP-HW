@@ -8,8 +8,11 @@ describe('OrderByPipe', () => {
       title: `Video Course 2. Name tag`,
       description: `Learn about where you can find course descriptions,what information they include,
       how they work, and details about various components of a course description.`,
-      creationDate: new Date(2019, 5, 1).toLocaleDateString(),
-      duration: '115',
+      creationDate: new Date(2019, 5, 1)
+        .toLocaleDateString()
+        .split('/')
+        .join('-'),
+      duration: 115,
       isTopRated: false
     },
     {
@@ -17,8 +20,11 @@ describe('OrderByPipe', () => {
       title: `Video Course 1. Name tag`,
       description: `Learn about where you can find course descriptions,what information they include,
     how they work, and details about various components of a course description.`,
-      creationDate: new Date(2019, 8, 1).toLocaleDateString(),
-      duration: '110',
+      creationDate: new Date(2019, 8, 1)
+        .toLocaleDateString()
+        .split('/')
+        .join('-'),
+      duration: 110,
       isTopRated: false
     },
     {
@@ -26,8 +32,11 @@ describe('OrderByPipe', () => {
       title: `Video Course 3. Name tag`,
       description: `Learn about where you can find course descriptions,what information they include,
     how they work, and details about various components of a course description.`,
-      creationDate: new Date(2019, 3, 1).toLocaleDateString(),
-      duration: '110',
+      creationDate: new Date(2019, 3, 1)
+        .toLocaleDateString()
+        .split('/')
+        .join('-'),
+      duration: 110,
       isTopRated: false
     }
   ];
