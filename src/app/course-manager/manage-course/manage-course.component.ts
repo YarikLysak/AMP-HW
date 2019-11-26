@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -11,9 +11,9 @@ import { Course } from 'src/app/shared/course.model';
   templateUrl: './manage-course.component.html',
   styleUrls: ['./manage-course.component.sass']
 })
-export class ManageCourseComponent implements OnInit, OnDestroy {
+export class ManageCourseComponent implements OnInit {
   public editCourse: Course;
-  public isNew: boolean;
+  public editCourseId: number;
   private sub: Subscription;
 
   public manageCourseForm = new FormGroup({
@@ -35,12 +35,10 @@ export class ManageCourseComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(({ id, isNew }) => {
-      this.isNew = JSON.parse(isNew);
-      if (isNew) {
-        this.editCourse = this.courseService.getCourseById(+id);
-      }
-      console.log(this.editCourse);
+    this.editCourseId = +this.route.snapshot.paramMap.get('id');
+
+    if (this.editCourseId) {
+      this.editCourse = this.courseService.getCourseById(this.editCourseId);
       this.manageCourseForm.setValue({
         title: this.editCourse.title,
         description: this.editCourse.description.trim(),
@@ -48,15 +46,11 @@ export class ManageCourseComponent implements OnInit, OnDestroy {
         createDate: this.editCourse.creationDate,
         authors: ''
       });
-    });
+    }
   }
 
   onSubmit() {
     console.log(this.manageCourseForm.value);
     this.manageCourseForm.reset();
-  }
-
-  ngOnDestroy() {
-    this.sub.unsubscribe();
   }
 }
