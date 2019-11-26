@@ -3,8 +3,8 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { CourseComponent } from './course.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
-import { IsFreshStatusDirective } from '../shared/directives/isFreshStatus.directive';
-import { DurationPipe } from '../../application-pipes/duration/duration.pipe';
+import { IsFreshStatusDirective } from '../../shared/directives/isFreshStatus.directive';
+import { DurationPipe } from '../../shared/pipes/duration/duration.pipe';
 
 describe('CourseComponent', () => {
   let component: CourseComponent;

@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 
-import { CoursesService } from '../shared/services/courses.service';
-import { Course } from '../shared/course.model';
+import { CoursesService } from '../../shared/services/courses/courses.service';
+import { Course } from '../../shared/course.model';
 
 @Component({
   selector: 'app-courses-list',

@@ -3,8 +3,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
-import { CoursesService } from 'src/app/courses-dashboard/shared/services/courses.service';
-import { Course } from 'src/app/courses-dashboard/shared/course.model';
+import { CoursesService } from 'src/app/shared/services/courses/courses.service';
+import { Course } from 'src/app/shared/course.model';
 
 @Component({
   selector: 'app-manage-course',
@@ -18,7 +18,7 @@ export class ManageCourseComponent implements OnInit, OnDestroy {
 
   public manageCourseForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    descrition: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
     duration: new FormControl('', [Validators.required]),
     createDate: new FormControl('', [
       Validators.required,
@@ -43,7 +43,7 @@ export class ManageCourseComponent implements OnInit, OnDestroy {
       console.log(this.editCourse);
       this.manageCourseForm.setValue({
         title: this.editCourse.title,
-        descrition: this.editCourse.description.trim(),
+        description: this.editCourse.description.trim(),
         duration: this.editCourse.duration,
         createDate: this.editCourse.creationDate,
         authors: ''

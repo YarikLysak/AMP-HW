@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { ApplicationPipesModule } from '../application-pipes/application-pipes.module';
+import { SharedModule } from '../shared/shared.module';
 
 import { ManageCourseComponent } from './manage-course/manage-course.component';
-import { DatePickerComponent } from './date-picker/date-picker.component';
-import { DurationInputComponent } from './duration-input/duration-input.component';
-import { AuthorsListComponent } from './authors-list/authors-list.component';
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
+import { DurationInputComponent } from './components/duration-input/duration-input.component';
+import { AuthorsListComponent } from './components/authors-list/authors-list.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +16,6 @@ import { AuthorsListComponent } from './authors-list/authors-list.component';
     DurationInputComponent,
     AuthorsListComponent
   ],
-  imports: [CommonModule, ReactiveFormsModule, ApplicationPipesModule]
+  imports: [CommonModule, ReactiveFormsModule, SharedModule]
 })
 export class CourseManagerModule {}

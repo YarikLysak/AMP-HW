@@ -1,7 +1,7 @@
 import { IsFreshStatusDirective } from './isFreshStatus.directive';
 import { ElementRef } from '@angular/core';
-import { DateService } from 'src/app/shared/date-service/date-service.service';
-import { CourseComponent } from '../../course/course.component';
+import { DateService } from 'src/app/shared/services/date/date-service.service';
+import { CourseComponent } from '../../courses-dashboard/course/course.component';
 
 describe('IsFreshStatusDirective', () => {
   it('should create an instance', () => {
