@@ -4,9 +4,9 @@ import {
   TestBed,
   inject
 } from '@angular/core/testing';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
 import { AuthorsListComponent } from './authors-list.component';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
 describe('AuthorsListComponent', () => {
   let component: AuthorsListComponent;

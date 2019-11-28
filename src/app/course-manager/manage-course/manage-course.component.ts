@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
-import { CoursesService } from 'src/app/shared/services/courses/courses.service';
-import { Course } from 'src/app/shared/course.model';
+import { CoursesService } from '../../shared/services/courses/courses.service';
+import { Course } from '../../shared/course.model';
 
 @Component({
   selector: 'app-manage-course',

@@ -4,14 +4,15 @@ import {
   TestBed,
   inject
 } from '@angular/core/testing';
-
-import { DurationInputComponent } from './duration-input.component';
 import {
   ReactiveFormsModule,
   FormsModule,
   FormBuilder,
   Validators
 } from '@angular/forms';
+
+import { DurationInputComponent } from './duration-input.component';
+
 import { DurationPipe } from '../../../shared/pipes/duration/duration.pipe';
 
 describe('DurationInputComponent', () => {

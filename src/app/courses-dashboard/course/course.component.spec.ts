@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { CourseComponent } from './course.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+
+import { CourseComponent } from './course.component';
+
 import { IsFreshStatusDirective } from '../../shared/directives/isFreshStatus.directive';
 import { DurationPipe } from '../../shared/pipes/duration/duration.pipe';
 

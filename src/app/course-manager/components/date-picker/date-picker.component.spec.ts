@@ -4,9 +4,9 @@ import {
   TestBed,
   inject
 } from '@angular/core/testing';
+import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
 import { DatePickerComponent } from './date-picker.component';
-import { ReactiveFormsModule, FormBuilder, Validators } from '@angular/forms';
 
 describe('DatePickerComponent', () => {
   let component: DatePickerComponent;

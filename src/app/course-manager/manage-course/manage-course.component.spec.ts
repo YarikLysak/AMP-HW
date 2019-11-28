@@ -1,12 +1,13 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterTestingModule } from '@angular/router/testing';
 
 import { ManageCourseComponent } from './manage-course.component';
 import { DatePickerComponent } from '../components/date-picker/date-picker.component';
 import { DurationInputComponent } from '../components/duration-input/duration-input.component';
 import { AuthorsListComponent } from '../components/authors-list/authors-list.component';
-import { DurationPipe } from 'src/app/shared/pipes/duration/duration.pipe';
-import { RouterTestingModule } from '@angular/router/testing';
+
+import { DurationPipe } from '../../shared/pipes/duration/duration.pipe';
 
 describe('ManageCourseComponent', () => {
   let component: ManageCourseComponent;
