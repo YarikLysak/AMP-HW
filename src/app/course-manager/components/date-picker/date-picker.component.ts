@@ -1,9 +1,4 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ChangeDetectionStrategy
-} from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 @Component({
@@ -12,10 +7,6 @@ import { FormGroup } from '@angular/forms';
   styleUrls: ['./date-picker.component.sass'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DatePickerComponent implements OnInit {
+export class DatePickerComponent {
   @Input() parentForm: FormGroup;
-
-  ngOnInit() {
-    console.log(this.parentForm);
-  }
 }

@@ -13,6 +13,7 @@ describe('OrderByPipe', () => {
         .split('/')
         .join('-'),
       duration: 115,
+      authors: '',
       isTopRated: false
     },
     {
@@ -25,6 +26,7 @@ describe('OrderByPipe', () => {
         .split('/')
         .join('-'),
       duration: 110,
+      authors: '',
       isTopRated: false
     },
     {
@@ -37,6 +39,7 @@ describe('OrderByPipe', () => {
         .split('/')
         .join('-'),
       duration: 110,
+      authors: '',
       isTopRated: false
     }
   ];

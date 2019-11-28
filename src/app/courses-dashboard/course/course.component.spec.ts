@@ -19,7 +19,8 @@ describe('CourseComponent', () => {
       .split('/')
       .join('-'),
     duration: 115,
-    isTopRated: true
+    isTopRated: true,
+    authors: ''
   };
 
   beforeEach(async(() => {

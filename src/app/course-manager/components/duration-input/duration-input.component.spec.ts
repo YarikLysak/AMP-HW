@@ -1,8 +1,18 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {
+  async,
+  ComponentFixture,
+  TestBed,
+  inject
+} from '@angular/core/testing';
 
 import { DurationInputComponent } from './duration-input.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { DurationPipe } from 'src/app/application-pipes/duration/duration.pipe';
+import {
+  ReactiveFormsModule,
+  FormsModule,
+  FormBuilder,
+  Validators
+} from '@angular/forms';
+import { DurationPipe } from '../../../shared/pipes/duration/duration.pipe';
 
 describe('DurationInputComponent', () => {
   let component: DurationInputComponent;
@@ -11,17 +21,20 @@ describe('DurationInputComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [DurationInputComponent, DurationPipe],
-      imports: [ReactiveFormsModule]
+      imports: [ReactiveFormsModule, FormsModule]
     }).compileComponents();
   }));
 
-  beforeEach(() => {
+  beforeEach(inject([FormBuilder], (fb: FormBuilder) => {
     fixture = TestBed.createComponent(DurationInputComponent);
     component = fixture.componentInstance;
+    component.parentForm = fb.group({
+      duration: ['', Validators.required]
+    });
     fixture.detectChanges();
-  });
+  }));
 
-  // it('should create', () => {
-  //   expect(component).toBeTruthy();
-  // });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 });

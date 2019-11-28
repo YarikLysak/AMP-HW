@@ -38,7 +38,7 @@
       <app-date-picker [parentForm]="manageCourseForm"></app-date-picker>
       <app-authors-list [parentForm]="manageCourseForm"></app-authors-list>
       <div class="manage-course-bottom">
-        <button type="button" class="cancel-btn">
+        <button type="button" class="cancel-btn" (click)="onCancel()">
           Cancel
         </button>
         <button type="submit" class="accept-btn">

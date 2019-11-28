@@ -8,7 +8,9 @@ export class CoursesService {
   public coursesList: Course[] = [];
 
   getCourses(): Course[] {
-    this.coursesList = this.createCoursesList();
+    if (this.coursesList.length === 0) {
+      return (this.coursesList = this.createCoursesList());
+    }
     return this.coursesList;
   }
 
@@ -17,7 +19,9 @@ export class CoursesService {
   }
 
   getCourseById(id: number) {
-    this.getCourses();
+    if (this.coursesList.length === 0) {
+      this.getCourses();
+    }
     return this.coursesList.find(course => course.id === id);
   }
 
@@ -48,6 +52,7 @@ export class CoursesService {
           .split('/')
           .join('-'),
         duration: 115,
+        authors: '',
         isTopRated: false
       });
     }
