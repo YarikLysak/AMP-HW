@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { DurationPipe } from './duration/duration.pipe';
-import { OrderByPipe } from './orderBy/order-by.pipe';
-import { FilterCoursePipe } from './filterCourse/filterCourse.pipe';
+import { DurationPipe } from './pipes/duration/duration.pipe';
+import { OrderByPipe } from './pipes/orderBy/order-by.pipe';
+import { FilterCoursePipe } from './pipes/filterCourse/filterCourse.pipe';
 
 @NgModule({
   declarations: [DurationPipe, OrderByPipe, FilterCoursePipe],
@@ -11,4 +11,4 @@ import { FilterCoursePipe } from './filterCourse/filterCourse.pipe';
   imports: [CommonModule],
   providers: [FilterCoursePipe]
 })
-export class ApplicationPipesModule {}
+export class SharedModule {}

@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Input, OnInit } from '@angular/core';
-import { DateService } from 'src/app/shared/date-service/date-service.service';
+import { DateService } from '../services/date/date-service.service';
 
 @Directive({
   selector: '[appIsFreshStatus]'

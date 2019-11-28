@@ -1,26 +1,24 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import { CoursesService } from 'src/app/courses-dashboard/shared/services/courses.service';
-import { Course } from 'src/app/courses-dashboard/shared/course.model';
+import { CoursesService } from '../../shared/services/courses/courses.service';
+import { Course } from '../../shared/course.model';
 
 @Component({
   selector: 'app-manage-course',
   templateUrl: './manage-course.component.html',
   styleUrls: ['./manage-course.component.sass']
 })
-export class ManageCourseComponent implements OnInit, OnDestroy {
+export class ManageCourseComponent implements OnInit {
   public editCourse: Course;
-  public isNew: boolean;
-  private sub: Subscription;
+  public editCourseId: number;
 
   public manageCourseForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
-    descrition: new FormControl('', [Validators.required]),
+    description: new FormControl('', [Validators.required]),
     duration: new FormControl('', [Validators.required]),
-    createDate: new FormControl('', [
+    creationDate: new FormControl('', [
       Validators.required,
       Validators.pattern(
         /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
@@ -31,32 +29,46 @@ export class ManageCourseComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private courseService: CoursesService
   ) {}
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(({ id, isNew }) => {
-      this.isNew = JSON.parse(isNew);
-      if (isNew) {
-        this.editCourse = this.courseService.getCourseById(+id);
-      }
-      console.log(this.editCourse);
+    this.editCourseId = +this.route.snapshot.paramMap.get('id');
+
+    if (this.editCourseId) {
+      this.editCourse = this.courseService.getCourseById(this.editCourseId);
       this.manageCourseForm.setValue({
         title: this.editCourse.title,
-        descrition: this.editCourse.description.trim(),
+        description: this.editCourse.description.trim(),
         duration: this.editCourse.duration,
-        createDate: this.editCourse.creationDate,
-        authors: ''
+        creationDate: this.editCourse.creationDate,
+        authors: this.editCourse.authors
       });
-    });
+    }
   }
 
   onSubmit() {
-    console.log(this.manageCourseForm.value);
+    const randId = Math.floor(Math.random() * (20 - 4 + 1)) + 4;
+
+    if (this.editCourseId) {
+      this.courseService.updateCourse({
+        ...this.editCourse,
+        ...this.manageCourseForm.value
+      });
+    } else {
+      this.courseService.addCourse({
+        id: randId,
+        ...this.manageCourseForm.value,
+        isTopRated: false
+      });
+    }
+    this.router.navigate(['/course-list']);
     this.manageCourseForm.reset();
   }
 
-  ngOnDestroy() {
-    this.sub.unsubscribe();
+  onCancel() {
+    this.router.navigate(['/course-list']);
+    this.manageCourseForm.reset();
   }
 }

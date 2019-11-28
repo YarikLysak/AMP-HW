@@ -1,8 +1,9 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { SearchBarComponent } from './search-bar.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FilterCoursePipe } from '../../application-pipes/filterCourse/filterCourse.pipe';
+
+import { FilterCoursePipe } from '../../shared/pipes/filterCourse/filterCourse.pipe';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;

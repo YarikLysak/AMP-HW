@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
-import { ApplicationPipesModule } from '../application-pipes/application-pipes.module';
-import { IsFreshStatusDirective } from './shared/directives/isFreshStatus.directive';
+import { SharedModule } from '../shared/shared.module';
+import { IsFreshStatusDirective } from '../shared/directives/isFreshStatus.directive';
 
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CourseComponent } from './course/course.component';
@@ -19,12 +19,7 @@ import { LoadMoreComponent } from './load-more/load-more.component';
     LoadMoreComponent,
     IsFreshStatusDirective
   ],
-  imports: [
-    CommonModule,
-    RouterModule,
-    ReactiveFormsModule,
-    ApplicationPipesModule
-  ],
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, SharedModule],
   exports: [CoursesListComponent, CourseComponent]
 })
 export class CoursesDashboardModule {}

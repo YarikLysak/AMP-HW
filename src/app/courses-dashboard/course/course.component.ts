@@ -5,7 +5,7 @@ import {
   Output,
   ChangeDetectionStrategy
 } from '@angular/core';
-import { Course } from 'src/app/courses-dashboard/shared/course.model';
+import { Course } from '../../shared/course.model';
 
 @Component({
   selector: 'app-course',

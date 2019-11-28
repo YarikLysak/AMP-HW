@@ -4,19 +4,20 @@ import {
   TestBed,
   inject
 } from '@angular/core/testing';
-
-import { CoursesListComponent } from './courses-list.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { ModalModule } from 'ngx-bootstrap';
+
+import { CoursesListComponent } from './courses-list.component';
 import { SearchBarComponent } from '../search-bar/search-bar.component';
 import { CourseComponent } from '../course/course.component';
 import { LoadMoreComponent } from '../load-more/load-more.component';
-import { CoursesService } from '../shared/services/courses.service';
-import { IsFreshStatusDirective } from '../shared/directives/isFreshStatus.directive';
-import { DurationPipe } from '../../application-pipes/duration/duration.pipe';
-import { OrderByPipe } from '../../application-pipes/orderBy/order-by.pipe';
-import { FilterCoursePipe } from '../../application-pipes/filterCourse/filterCourse.pipe';
-import { ModalModule } from 'ngx-bootstrap';
+
+import { CoursesService } from '../../shared/services/courses/courses.service';
+import { IsFreshStatusDirective } from '../../shared/directives/isFreshStatus.directive';
+import { DurationPipe } from '../../shared/pipes/duration/duration.pipe';
+import { OrderByPipe } from '../../shared/pipes/orderBy/order-by.pipe';
+import { FilterCoursePipe } from '../../shared/pipes/filterCourse/filterCourse.pipe';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
@@ -33,7 +34,8 @@ describe('CoursesListComponent', () => {
       .split('/')
       .join('-'),
     duration: 115,
-    isTopRated: false
+    isTopRated: false,
+    authors: ''
   };
 
   beforeEach(async(() => {
