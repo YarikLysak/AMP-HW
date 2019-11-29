@@ -18,16 +18,10 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', Validators.required)
   });
 
-  constructor(
-    private auth: AuthService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
+  constructor(private auth: AuthService) {}
 
   ngOnInit() {
     this.auth.logout();
-    console.log(this.route.snapshot);
-    // this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
   }
 
   onSubmit() {

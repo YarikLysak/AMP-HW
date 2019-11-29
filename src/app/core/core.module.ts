@@ -7,6 +7,7 @@ import { LogoComponent } from './logo/logo.component';
 import { UserToolsComponent } from './user-tools/user-tools.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { FooterComponent } from './footer/footer.component';
+import { NotFoundComponent } from './not-found/not-found.component';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { FooterComponent } from './footer/footer.component';
     LogoComponent,
     UserToolsComponent,
     BreadcrumbsComponent,
-    FooterComponent
+    FooterComponent,
+    NotFoundComponent
   ],
   imports: [CommonModule, AppRoutingModule],
   exports: [HeaderComponent, BreadcrumbsComponent, FooterComponent]

@@ -7,9 +7,8 @@ import { BsModalService } from 'ngx-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 
 import { CoreModule } from './core/core.module';
-import { CoursesDashboardModule } from './courses-dashboard/courses-dashboard.module';
-import { CourseManagerModule } from './course-manager/course-manager.module';
 import { AuthModule } from './auth/auth.module';
+import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
 
@@ -20,9 +19,8 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     AppRoutingModule,
     CoreModule,
-    CoursesDashboardModule,
-    CourseManagerModule,
     AuthModule,
+    SharedModule,
     ModalModule.forRoot()
   ],
   providers: [BsModalService],

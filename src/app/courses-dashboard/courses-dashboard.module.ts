@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 
 import { SharedModule } from '../shared/shared.module';
-import { IsFreshStatusDirective } from '../shared/directives/isFreshStatus.directive';
 
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CourseComponent } from './course/course.component';
@@ -16,8 +15,7 @@ import { LoadMoreComponent } from './load-more/load-more.component';
     CoursesListComponent,
     CourseComponent,
     SearchBarComponent,
-    LoadMoreComponent,
-    IsFreshStatusDirective
+    LoadMoreComponent
   ],
   imports: [CommonModule, RouterModule, ReactiveFormsModule, SharedModule],
   exports: [CoursesListComponent, CourseComponent]
