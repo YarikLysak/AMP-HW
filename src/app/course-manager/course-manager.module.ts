@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { CourseManageRoutingModule } from './course-manager-routing.module';
 import { SharedModule } from '../shared/shared.module';
 
 import { ManageCourseComponent } from './manage-course/manage-course.component';
@@ -17,11 +16,6 @@ import { AuthorsListComponent } from './components/authors-list/authors-list.com
     DurationInputComponent,
     AuthorsListComponent
   ],
-  imports: [
-    CommonModule,
-    CourseManageRoutingModule,
-    ReactiveFormsModule,
-    SharedModule
-  ]
+  imports: [CommonModule, ReactiveFormsModule, SharedModule]
 })
 export class CourseManagerModule {}

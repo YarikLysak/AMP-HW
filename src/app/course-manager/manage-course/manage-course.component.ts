@@ -63,12 +63,12 @@ export class ManageCourseComponent implements OnInit {
         isTopRated: false
       });
     }
-    this.router.navigate(['/course-list']);
+    this.router.navigate(['/courses']);
     this.manageCourseForm.reset();
   }
 
   onCancel() {
-    this.router.navigate(['/course-list']);
+    this.router.navigate(['/courses']);
     this.manageCourseForm.reset();
   }
 }

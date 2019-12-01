@@ -1,10 +1,7 @@
 <div class="manage-course-wrapper">
   <div class="container-white form-container manage-course">
     <div class="manage-course-head">
-      <h2 *ngIf="editCourseId; else newCourseTemplate">Edit Course</h2>
-      <ng-template #newCourseTemplate>
-        <h2>New Course</h2>
-      </ng-template>
+      <h2>{{ editCourseId ? 'Edit Course' : 'New Course' }}</h2>
     </div>
     <form
       [formGroup]="manageCourseForm"

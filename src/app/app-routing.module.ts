@@ -3,30 +3,42 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from './auth/shared/guards/auth.guard';
 
-import { CoursesListComponent } from './courses-dashboard/courses-list/courses-list.component';
 import { LoginComponent } from './auth/login/login.component';
+import { CoursesComponent } from './courses-dashboard/courses/courses.component';
+import { CoursesListComponent } from './courses-dashboard/courses-list/courses-list.component';
+import { ManageCourseComponent } from './course-manager/manage-course/manage-course.component';
 import { NotFoundComponent } from './core/not-found/not-found.component';
 
 const routes: Routes = [
   {
-    path: 'course-list',
-    canActivate: [AuthGuard],
-    component: CoursesListComponent,
-    data: { breadcrumbs: 'Courses' }
-  },
-  { path: 'login', component: LoginComponent },
-  {
     path: '',
-    redirectTo: '/course-list',
+    redirectTo: '/courses',
     pathMatch: 'full'
   },
   {
-    path: 'course-manage',
-    loadChildren: () =>
-      import('./course-manager/course-manager.module').then(
-        m => m.CourseManagerModule
-      )
+    path: 'courses',
+    component: CoursesComponent,
+    canActivate: [AuthGuard],
+    children: [
+      {
+        path: '',
+        component: CoursesListComponent,
+        data: { breadcrumbs: 'Courses' }
+      },
+      {
+        path: 'new',
+        component: ManageCourseComponent,
+        data: { breadcrumbs: 'New Course' }
+      },
+      {
+        path: ':id',
+        component: ManageCourseComponent,
+        data: { breadcrumbs: 'Edit Course' }
+      }
+    ]
   },
+  { path: 'login', component: LoginComponent },
+
   { path: '**', component: NotFoundComponent }
 ];
 

@@ -6,7 +6,7 @@
   <div class="course-content">
     <div class="course-head">
       <div class="left-part">
-        <a [routerLink]="['/course-manage', course.id]">
+        <a [routerLink]="['/courses', course.id]">
           <h2 class="course-head-title">
             {{ course.title | uppercase }}
           </h2>
@@ -27,7 +27,7 @@
   </div>
   <div class="course-manage-tools">
     <button
-      [routerLink]="['/course-manage', course.id]"
+      [routerLink]="['/courses', course.id]"
       type="button"
       class="common-btn edit-btn"
     >

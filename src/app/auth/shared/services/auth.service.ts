@@ -26,7 +26,6 @@ export class AuthService {
   constructor(private httpClient: HttpClient, private router: Router) {}
 
   login(authData) {
-    this.isAuth.next(false);
     const token = localStorage.getItem('user-token') || '';
 
     this.httpClient
@@ -50,7 +49,7 @@ export class AuthService {
                   localStorage.setItem('user-email', user[0].email);
                   this.isAuth.next(true);
                   this.currentUser.next(user[0]);
-                  this.router.navigate(['/course-list']);
+                  this.router.navigate(['/courses']);
                 } else {
                   this.isAuth.next(false);
                   console.log('wrong password!');
