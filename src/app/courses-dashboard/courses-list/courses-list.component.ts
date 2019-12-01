@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { ActivatedRoute } from '@angular/router';
 
 import { CoursesService } from '../../shared/services/courses/courses.service';
+import { BreadcrumbsService } from 'src/app/shared/services/breadcrumbs/breadcrumbs.service';
 import { Course } from '../../shared/course.model';
 
 @Component({
@@ -15,15 +17,20 @@ export class CoursesListComponent implements OnInit {
   public fromOld = 'old';
   public needToDelete: Course = null;
   private modalRef: BsModalRef;
+  private breadcrumb: string;
 
   @ViewChild('modal', { static: false }) modalTemplateRef: ElementRef;
 
   constructor(
     private courseService: CoursesService,
-    private modalService: BsModalService
+    private modalService: BsModalService,
+    private breadcrumbsService: BreadcrumbsService,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.breadcrumb = this.route.snapshot.data.breadcrumbs;
+    this.breadcrumbsService.setBreadcrumb(this.breadcrumb);
     this.coursesList = this.courseService.getCourses();
   }
 

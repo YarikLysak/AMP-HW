@@ -1,7 +1,9 @@
 <div class="custom-container">
   <div class="breadcrumbs">
     <div *ngFor="let page of crumbsArray" class="crumb">
-      <a href="#" *ngIf="page !== currentPage">{{ page }}</a>
+      <a [routerLink]="page | lowercase" *ngIf="page !== currentPage">
+        {{ page }}
+      </a>
       <span class="active" *ngIf="page == currentPage">{{ page }}</span>
     </div>
   </div>

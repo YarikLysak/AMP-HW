@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CoursesService } from '../../shared/services/courses/courses.service';
+import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 import { Course } from '../../shared/course.model';
 
 @Component({
@@ -13,6 +14,7 @@ import { Course } from '../../shared/course.model';
 export class ManageCourseComponent implements OnInit {
   public editCourse: Course;
   public editCourseId: number;
+  private breadcrumb: string;
 
   public manageCourseForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -30,14 +32,20 @@ export class ManageCourseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private courseService: CoursesService
+    private courseService: CoursesService,
+    private breadcrumbsService: BreadcrumbsService
   ) {}
 
   ngOnInit() {
+    this.breadcrumb = this.route.snapshot.data.breadcrumbs;
     this.editCourseId = +this.route.snapshot.paramMap.get('id');
 
     if (this.editCourseId) {
       this.editCourse = this.courseService.getCourseById(this.editCourseId);
+      this.breadcrumbsService.setBreadcrumb(
+        this.breadcrumb,
+        this.editCourse.title
+      );
       this.manageCourseForm.setValue({
         title: this.editCourse.title,
         description: this.editCourse.description.trim(),
@@ -45,6 +53,8 @@ export class ManageCourseComponent implements OnInit {
         creationDate: this.editCourse.creationDate,
         authors: this.editCourse.authors
       });
+    } else {
+      this.breadcrumbsService.setBreadcrumb(this.breadcrumb);
     }
   }
 

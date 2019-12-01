@@ -4,6 +4,7 @@ import { HeaderComponent } from './header.component';
 import { LogoComponent } from '../logo/logo.component';
 import { UserToolsComponent } from '../user-tools/user-tools.component';
 import { HttpClientModule } from '@angular/common/http';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -11,7 +12,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientModule],
+      imports: [HttpClientModule, RouterTestingModule],
       declarations: [HeaderComponent, LogoComponent, UserToolsComponent]
     }).compileComponents();
   }));
