@@ -20,6 +20,6 @@ import { IsFreshStatusDirective } from './directives/isFreshStatus.directive';
     IsFreshStatusDirective
   ],
   imports: [CommonModule],
-  providers: [FilterCoursePipe, IsFreshStatusDirective]
+  providers: [FilterCoursePipe]
 })
 export class SharedModule {}

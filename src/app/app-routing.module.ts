@@ -28,12 +28,12 @@ const routes: Routes = [
       {
         path: 'new',
         component: ManageCourseComponent,
-        data: { breadcrumbs: 'Courses/New Course' }
+        data: { breadcrumbs: 'New Course' }
       },
       {
         path: ':id',
         component: ManageCourseComponent,
-        data: { breadcrumbs: 'Courses/Edit Course' }
+        data: { breadcrumbs: 'Edit Course' }
       }
     ]
   },

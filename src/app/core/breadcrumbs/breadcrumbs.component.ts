@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { BreadcrumbsService } from 'src/app/shared/services/breadcrumbs/breadcrumbs.service';
+import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -23,6 +23,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    this.breadcrumbsService.removeBreadcrumbs();
     this.sub.unsubscribe();
   }
 }

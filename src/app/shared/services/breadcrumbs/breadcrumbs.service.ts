@@ -1,22 +1,40 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BreadcrumbsService {
-  breadcrumbsArray;
-  breadcrumbs: Subject<[]> = new Subject();
+  breadcrumbsArray: string[] = [];
+  breadcrumbs: BehaviorSubject<string[]> = new BehaviorSubject(
+    this.breadcrumbsArray
+  );
 
-  getBreadcrumbs(): Observable<[]> {
+  getBreadcrumbs(): Observable<string[]> {
     return this.breadcrumbs.asObservable();
   }
 
   setBreadcrumb(breadcrumb: string, title?: string) {
-    this.breadcrumbsArray = breadcrumb.split('/');
+    const isInArray = this.breadcrumbsArray.indexOf(breadcrumb) !== -1;
+    const isFirstInArray = this.breadcrumbsArray.indexOf(breadcrumb) === 0;
+
     if (title !== undefined) {
-      this.breadcrumbsArray[this.breadcrumbsArray.length - 1] = ` ${title}`;
+      breadcrumb = `${breadcrumb} ${title}`;
     }
+    if (isInArray && !isFirstInArray) {
+      this.breadcrumbsArray = [...this.breadcrumbsArray].slice(
+        this.breadcrumbsArray.indexOf(breadcrumb)
+      );
+    } else if (isFirstInArray) {
+      this.breadcrumbsArray = [breadcrumb];
+    } else {
+      this.breadcrumbsArray.push(breadcrumb);
+    }
+    this.breadcrumbs.next(this.breadcrumbsArray);
+  }
+
+  removeBreadcrumbs() {
+    this.breadcrumbsArray = [];
     this.breadcrumbs.next(this.breadcrumbsArray);
   }
 }
