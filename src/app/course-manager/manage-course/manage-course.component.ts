@@ -12,9 +12,8 @@ import { Course } from '../../shared/course.model';
   styleUrls: ['./manage-course.component.sass']
 })
 export class ManageCourseComponent implements OnInit {
-  public editCourse: Course;
-  public editCourseId: number;
-  private breadcrumb: string;
+  public editCourse: Course = null;
+  public editCourseId: number | null = null;
 
   public manageCourseForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -34,18 +33,21 @@ export class ManageCourseComponent implements OnInit {
     private router: Router,
     private courseService: CoursesService,
     private breadcrumbsService: BreadcrumbsService
-  ) {}
+  ) {
+    const paramId = this.route.snapshot.paramMap.get('id');
+    const breadcrumb = this.route.snapshot.data.breadcrumbs;
+    if (paramId) {
+      this.editCourseId = +paramId;
+      this.editCourse = this.courseService.getCourseById(this.editCourseId);
+      this.breadcrumbsService.setBreadcrumb(breadcrumb, this.editCourse.title);
+    } else {
+      this.editCourseId = null;
+      this.breadcrumbsService.setBreadcrumb(breadcrumb);
+    }
+  }
 
   ngOnInit() {
-    this.breadcrumb = this.route.snapshot.data.breadcrumbs;
-    this.editCourseId = +this.route.snapshot.paramMap.get('id');
-
     if (this.editCourseId) {
-      this.editCourse = this.courseService.getCourseById(this.editCourseId);
-      this.breadcrumbsService.setBreadcrumb(
-        this.breadcrumb,
-        this.editCourse.title
-      );
       this.manageCourseForm.setValue({
         title: this.editCourse.title,
         description: this.editCourse.description.trim(),
@@ -53,8 +55,6 @@ export class ManageCourseComponent implements OnInit {
         creationDate: this.editCourse.creationDate,
         authors: this.editCourse.authors
       });
-    } else {
-      this.breadcrumbsService.setBreadcrumb(this.breadcrumb);
     }
   }
 

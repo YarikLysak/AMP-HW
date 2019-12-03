@@ -10,17 +10,6 @@ import { User } from '../models/user.model';
 })
 export class AuthService {
   public isAuth = new BehaviorSubject<boolean>(false);
-  // mockUsers = [
-  //   {
-  //     id: 1,
-  //     email: 'admin@admin',
-  //     password: '12345',
-  //     token: '4QhmRwHwwrgFqXULXNtx4d'
-  //   }
-  // ];
-
-  // currentUser = new BehaviorSubject<User>(this.mockUsers[0]);
-
   public currentUser = new BehaviorSubject<User>(null);
 
   constructor(private httpClient: HttpClient, private router: Router) {}
@@ -28,41 +17,38 @@ export class AuthService {
   login(authData) {
     const token = localStorage.getItem('user-token') || '';
 
-    this.httpClient
-      .get(`http://localhost:3001/users/?token=${token}`)
-      .subscribe((usersData: User[]) => {
-        if (usersData.length !== 0) {
-          this.currentUser.next(usersData[0]);
-          this.isAuth.next(true);
-        } else {
-          this.httpClient
-            .get(
-              `http://localhost:3001/users/?email=${authData.email.toLowerCase()}`
-            )
-            .subscribe((user: User[]) => {
-              if (user.length === 0) {
-                this.isAuth.next(false);
-                console.log('no such user!!!');
-              } else {
-                if (user[0].password === authData.password) {
-                  localStorage.setItem('user-token', user[0].token);
-                  localStorage.setItem('user-email', user[0].email);
-                  this.isAuth.next(true);
-                  this.currentUser.next(user[0]);
-                  this.router.navigate(['/courses']);
-                } else {
-                  this.isAuth.next(false);
-                  console.log('wrong password!');
-                }
-              }
-            });
+    this.makeHttpRequest(`?token=${token}`).subscribe((loggedUser: User[]) => {
+      if (loggedUser.length !== 0) {
+        this.currentUser.next(loggedUser[0]);
+        this.isAuth.next(true);
+        return;
+      }
+
+      this.makeHttpRequest(`?email=${authData.email.toLowerCase()}`).subscribe(
+        (user: User[]) => {
+          if (user.length === 0) {
+            console.log('no such user!!!');
+            this.isAuth.next(false);
+            return;
+          }
+
+          const isPasswordCorrect = user[0].password === authData.password;
+          this.isAuth.next(isPasswordCorrect);
+          if (!isPasswordCorrect) {
+            console.log('wrong password!');
+            return;
+          }
+
+          this.setLSItems(user[0]);
+          this.currentUser.next(user[0]);
+          this.router.navigate(['/courses']);
         }
-      });
+      );
+    });
   }
 
   logout() {
-    localStorage.setItem('user-email', '');
-    localStorage.setItem('user-token', '');
+    this.setLSItems({ token: '', email: '' });
     this.currentUser.next(null);
     this.isAuth.next(false);
     this.router.navigate(['/login']);
@@ -74,5 +60,15 @@ export class AuthService {
 
   getUserInfo(): Observable<User> {
     return this.currentUser.asObservable();
+  }
+
+  private makeHttpRequest(query) {
+    const url = 'http://localhost:3001/users';
+    return this.httpClient.get(`${url}/${query}`);
+  }
+
+  private setLSItems(data) {
+    localStorage.setItem('user-token', data.token);
+    localStorage.setItem('user-email', data.email);
   }
 }

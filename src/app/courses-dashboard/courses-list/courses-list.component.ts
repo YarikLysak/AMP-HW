@@ -26,11 +26,12 @@ export class CoursesListComponent implements OnInit {
     private modalService: BsModalService,
     private breadcrumbsService: BreadcrumbsService,
     private route: ActivatedRoute
-  ) {}
-
-  ngOnInit() {
+  ) {
     this.breadcrumb = this.route.snapshot.data.breadcrumbs;
     this.breadcrumbsService.setBreadcrumb(this.breadcrumb);
+  }
+
+  ngOnInit() {
     this.coursesList = this.courseService.getCourses();
   }
 
