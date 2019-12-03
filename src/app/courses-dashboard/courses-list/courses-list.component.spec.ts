@@ -18,7 +18,7 @@ import { IsFreshStatusDirective } from '../../shared/directives/isFreshStatus.di
 import { DurationPipe } from '../../shared/pipes/duration/duration.pipe';
 import { OrderByPipe } from '../../shared/pipes/orderBy/order-by.pipe';
 import { FilterCoursePipe } from '../../shared/pipes/filterCourse/filterCourse.pipe';
-import { BreadcrumbsService } from 'src/app/shared/services/breadcrumbs/breadcrumbs.service';
+import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
