@@ -1,10 +1,15 @@
 <div class="custom-container">
   <div class="breadcrumbs">
-    <div *ngFor="let page of crumbsArray" class="crumb">
-      <a [routerLink]="page | lowercase" *ngIf="page !== currentPage">
+    <div *ngFor="let page of crumbsArray$ | async" class="crumb">
+      <a
+        [routerLink]="page | lowercase"
+        *ngIf="page !== (currentPage$ | async); else currentPage"
+      >
         {{ page }}
       </a>
-      <span class="active" *ngIf="page == currentPage">{{ page }}</span>
+      <ng-template #currentPage>
+        <span class="active">{{ page }}</span>
+      </ng-template>
     </div>
   </div>
 </div>

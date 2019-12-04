@@ -12,43 +12,48 @@ export class AuthService {
   public isAuth = new BehaviorSubject<boolean>(false);
   public currentUser = new BehaviorSubject<User>(null);
 
-  constructor(private httpClient: HttpClient, private router: Router) {}
+  constructor(private httpClient: HttpClient, private router: Router) {
+    this.loginByToken();
+  }
 
-  login(authData) {
-    const token = localStorage.getItem('user-token') || '';
+  login(authData): void {
+    this.makeHttpRequest(`?email=${authData.email.toLowerCase()}`).subscribe(
+      ([user]: User[]) => {
+        if (!user) {
+          console.log('no such user!!!');
+          this.isAuth.next(false);
+          return;
+        }
 
-    this.makeHttpRequest(`?token=${token}`).subscribe((loggedUser: User[]) => {
-      if (loggedUser.length !== 0) {
-        this.currentUser.next(loggedUser[0]);
-        this.isAuth.next(true);
-        return;
+        const isPasswordCorrect = user.password === authData.password;
+        this.isAuth.next(isPasswordCorrect);
+        if (!isPasswordCorrect) {
+          console.log('wrong password!');
+          return;
+        }
+
+        localStorage.setItem('user-token', user.token);
+        this.currentUser.next(user);
+        this.router.navigate(['/courses']);
       }
+    );
+  }
 
-      this.makeHttpRequest(`?email=${authData.email.toLowerCase()}`).subscribe(
-        (user: User[]) => {
-          if (user.length === 0) {
-            console.log('no such user!!!');
-            this.isAuth.next(false);
-            return;
-          }
-
-          const isPasswordCorrect = user[0].password === authData.password;
-          this.isAuth.next(isPasswordCorrect);
-          if (!isPasswordCorrect) {
-            console.log('wrong password!');
-            return;
-          }
-
-          this.setLSItems(user[0]);
-          this.currentUser.next(user[0]);
+  private loginByToken() {
+    const token = localStorage.getItem('user-token');
+    if (token) {
+      this.makeHttpRequest(`?token=${token}`).subscribe(([user]: User[]) => {
+        if (user) {
+          this.currentUser.next(user);
+          this.isAuth.next(true);
           this.router.navigate(['/courses']);
         }
-      );
-    });
+      });
+    }
   }
 
   logout() {
-    this.setLSItems({ token: '', email: '' });
+    localStorage.removeItem('user-token');
     this.currentUser.next(null);
     this.isAuth.next(false);
     this.router.navigate(['/login']);
@@ -62,13 +67,8 @@ export class AuthService {
     return this.currentUser.asObservable();
   }
 
-  private makeHttpRequest(query) {
+  private makeHttpRequest(query): Observable<any> {
     const url = 'http://localhost:3001/users';
     return this.httpClient.get(`${url}/${query}`);
-  }
-
-  private setLSItems(data) {
-    localStorage.setItem('user-token', data.token);
-    localStorage.setItem('user-email', data.email);
   }
 }

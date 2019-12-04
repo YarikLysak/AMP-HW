@@ -1,5 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 
@@ -9,21 +10,21 @@ import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumb
   styleUrls: ['./breadcrumbs.component.sass']
 })
 export class BreadcrumbsComponent implements OnInit, OnDestroy {
-  public crumbsArray: string[];
-  public currentPage: string;
-  private sub: Subscription;
+  public crumbsArray$: Observable<string[]>;
+  public currentPage$: Observable<string>;
 
   constructor(private breadcrumbsService: BreadcrumbsService) {}
 
   ngOnInit() {
-    this.sub = this.breadcrumbsService.getBreadcrumbs().subscribe(data => {
-      this.crumbsArray = data;
-      this.currentPage = this.crumbsArray[this.crumbsArray.length - 1];
-    });
+    this.crumbsArray$ = this.breadcrumbsService
+      .getBreadcrumbs()
+      .pipe(map(crumbs => crumbs));
+    this.currentPage$ = this.breadcrumbsService
+      .getBreadcrumbs()
+      .pipe(map(crumbs => crumbs[crumbs.length - 1]));
   }
 
   ngOnDestroy() {
     this.breadcrumbsService.removeBreadcrumbs();
-    this.sub.unsubscribe();
   }
 }

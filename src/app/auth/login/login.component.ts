@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 import { AuthService } from '../shared/services/auth.service';
@@ -8,7 +8,7 @@ import { AuthService } from '../shared/services/auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.sass']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent {
   isUserAuthenticated = false;
   returnUrl = '';
 
@@ -18,10 +18,6 @@ export class LoginComponent implements OnInit {
   });
 
   constructor(private auth: AuthService) {}
-
-  ngOnInit() {
-    this.auth.logout();
-  }
 
   onSubmit() {
     this.auth.login(this.loginForm.value);
