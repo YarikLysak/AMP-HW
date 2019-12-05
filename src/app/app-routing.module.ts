@@ -1,25 +1,45 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { AuthGuard } from './auth/shared/guards/auth.guard';
+
+import { LoginComponent } from './auth/login/login.component';
+import { CoursesComponent } from './courses-dashboard/courses/courses.component';
 import { CoursesListComponent } from './courses-dashboard/courses-list/courses-list.component';
 import { ManageCourseComponent } from './course-manager/manage-course/manage-course.component';
-import { LoginComponent } from './auth/login/login.component';
+import { NotFoundComponent } from './core/not-found/not-found.component';
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: '/course-list',
+    redirectTo: '/courses',
     pathMatch: 'full'
   },
-  { path: 'login', component: LoginComponent },
-  { path: 'course-list', component: CoursesListComponent },
   {
-    path: 'course-manage',
+    path: 'courses',
+    component: CoursesComponent,
+    canActivate: [AuthGuard],
     children: [
-      { path: '', component: ManageCourseComponent },
-      { path: ':id', component: ManageCourseComponent }
+      {
+        path: '',
+        component: CoursesListComponent,
+        data: { breadcrumbs: 'Courses' }
+      },
+      {
+        path: 'new',
+        component: ManageCourseComponent,
+        data: { breadcrumbs: 'New Course' }
+      },
+      {
+        path: ':id',
+        component: ManageCourseComponent,
+        data: { breadcrumbs: 'Edit Course' }
+      }
     ]
-  }
+  },
+  { path: 'login', component: LoginComponent },
+
+  { path: '**', component: NotFoundComponent }
 ];
 
 @NgModule({

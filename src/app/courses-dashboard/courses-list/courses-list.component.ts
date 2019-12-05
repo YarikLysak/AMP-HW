@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
+import { ActivatedRoute } from '@angular/router';
 
 import { CoursesService } from '../../shared/services/courses/courses.service';
+import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 import { Course } from '../../shared/course.model';
 
 @Component({
@@ -20,8 +22,13 @@ export class CoursesListComponent implements OnInit {
 
   constructor(
     private courseService: CoursesService,
-    private modalService: BsModalService
-  ) {}
+    private modalService: BsModalService,
+    private breadcrumbsService: BreadcrumbsService,
+    private route: ActivatedRoute
+  ) {
+    const breadcrumb = this.route.snapshot.data.breadcrumbs;
+    this.breadcrumbsService.setBreadcrumb(breadcrumb);
+  }
 
   ngOnInit() {
     this.coursesList = this.courseService.getCourses();

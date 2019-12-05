@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { CoursesService } from '../../shared/services/courses/courses.service';
+import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 import { Course } from '../../shared/course.model';
 
 @Component({
@@ -11,8 +12,8 @@ import { Course } from '../../shared/course.model';
   styleUrls: ['./manage-course.component.sass']
 })
 export class ManageCourseComponent implements OnInit {
-  public editCourse: Course;
-  public editCourseId: number;
+  public editCourse: Course = null;
+  public editCourseId: number | null = null;
 
   public manageCourseForm = new FormGroup({
     title: new FormControl('', [Validators.required]),
@@ -30,14 +31,23 @@ export class ManageCourseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private courseService: CoursesService
-  ) {}
+    private courseService: CoursesService,
+    private breadcrumbsService: BreadcrumbsService
+  ) {
+    const paramId = this.route.snapshot.paramMap.get('id');
+    const breadcrumb = this.route.snapshot.data.breadcrumbs;
+    if (paramId) {
+      this.editCourseId = +paramId;
+      this.editCourse = this.courseService.getCourseById(this.editCourseId);
+      this.breadcrumbsService.setBreadcrumb(breadcrumb, this.editCourse.title);
+    } else {
+      this.editCourseId = null;
+      this.breadcrumbsService.setBreadcrumb(breadcrumb);
+    }
+  }
 
   ngOnInit() {
-    this.editCourseId = +this.route.snapshot.paramMap.get('id');
-
     if (this.editCourseId) {
-      this.editCourse = this.courseService.getCourseById(this.editCourseId);
       this.manageCourseForm.setValue({
         title: this.editCourse.title,
         description: this.editCourse.description.trim(),
@@ -63,12 +73,12 @@ export class ManageCourseComponent implements OnInit {
         isTopRated: false
       });
     }
-    this.router.navigate(['/course-list']);
+    this.router.navigate(['/courses']);
     this.manageCourseForm.reset();
   }
 
   onCancel() {
-    this.router.navigate(['/course-list']);
+    this.router.navigate(['/courses']);
     this.manageCourseForm.reset();
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, filter } from 'rxjs/operators';
 import { AuthService } from '../../auth/shared/services/auth.service';
 
 @Component({
@@ -16,7 +16,10 @@ export class UserToolsComponent implements OnInit {
 
   ngOnInit() {
     this.isAuth$ = this.auth.isAuthenticated();
-    this.userEmail$ = this.auth.getUserInfo().pipe(map(({ email }) => email));
+    this.userEmail$ = this.auth.getUserInfo().pipe(
+      filter(user => !!user),
+      map(({ email }) => email)
+    );
   }
 
   onLogOff() {

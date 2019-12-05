@@ -18,11 +18,13 @@ import { IsFreshStatusDirective } from '../../shared/directives/isFreshStatus.di
 import { DurationPipe } from '../../shared/pipes/duration/duration.pipe';
 import { OrderByPipe } from '../../shared/pipes/orderBy/order-by.pipe';
 import { FilterCoursePipe } from '../../shared/pipes/filterCourse/filterCourse.pipe';
+import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 
 describe('CoursesListComponent', () => {
   let component: CoursesListComponent;
   let fixture: ComponentFixture<CoursesListComponent>;
   let testBedService: CoursesService;
+  let testBedCrumbsService: BreadcrumbsService;
 
   const mockCourse = {
     id: 2,
@@ -49,7 +51,7 @@ describe('CoursesListComponent', () => {
         DurationPipe,
         OrderByPipe
       ],
-      providers: [CoursesService, FilterCoursePipe],
+      providers: [CoursesService, BreadcrumbsService, FilterCoursePipe],
       imports: [RouterTestingModule, ReactiveFormsModule, ModalModule.forRoot()]
     })
       .compileComponents()
@@ -63,6 +65,7 @@ describe('CoursesListComponent', () => {
     fixture = TestBed.createComponent(CoursesListComponent);
     component = fixture.componentInstance;
     testBedService = TestBed.get(CoursesService);
+    testBedCrumbsService = TestBed.get(BreadcrumbsService);
 
     fixture.detectChanges();
   });
@@ -80,6 +83,12 @@ describe('CoursesListComponent', () => {
     [CoursesService],
     (injectService: CoursesService) => {
       expect(injectService).toBe(testBedService);
+    }
+  ));
+  it('Service injected via inject(...) and TestBed.get(...) should be the same instance', inject(
+    [BreadcrumbsService],
+    (injectService: BreadcrumbsService) => {
+      expect(injectService).toBe(testBedCrumbsService);
     }
   ));
 

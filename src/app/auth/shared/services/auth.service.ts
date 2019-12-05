@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-// import { HttpClient } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 import { User } from '../models/user.model';
 
@@ -8,62 +9,57 @@ import { User } from '../models/user.model';
   providedIn: 'root'
 })
 export class AuthService {
-  isAuth = new BehaviorSubject<boolean>(false);
-  mockUsers = [
-    {
-      id: 1,
-      email: 'admin@admin',
-      password: '12345',
-      token: '4QhmRwHwwrgFqXULXNtx4d'
+  public isAuth = new BehaviorSubject<boolean>(false);
+  public currentUser = new BehaviorSubject<User>(null);
+  private USERS_URL = 'http://localhost:3001/users';
+
+  constructor(private httpClient: HttpClient, private router: Router) {
+    this.loginByToken();
+  }
+
+  login(authData): void {
+    this.httpClient
+      .get(`${this.USERS_URL}/?email=${authData.email.toLowerCase()}`)
+      .subscribe(([user]: User[]) => {
+        if (!user) {
+          console.log('no such user!!!');
+          this.isAuth.next(false);
+          return;
+        }
+
+        const isPasswordCorrect = user.password === authData.password;
+        this.isAuth.next(isPasswordCorrect);
+        if (!isPasswordCorrect) {
+          console.log('wrong password!');
+          return;
+        }
+
+        localStorage.setItem('user-token', user.token);
+        this.currentUser.next(user);
+        this.router.navigate(['/courses']);
+      });
+  }
+
+  private loginByToken() {
+    const token = localStorage.getItem('user-token');
+    if (token) {
+      this.httpClient
+        .get(`${this.USERS_URL}/?token=${token}`)
+        .subscribe(([user]: User[]) => {
+          if (user) {
+            this.currentUser.next(user);
+            this.isAuth.next(true);
+            this.router.navigate(['/courses']);
+          }
+        });
     }
-  ];
-
-  currentUser = new BehaviorSubject<User>(this.mockUsers[0]);
-
-  // constructor(private httpClient: HttpClient) {}
-
-  login(authData) {
-    console.log('logged in successfully');
-    localStorage.setItem('user-email', '');
-    localStorage.setItem('user-token', '');
-
-    this.currentUser.next(authData);
-    this.currentUser.subscribe(user => {
-      localStorage.setItem('user-email', user.email);
-      localStorage.setItem('user-token', this.mockUsers[0].token);
-    });
-    this.isAuth.next(true);
-
-    //   const token = localStorage.getItem('user-token') || '';
-    //   this.httpClient
-    //     .get(`http://localhost:3001/users/?token=${token}`)
-    //     .subscribe((userArray: User[]) => {
-    //       if (userArray.length !== 0) {
-    //         this.currentUser = userArray[0];
-    //         this.isAuth.next(true);
-    //       } else {
-    //         this.httpClient
-    //           .get(
-    //             `http://localhost:3001/users/?email=${authData.email.toLowerCase()}`
-    //           )
-    //           .subscribe((user: User[]) => {
-    //             if (user.length === 0) {
-    //               this.isAuth.next(false);
-    //             } else {
-    //               if (user[0].password === authData.password) {
-    //                 localStorage.setItem('user-token', user[0].token);
-    //                 localStorage.setItem('user-email', user[0].email);
-    //                 this.isAuth.next(true);
-    //               }
-    //             }
-    //           });
-    //       }
-    //     });
   }
 
   logout() {
-    localStorage.clear();
+    localStorage.removeItem('user-token');
+    this.currentUser.next(null);
     this.isAuth.next(false);
+    this.router.navigate(['/login']);
   }
 
   isAuthenticated(): Observable<boolean> {
