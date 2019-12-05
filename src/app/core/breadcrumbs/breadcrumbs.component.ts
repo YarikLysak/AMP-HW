@@ -16,9 +16,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   constructor(private breadcrumbsService: BreadcrumbsService) {}
 
   ngOnInit() {
-    this.crumbsArray$ = this.breadcrumbsService
-      .getBreadcrumbs()
-      .pipe(tap(crumbs => crumbs));
+    this.crumbsArray$ = this.breadcrumbsService.getBreadcrumbs();
     this.currentPage$ = this.breadcrumbsService
       .getBreadcrumbs()
       .pipe(map(crumbs => crumbs[crumbs.length - 1]));
