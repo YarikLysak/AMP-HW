@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 
@@ -18,7 +18,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.crumbsArray$ = this.breadcrumbsService
       .getBreadcrumbs()
-      .pipe(map(crumbs => crumbs));
+      .pipe(tap(crumbs => crumbs));
     this.currentPage$ = this.breadcrumbsService
       .getBreadcrumbs()
       .pipe(map(crumbs => crumbs[crumbs.length - 1]));

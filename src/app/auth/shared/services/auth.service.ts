@@ -11,14 +11,16 @@ import { User } from '../models/user.model';
 export class AuthService {
   public isAuth = new BehaviorSubject<boolean>(false);
   public currentUser = new BehaviorSubject<User>(null);
+  private USERS_URL = 'http://localhost:3001/users';
 
   constructor(private httpClient: HttpClient, private router: Router) {
     this.loginByToken();
   }
 
   login(authData): void {
-    this.makeHttpRequest(`?email=${authData.email.toLowerCase()}`).subscribe(
-      ([user]: User[]) => {
+    this.httpClient
+      .get(`${this.USERS_URL}/?email=${authData.email.toLowerCase()}`)
+      .subscribe(([user]: User[]) => {
         if (!user) {
           console.log('no such user!!!');
           this.isAuth.next(false);
@@ -35,20 +37,21 @@ export class AuthService {
         localStorage.setItem('user-token', user.token);
         this.currentUser.next(user);
         this.router.navigate(['/courses']);
-      }
-    );
+      });
   }
 
   private loginByToken() {
     const token = localStorage.getItem('user-token');
     if (token) {
-      this.makeHttpRequest(`?token=${token}`).subscribe(([user]: User[]) => {
-        if (user) {
-          this.currentUser.next(user);
-          this.isAuth.next(true);
-          this.router.navigate(['/courses']);
-        }
-      });
+      this.httpClient
+        .get(`${this.USERS_URL}/?token=${token}`)
+        .subscribe(([user]: User[]) => {
+          if (user) {
+            this.currentUser.next(user);
+            this.isAuth.next(true);
+            this.router.navigate(['/courses']);
+          }
+        });
     }
   }
 
@@ -65,10 +68,5 @@ export class AuthService {
 
   getUserInfo(): Observable<User> {
     return this.currentUser.asObservable();
-  }
-
-  private makeHttpRequest(query): Observable<any> {
-    const url = 'http://localhost:3001/users';
-    return this.httpClient.get(`${url}/${query}`);
   }
 }
