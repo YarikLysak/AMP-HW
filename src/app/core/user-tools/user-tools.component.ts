@@ -10,15 +10,15 @@ import { AuthService } from '../../auth/shared/services/auth.service';
 })
 export class UserToolsComponent implements OnInit {
   public isAuth$: Observable<boolean>;
-  public userLogin$: Observable<string>;
+  public userName$: Observable<{ first: string; last: string }>;
 
   constructor(private auth: AuthService) {}
 
   ngOnInit() {
     this.isAuth$ = this.auth.isAuthenticated();
-    this.userLogin$ = this.auth.getUserInfo().pipe(
+    this.userName$ = this.auth.getUserInfo().pipe(
       filter(user => !!user),
-      map(({ login }) => login)
+      map(({ name }) => name)
     );
   }
 
