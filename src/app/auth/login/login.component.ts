@@ -13,7 +13,7 @@ export class LoginComponent {
   returnUrl = '';
 
   public loginForm = new FormGroup({
-    email: new FormControl(''),
+    login: new FormControl(''),
     password: new FormControl('')
   });
 
