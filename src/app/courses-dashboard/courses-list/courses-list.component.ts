@@ -1,6 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  OnDestroy
+} from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
 
 import { CoursesService } from '../../shared/services/courses/courses.service';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
@@ -11,12 +18,13 @@ import { Course } from '../../shared/course.model';
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.sass']
 })
-export class CoursesListComponent implements OnInit {
+export class CoursesListComponent implements OnInit, OnDestroy {
   public coursesList: Course[];
-  public fromNew = 'new';
-  public fromOld = 'old';
+  public isNeedNew = true;
+  public filterStatus = 'last';
   public needToDelete: Course = null;
   private modalRef: BsModalRef;
+  private sub: Subscription[] = [];
 
   @ViewChild('modal', { static: false }) modalTemplateRef: ElementRef;
 
@@ -28,10 +36,13 @@ export class CoursesListComponent implements OnInit {
   ) {
     const breadcrumb = this.route.snapshot.data.breadcrumbs;
     this.breadcrumbsService.setBreadcrumb(breadcrumb);
+    this.courseService.getCourses().subscribe(courses => {
+      this.coursesList = courses;
+    });
   }
 
   ngOnInit() {
-    this.coursesList = this.courseService.getCourses();
+    this.sub.push();
   }
 
   showFiltered(filteredCoursesList: Course[]) {
@@ -44,7 +55,12 @@ export class CoursesListComponent implements OnInit {
   }
 
   private deleteCourse(id: number) {
-    this.coursesList = this.courseService.removeCourse(id);
+    this.courseService.removeCourse(id);
+  }
+
+  toggleFilter() {
+    this.isNeedNew = !this.isNeedNew;
+    this.filterStatus = this.isNeedNew ? 'last' : 'first';
   }
 
   openModal() {
@@ -61,5 +77,9 @@ export class CoursesListComponent implements OnInit {
   decline(): void {
     this.needToDelete = null;
     this.modalRef.hide();
+  }
+
+  ngOnDestroy() {
+    this.sub.forEach(obs => obs.unsubscribe());
   }
 }

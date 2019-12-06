@@ -2,16 +2,37 @@
   <div class="custom-container">
     <div class="courses-list">
       <app-search-bar (filtered)="showFiltered($event)"></app-search-bar>
-      <button
-        routerLink="/courses/new"
-        type="button"
-        class="common-btn add-course-btn"
-      >
-        <i class="fa fa-plus fa-lg"></i>
-        Add course
-      </button>
+      <div class="courses-list-header">
+        <div (click)="toggleFilter()">
+          <i
+            class="fas fa-sort-up sort"
+            [ngClass]="{
+              'sort-active': !isNeedNew,
+              'sort-disabled': isNeedNew
+            }"
+          ></i>
+          <i
+            class="fas fa-sort-down sort"
+            [ngClass]="{
+              'sort-active': isNeedNew,
+              'sort-disabled': !isNeedNew
+            }"
+          ></i>
+          <span
+            >Filtered from {{ filterStatus == 'last' ? 'new' : 'old' }}</span
+          >
+        </div>
+        <button
+          routerLink="/courses/new"
+          type="button"
+          class="common-btn add-course-btn"
+        >
+          <i class="fa fa-plus fa-lg"></i>
+          Add course
+        </button>
+      </div>
       <app-course
-        *ngFor="let course of coursesList | orderBy: fromNew"
+        *ngFor="let course of coursesList | orderBy: 'date':filterStatus"
         [course]="course"
         (deleted)="onDelete($event)"
       >

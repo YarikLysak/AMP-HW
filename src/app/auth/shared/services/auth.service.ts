@@ -18,7 +18,6 @@ export class AuthService {
   }
 
   login(authData): void {
-    console.log(authData);
     this.httpClient
       .get(`${this.USERS_URL}/?login=${authData.login}`)
       .subscribe(([user]: User[]) => {

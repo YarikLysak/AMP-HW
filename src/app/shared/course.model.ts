@@ -1,19 +1,21 @@
+import { Author } from './author.model';
+
 export interface Course {
   id: number;
-  title: string;
-  creationDate: string;
-  duration: number;
+  name: string;
   description: string;
   isTopRated: boolean;
-  authors: string;
+  date: string;
+  authors: Author[];
+  length: number;
 }
 
 export class Course implements Course {
   id: number;
-  title: string;
-  creationDate: string;
-  duration: number;
+  name: string;
   description: string;
   isTopRated: boolean;
-  authors: string;
+  date: string;
+  authors: Author[];
+  length: number;
 }
