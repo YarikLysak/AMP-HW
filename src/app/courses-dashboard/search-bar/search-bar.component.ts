@@ -22,10 +22,12 @@ export class SearchBarComponent {
   ) {}
 
   searchCourses() {
-    this.filteredCoursesList = this.filterCourse.transform(
-      this.searchField.value,
-      this.courseService.coursesList
-    );
-    this.filtered.emit(this.filteredCoursesList);
+    this.courseService.coursesList$.subscribe(courses => {
+      this.filteredCoursesList = this.filterCourse.transform(
+        this.searchField.value,
+        courses
+      );
+      this.filtered.emit(this.filteredCoursesList);
+    });
   }
 }

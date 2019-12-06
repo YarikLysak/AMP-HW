@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 import { CoursesService } from '../../shared/services/courses/courses.service';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
@@ -14,12 +15,13 @@ import { Course } from '../../shared/course.model';
 export class ManageCourseComponent implements OnInit {
   public editCourse: Course = null;
   public editCourseId: number | null = null;
+  private breadcrumb = '';
 
   public manageCourseForm = new FormGroup({
-    title: new FormControl('', [Validators.required]),
+    name: new FormControl('', [Validators.required]),
     description: new FormControl('', [Validators.required]),
-    duration: new FormControl('', [Validators.required]),
-    creationDate: new FormControl('', [
+    length: new FormControl('', [Validators.required]),
+    date: new FormControl('', [
       Validators.required,
       Validators.pattern(
         /^(0?[1-9]|[12][0-9]|3[01])[\/\-](0?[1-9]|1[012])[\/\-]\d{4}$/
@@ -32,28 +34,34 @@ export class ManageCourseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private courseService: CoursesService,
-    private breadcrumbsService: BreadcrumbsService
+    private breadcrumbsService: BreadcrumbsService,
+    private datePipe: DatePipe
   ) {
     const paramId = this.route.snapshot.paramMap.get('id');
-    const breadcrumb = this.route.snapshot.data.breadcrumbs;
+    this.breadcrumb = this.route.snapshot.data.breadcrumbs;
     if (paramId) {
       this.editCourseId = +paramId;
-      this.editCourse = this.courseService.getCourseById(this.editCourseId);
-      this.breadcrumbsService.setBreadcrumb(breadcrumb, this.editCourse.title);
     } else {
       this.editCourseId = null;
-      this.breadcrumbsService.setBreadcrumb(breadcrumb);
+      this.breadcrumbsService.setBreadcrumb(this.breadcrumb);
     }
   }
 
   ngOnInit() {
     if (this.editCourseId) {
-      this.manageCourseForm.setValue({
-        title: this.editCourse.title,
-        description: this.editCourse.description.trim(),
-        duration: this.editCourse.duration,
-        creationDate: this.editCourse.creationDate,
-        authors: this.editCourse.authors
+      this.courseService.getCourseById(this.editCourseId).subscribe(course => {
+        this.editCourse = course;
+        this.breadcrumbsService.setBreadcrumb(
+          this.breadcrumb,
+          this.editCourse.name
+        );
+        this.manageCourseForm.setValue({
+          name: this.editCourse.name,
+          description: this.editCourse.description.trim(),
+          length: this.editCourse.length,
+          date: this.datePipe.transform(this.editCourse.date, 'd MMM, yyyy'),
+          authors: this.editCourse.authors
+        });
       });
     }
   }

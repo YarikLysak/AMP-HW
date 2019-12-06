@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 
 import { DurationPipe } from './pipes/duration/duration.pipe';
 import { OrderByPipe } from './pipes/orderBy/order-by.pipe';
@@ -20,6 +20,6 @@ import { IsFreshStatusDirective } from './directives/isFreshStatus.directive';
     IsFreshStatusDirective
   ],
   imports: [CommonModule],
-  providers: [FilterCoursePipe]
+  providers: [FilterCoursePipe, DatePipe]
 })
 export class SharedModule {}
