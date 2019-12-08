@@ -67,17 +67,16 @@ export class ManageCourseComponent implements OnInit {
   }
 
   onSubmit() {
-    const randId = Math.floor(Math.random() * (20 - 4 + 1)) + 4;
-
     if (this.editCourseId) {
       this.courseService.updateCourse({
         ...this.editCourse,
-        ...this.manageCourseForm.value
+        ...this.manageCourseForm.value,
+        date: new Date(this.manageCourseForm.controls.date.value)
       });
     } else {
       this.courseService.addCourse({
-        id: randId,
         ...this.manageCourseForm.value,
+        date: new Date(this.manageCourseForm.controls.date.value),
         isTopRated: false
       });
     }
