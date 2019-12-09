@@ -1,6 +1,7 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { CourseComponent } from './course.component';
 
@@ -12,22 +13,22 @@ describe('CourseComponent', () => {
   let fixture: ComponentFixture<CourseComponent>;
   const mockCourse = {
     id: 2,
-    title: `Video Course 2. Name tag`,
+    name: `Video Course 2. Name tag`,
     description: `Learn about where you can find course descriptions,what information they include,
     how they work, and details about various components of a course description.`,
-    creationDate: new Date(2019, 8, 1)
+    date: new Date(2019, 8, 1)
       .toLocaleDateString()
       .split('/')
       .join('-'),
-    duration: 115,
+    length: 115,
     isTopRated: true,
-    authors: ''
+    authors: [{ id: 1, name: '', lastName: '' }]
   };
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [CourseComponent, IsFreshStatusDirective, DurationPipe],
-      imports: [RouterTestingModule, ReactiveFormsModule]
+      imports: [RouterTestingModule, ReactiveFormsModule, HttpClientModule]
     })
       .compileComponents()
       .then(() => {

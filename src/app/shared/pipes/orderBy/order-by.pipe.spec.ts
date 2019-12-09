@@ -5,42 +5,42 @@ describe('OrderByPipe', () => {
   const mockCoursesList = [
     {
       id: 2,
-      title: `Video Course 2. Name tag`,
+      name: `Video Course 2. Name tag`,
       description: `Learn about where you can find course descriptions,what information they include,
       how they work, and details about various components of a course description.`,
-      creationDate: new Date(2019, 5, 1)
+      date: new Date(2019, 5, 1)
         .toLocaleDateString()
         .split('/')
         .join('-'),
-      duration: 115,
-      authors: '',
-      isTopRated: false
+      length: 115,
+      isTopRated: false,
+      authors: [{ id: 1, name: '', lastName: '' }]
     },
     {
       id: 1,
-      title: `Video Course 1. Name tag`,
+      name: `Video Course 1. Name tag`,
       description: `Learn about where you can find course descriptions,what information they include,
     how they work, and details about various components of a course description.`,
-      creationDate: new Date(2019, 8, 1)
+      date: new Date(2019, 8, 1)
         .toLocaleDateString()
         .split('/')
         .join('-'),
-      duration: 110,
-      authors: '',
-      isTopRated: false
+      length: 110,
+      isTopRated: false,
+      authors: [{ id: 1, name: '', lastName: '' }]
     },
     {
       id: 3,
-      title: `Video Course 3. Name tag`,
+      name: `Video Course 3. Name tag`,
       description: `Learn about where you can find course descriptions,what information they include,
     how they work, and details about various components of a course description.`,
-      creationDate: new Date(2019, 3, 1)
+      date: new Date(2019, 3, 1)
         .toLocaleDateString()
         .split('/')
         .join('-'),
-      duration: 110,
-      authors: '',
-      isTopRated: false
+      length: 110,
+      isTopRated: false,
+      authors: [{ id: 1, name: '', lastName: '' }]
     }
   ];
 
@@ -54,7 +54,7 @@ describe('OrderByPipe', () => {
 
   it('compareNumeric should be called', () => {
     const compareSpy = spyOn(pipe, 'compareNumeric');
-    pipe.transform(mockCoursesList, 'new');
+    pipe.transform(mockCoursesList, 'date', 'new');
     expect(compareSpy).toHaveBeenCalled();
   });
 });

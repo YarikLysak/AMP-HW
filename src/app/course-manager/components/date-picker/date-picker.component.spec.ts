@@ -23,7 +23,7 @@ describe('DatePickerComponent', () => {
     fixture = TestBed.createComponent(DatePickerComponent);
     component = fixture.componentInstance;
     component.parentForm = fb.group({
-      creationDate: ['', Validators.required]
+      date: ['', Validators.required]
     });
     fixture.detectChanges();
   }));

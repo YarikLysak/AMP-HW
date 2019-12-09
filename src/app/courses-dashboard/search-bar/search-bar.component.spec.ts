@@ -1,9 +1,8 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
 
 import { SearchBarComponent } from './search-bar.component';
-
-import { FilterCoursePipe } from '../../shared/pipes/filterCourse/filterCourse.pipe';
 
 describe('SearchBarComponent', () => {
   let component: SearchBarComponent;
@@ -11,9 +10,8 @@ describe('SearchBarComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [SearchBarComponent, FilterCoursePipe],
-      providers: [FilterCoursePipe],
-      imports: [ReactiveFormsModule]
+      declarations: [SearchBarComponent],
+      imports: [ReactiveFormsModule, HttpClientModule]
     }).compileComponents();
   }));
 
