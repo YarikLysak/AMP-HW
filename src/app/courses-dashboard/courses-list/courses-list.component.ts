@@ -11,7 +11,7 @@ import { Subscription } from 'rxjs';
 
 import { CoursesService } from '../../shared/services/courses/courses.service';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
-import { Course } from '../../shared/course.model';
+import { Course } from '../../shared/models/course.model';
 
 @Component({
   selector: 'app-courses-list',
@@ -43,10 +43,6 @@ export class CoursesListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.sub.push();
-  }
-
-  showFiltered(filteredCoursesList: Course[]) {
-    this.coursesList = filteredCoursesList;
   }
 
   onDelete(deletedId: number) {

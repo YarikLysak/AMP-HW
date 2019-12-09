@@ -5,7 +5,7 @@ import { DatePipe } from '@angular/common';
 
 import { CoursesService } from '../../shared/services/courses/courses.service';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
-import { Course } from '../../shared/course.model';
+import { Course } from '../../shared/models/course.model';
 
 @Component({
   selector: 'app-manage-course',

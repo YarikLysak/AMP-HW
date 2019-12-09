@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Course } from '../../course.model';
+import { Course } from '../../models/course.model';
 
 @Injectable({
   providedIn: 'root'
@@ -16,15 +16,36 @@ export class CoursesService {
       'Content-Type': 'application/json'
     })
   };
-  private currentCount = 3;
+  private courseOnPageAmount = 3;
+  private searchingParams = { start: '0', count: `${this.courseOnPageAmount}` };
+  private isFiltered = false;
+  private searchString: string;
 
   constructor(private http: HttpClient) {
     this.httpRequestCourses();
   }
 
   loadMoreCourses() {
-    this.currentCount += 3;
-    this.httpRequestCourses();
+    this.courseOnPageAmount += 3;
+    if (!this.isFiltered) {
+      this.httpRequestCourses();
+    } else {
+      this.searchCourses(this.searchString);
+    }
+  }
+
+  searchCourses(searchString: string) {
+    this.searchString = searchString;
+    if (!this.searchString) {
+      this.courseOnPageAmount = 3;
+      this.httpRequestCourses();
+      return;
+    }
+    if (!this.isFiltered) {
+      this.courseOnPageAmount = 3;
+    }
+    this.isFiltered = true;
+    this.httpSearchCoursesRequest();
   }
 
   getCourses(): Observable<Course[]> {
@@ -73,12 +94,28 @@ export class CoursesService {
   }
 
   private httpRequestCourses() {
+    this.searchingParams.count = `${this.courseOnPageAmount}`;
+    this.isFiltered = false;
     console.log('request');
     this.http
-      .get(`${this.COURSES_URL}?start=5&count=${this.currentCount}`)
+      .get(this.COURSES_URL, { params: this.searchingParams })
       .subscribe((courses: Course[]) => {
         console.log(courses);
         this.coursesList$.next(courses);
       });
+  }
+
+  private httpSearchCoursesRequest() {
+    this.searchingParams.count = `${this.courseOnPageAmount}`;
+
+    const searchingParams = {
+      textFragment: this.searchString,
+      ...this.searchingParams
+    };
+    this.http
+      .get(this.COURSES_URL, { params: searchingParams })
+      .subscribe((filteredCourses: Course[]) =>
+        this.coursesList$.next(filteredCourses)
+      );
   }
 }
