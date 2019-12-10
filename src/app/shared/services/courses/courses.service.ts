@@ -17,7 +17,11 @@ export class CoursesService {
     })
   };
   private courseOnPageAmount = 3;
-  private searchingParams = { start: '0', count: `${this.courseOnPageAmount}` };
+  private searchingParams = {
+    start: '0',
+    count: `${this.courseOnPageAmount}`,
+    sort: 'date'
+  };
   private isFiltered = false;
   private searchString: string;
 

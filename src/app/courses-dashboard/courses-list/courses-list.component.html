@@ -18,9 +18,7 @@
               'sort-disabled': !isNeedNew
             }"
           ></i>
-          <span
-            >Filtered from {{ filterStatus == 'last' ? 'new' : 'old' }}</span
-          >
+          <span>Filtered from {{ filterStatus == 'asc' ? 'new' : 'old' }}</span>
         </div>
         <button
           routerLink="/courses/new"
@@ -32,7 +30,9 @@
         </button>
       </div>
       <app-course
-        *ngFor="let course of coursesList | orderBy: 'date':filterStatus"
+        *ngFor="
+          let course of coursesList$ | async | orderBy: 'date':filterStatus
+        "
         [course]="course"
         (deleted)="onDelete($event)"
       >
@@ -43,14 +43,14 @@
 </div>
 
 <ng-template #modal>
-  <div class="modal-body text-center" *ngIf="needToDelete !== null">
+  <div class="modal-body text-center" *ngIf="needToDelete$ | async as course">
     <div class="modal-header">
       <h4 class="modal-title pull-left">
-        Do you want to delete {{ needToDelete.name }}?
+        Do you want to delete {{ course.name }}?
       </h4>
     </div>
     <div class="modal-buttons">
-      <button type="button" class="accept-btn" (click)="confirm()">
+      <button type="button" class="accept-btn" (click)="confirm(course.id)">
         Yes
       </button>
       <button type="button" class="common-btn" (click)="decline()">
