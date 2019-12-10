@@ -20,36 +20,26 @@ export class CoursesService {
   private searchingParams = {
     start: '0',
     count: `${this.courseOnPageAmount}`,
+    textFragment: '',
     sort: 'date'
   };
   private isFiltered = false;
-  private searchString: string;
 
   constructor(private http: HttpClient) {
-    this.httpRequestCourses();
+    this.getCoursesArray();
   }
 
   loadMoreCourses() {
-    this.courseOnPageAmount += 3;
-    if (!this.isFiltered) {
-      this.httpRequestCourses();
-    } else {
-      this.searchCourses(this.searchString);
-    }
+    this.courseOnPageAmount = !this.isFiltered
+      ? 3
+      : this.courseOnPageAmount + 3;
+    this.getCoursesArray();
   }
 
   searchCourses(searchString: string) {
-    this.searchString = searchString;
-    if (!this.searchString) {
-      this.courseOnPageAmount = 3;
-      this.httpRequestCourses();
-      return;
-    }
-    if (!this.isFiltered) {
-      this.courseOnPageAmount = 3;
-    }
-    this.isFiltered = true;
-    this.httpSearchCoursesRequest();
+    this.isFiltered = !!searchString;
+    this.searchingParams.textFragment = searchString;
+    this.getCoursesArray();
   }
 
   getCourses(): Observable<Course[]> {
@@ -61,16 +51,14 @@ export class CoursesService {
       .post(this.COURSES_URL, JSON.stringify(newCourse), this.httpOptions)
       .subscribe(
         () => {
-          this.httpRequestCourses();
+          this.getCoursesArray();
         },
         err => console.error(err)
       );
   }
 
   getCourseById(id: number): Observable<Course> {
-    return this.http
-      .get(`${this.COURSES_URL}/${id}`)
-      .pipe(map((course: Course) => course));
+    return this.http.get<Course>(`${this.COURSES_URL}/${id}`);
   }
 
   updateCourse(updatedCourse: Course) {
@@ -82,7 +70,7 @@ export class CoursesService {
       )
       .subscribe(
         () => {
-          this.httpRequestCourses();
+          this.getCoursesArray();
         },
         err => console.error(err)
       );
@@ -91,35 +79,19 @@ export class CoursesService {
   removeCourse(id: number) {
     this.http.delete(`${this.COURSES_URL}/${id}`, this.httpOptions).subscribe(
       () => {
-        this.httpRequestCourses();
+        this.getCoursesArray();
       },
       err => console.error(err)
     );
   }
 
-  private httpRequestCourses() {
+  private getCoursesArray() {
     this.searchingParams.count = `${this.courseOnPageAmount}`;
-    this.isFiltered = false;
-    console.log('request');
     this.http
       .get(this.COURSES_URL, { params: this.searchingParams })
       .subscribe((courses: Course[]) => {
-        console.log(courses);
+        console.log(courses, 'request');
         this.coursesList$.next(courses);
       });
-  }
-
-  private httpSearchCoursesRequest() {
-    this.searchingParams.count = `${this.courseOnPageAmount}`;
-
-    const searchingParams = {
-      textFragment: this.searchString,
-      ...this.searchingParams
-    };
-    this.http
-      .get(this.COURSES_URL, { params: searchingParams })
-      .subscribe((filteredCourses: Course[]) =>
-        this.coursesList$.next(filteredCourses)
-      );
   }
 }
