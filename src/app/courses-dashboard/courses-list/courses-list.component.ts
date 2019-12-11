@@ -1,4 +1,4 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
@@ -14,10 +14,11 @@ import { Order } from '../../shared/pipes/orderBy/order.type';
   templateUrl: './courses-list.component.html',
   styleUrls: ['./courses-list.component.sass']
 })
-export class CoursesListComponent {
+export class CoursesListComponent implements OnInit {
   public coursesList$: Observable<Course[]>;
   public needToDelete$: Observable<Course>;
   public isNeedNew = true;
+  public nextAmountOfCourses = 6;
   public filterStatus: Order = 'asc';
   private modalRef: BsModalRef;
 
@@ -31,9 +32,30 @@ export class CoursesListComponent {
   ) {
     const breadcrumb = this.route.snapshot.data.breadcrumbs;
     this.breadcrumbsService.setBreadcrumb(breadcrumb);
+  }
+
+  ngOnInit() {
     this.coursesList$ = this.courseService
       .getCourses()
       .pipe(map((courses: Course[]) => courses));
+  }
+
+  onSearch(updatedCoursesList$: Observable<Course[]>) {
+    this.coursesList$ = updatedCoursesList$.pipe(
+      map((courses: Course[]) => courses)
+    );
+  }
+
+  onLoadMore(updatedCoursesList$: Observable<Course[]>) {
+    this.nextAmountOfCourses += 3;
+    this.coursesList$ = updatedCoursesList$.pipe(
+      map((updatedCourses: Course[]) => updatedCourses)
+    );
+  }
+
+  onToggleFilter() {
+    this.isNeedNew = !this.isNeedNew;
+    this.filterStatus = this.isNeedNew ? 'asc' : 'desc';
   }
 
   onDelete(deletedId: number) {
@@ -43,28 +65,28 @@ export class CoursesListComponent {
     this.openModal();
   }
 
-  private deleteCourse(id: number) {
-    this.courseService.removeCourse(id);
-  }
-
-  toggleFilter() {
-    this.isNeedNew = !this.isNeedNew;
-    this.filterStatus = this.isNeedNew ? 'asc' : 'desc';
-  }
-
   openModal() {
     this.modalRef = this.modalService.show(this.modalTemplateRef, {
       class: 'modal-sm'
     });
   }
 
-  confirm(id: number): void {
+  onConfirm(id: number): void {
     this.modalRef.hide();
     this.deleteCourse(id);
   }
 
-  decline(): void {
+  onDecline(): void {
     this.needToDelete$ = null;
     this.modalRef.hide();
+  }
+
+  private deleteCourse(id: number) {
+    this.courseService.removeCourse(id).subscribe(data => {
+      console.log(data, 'delete');
+    });
+    this.coursesList$ = this.courseService
+      .getCourses()
+      .pipe(map((courses: Course[]) => courses));
   }
 }

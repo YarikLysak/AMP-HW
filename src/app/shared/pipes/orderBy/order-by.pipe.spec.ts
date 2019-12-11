@@ -54,7 +54,7 @@ describe('OrderByPipe', () => {
 
   it('compareNumeric should be called', () => {
     const compareSpy = spyOn(pipe, 'compareNumeric');
-    pipe.transform(mockCoursesList, 'date', 'new');
+    pipe.transform(mockCoursesList, 'date', 'desc');
     expect(compareSpy).toHaveBeenCalled();
   });
 });

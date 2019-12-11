@@ -3,6 +3,10 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AuthGuard } from './auth/shared/guards/auth.guard';
 
+import { CoursesDashboardModule } from './courses-dashboard/courses-dashboard.module';
+import { CourseManagerModule } from './course-manager/course-manager.module';
+import { AuthModule } from './auth/auth.module';
+
 import { LoginComponent } from './auth/login/login.component';
 import { CoursesComponent } from './courses-dashboard/courses/courses.component';
 import { CoursesListComponent } from './courses-dashboard/courses-list/courses-list.component';
@@ -43,7 +47,12 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [
+    CoursesDashboardModule,
+    CourseManagerModule,
+    AuthModule,
+    RouterModule.forRoot(routes)
+  ],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

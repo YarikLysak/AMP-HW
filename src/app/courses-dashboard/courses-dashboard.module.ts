@@ -19,7 +19,6 @@ import { LoadMoreComponent } from './load-more/load-more.component';
     SearchBarComponent,
     LoadMoreComponent
   ],
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, SharedModule],
-  exports: [CoursesListComponent, CourseComponent]
+  imports: [CommonModule, RouterModule, ReactiveFormsModule, SharedModule]
 })
 export class CoursesDashboardModule {}

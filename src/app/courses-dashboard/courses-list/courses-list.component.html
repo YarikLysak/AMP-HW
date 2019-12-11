@@ -1,9 +1,9 @@
 <div class="course-list-wrapper">
   <div class="custom-container">
     <div class="courses-list">
-      <app-search-bar></app-search-bar>
+      <app-search-bar (updatedCoursesList$)="onSearch($event)"></app-search-bar>
       <div class="courses-list-header">
-        <div (click)="toggleFilter()">
+        <div (click)="onToggleFilter()">
           <i
             class="fas fa-sort-up sort"
             [ngClass]="{
@@ -37,7 +37,10 @@
         (deleted)="onDelete($event)"
       >
       </app-course>
-      <app-load-more></app-load-more>
+      <app-load-more
+        [nextAmountOfCourses]="nextAmountOfCourses"
+        (updatedCoursesList$)="onLoadMore($event)"
+      ></app-load-more>
     </div>
   </div>
 </div>
@@ -50,10 +53,10 @@
       </h4>
     </div>
     <div class="modal-buttons">
-      <button type="button" class="accept-btn" (click)="confirm(course.id)">
+      <button type="button" class="accept-btn" (click)="onConfirm(course.id)">
         Yes
       </button>
-      <button type="button" class="common-btn" (click)="decline()">
+      <button type="button" class="common-btn" (click)="onDecline()">
         No
       </button>
     </div>

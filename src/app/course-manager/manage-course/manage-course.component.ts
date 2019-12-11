@@ -68,17 +68,27 @@ export class ManageCourseComponent implements OnInit {
 
   onSubmit() {
     if (this.editCourseId) {
-      this.courseService.updateCourse({
-        ...this.editCourse,
-        ...this.manageCourseForm.value,
-        date: new Date(this.manageCourseForm.controls.date.value)
-      });
+      this.courseService
+        .updateCourse({
+          ...this.editCourse,
+          ...this.manageCourseForm.value,
+          date: new Date(this.manageCourseForm.controls.date.value)
+        })
+        .subscribe(
+          () => {},
+          err => console.error(err)
+        );
     } else {
-      this.courseService.addCourse({
-        ...this.manageCourseForm.value,
-        date: new Date(this.manageCourseForm.controls.date.value),
-        isTopRated: false
-      });
+      this.courseService
+        .addCourse({
+          ...this.manageCourseForm.value,
+          date: new Date(this.manageCourseForm.controls.date.value),
+          isTopRated: false
+        })
+        .subscribe(
+          () => {},
+          err => console.error(err)
+        );
     }
     this.router.navigate(['/courses']);
     this.manageCourseForm.reset();

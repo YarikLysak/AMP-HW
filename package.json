@@ -3,13 +3,14 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --aot",
+    "start": "concurrently \"npm run server\" \"ng serve --aot\"",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "prettier": "prettier --write **/*.{ts,html}",
-    "test:coverage": "ng test --watch=false --code-coverage"
+    "test:coverage": "ng test --watch=false --code-coverage",
+    "server": "cd ./BE && npm run start"
   },
   "husky": {
     "hooks": {
@@ -41,6 +42,7 @@
     "@types/jasminewd2": "~2.0.3",
     "@types/node": "~8.9.4",
     "codelyzer": "^5.0.0",
+    "concurrently": "^5.0.1",
     "husky": "^3.0.9",
     "jasmine-core": "~3.4.0",
     "jasmine-spec-reporter": "~4.2.1",

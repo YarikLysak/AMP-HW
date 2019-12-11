@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 import { Course } from '../../models/course.model';
 
@@ -10,51 +9,46 @@ import { Course } from '../../models/course.model';
 })
 export class CoursesService {
   private COURSES_URL = 'http://localhost:3004/courses';
-  public coursesList$ = new BehaviorSubject<Course[]>([]);
   private httpOptions = {
     headers: new HttpHeaders({
       'Content-Type': 'application/json'
     })
   };
-  private courseOnPageAmount = 3;
   private searchingParams = {
     start: '0',
-    count: `${this.courseOnPageAmount}`,
+    count: '3',
     textFragment: '',
     sort: 'date'
   };
-  private isFiltered = false;
 
-  constructor(private http: HttpClient) {
-    this.getCoursesArray();
-  }
+  constructor(private http: HttpClient) {}
 
-  loadMoreCourses() {
-    this.courseOnPageAmount = !this.isFiltered
-      ? 3
-      : this.courseOnPageAmount + 3;
-    this.getCoursesArray();
+  loadMoreCourses(next: number) {
+    this.searchingParams.count = `${next}`;
+    return this.http.get<Course[]>(this.COURSES_URL, {
+      params: this.searchingParams
+    });
   }
 
   searchCourses(searchString: string) {
-    this.isFiltered = !!searchString;
     this.searchingParams.textFragment = searchString;
-    this.getCoursesArray();
+    return this.http.get<Course[]>(this.COURSES_URL, {
+      params: this.searchingParams
+    });
   }
 
   getCourses(): Observable<Course[]> {
-    return this.coursesList$.asObservable();
+    return this.http.get<Course[]>(this.COURSES_URL, {
+      params: this.searchingParams
+    });
   }
 
   addCourse(newCourse: Course) {
-    this.http
-      .post(this.COURSES_URL, JSON.stringify(newCourse), this.httpOptions)
-      .subscribe(
-        () => {
-          this.getCoursesArray();
-        },
-        err => console.error(err)
-      );
+    return this.http.post(
+      this.COURSES_URL,
+      JSON.stringify(newCourse),
+      this.httpOptions
+    );
   }
 
   getCourseById(id: number): Observable<Course> {
@@ -62,36 +56,14 @@ export class CoursesService {
   }
 
   updateCourse(updatedCourse: Course) {
-    this.http
-      .patch(
-        `${this.COURSES_URL}/${updatedCourse.id}`,
-        JSON.stringify(updatedCourse),
-        this.httpOptions
-      )
-      .subscribe(
-        () => {
-          this.getCoursesArray();
-        },
-        err => console.error(err)
-      );
-  }
-
-  removeCourse(id: number) {
-    this.http.delete(`${this.COURSES_URL}/${id}`, this.httpOptions).subscribe(
-      () => {
-        this.getCoursesArray();
-      },
-      err => console.error(err)
+    return this.http.patch(
+      `${this.COURSES_URL}/${updatedCourse.id}`,
+      JSON.stringify(updatedCourse),
+      this.httpOptions
     );
   }
 
-  private getCoursesArray() {
-    this.searchingParams.count = `${this.courseOnPageAmount}`;
-    this.http
-      .get(this.COURSES_URL, { params: this.searchingParams })
-      .subscribe((courses: Course[]) => {
-        console.log(courses, 'request');
-        this.coursesList$.next(courses);
-      });
+  removeCourse(id: number) {
+    return this.http.delete(`${this.COURSES_URL}/${id}`, this.httpOptions);
   }
 }
