@@ -25,7 +25,7 @@ export class SearchBarComponent {
 
   searchCourses() {
     this.updatedCoursesList$.emit(
-      this.courseService.searchCourses(this.searchField.value)
+      this.courseService.searchCourses(this.searchField.value, 3)
     );
   }
 }

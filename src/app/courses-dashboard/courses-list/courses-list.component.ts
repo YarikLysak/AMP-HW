@@ -18,7 +18,7 @@ export class CoursesListComponent implements OnInit {
   public coursesList$: Observable<Course[]>;
   public needToDelete$: Observable<Course>;
   public isNeedNew = true;
-  public nextAmountOfCourses = 6;
+  public nextAmountOfCourses = 3;
   public filterStatus: Order = 'asc';
   private modalRef: BsModalRef;
 
@@ -36,11 +36,13 @@ export class CoursesListComponent implements OnInit {
 
   ngOnInit() {
     this.coursesList$ = this.courseService
-      .getCourses()
+      .getCourses(this.nextAmountOfCourses)
       .pipe(map((courses: Course[]) => courses));
+    this.nextAmountOfCourses += 3;
   }
 
   onSearch(updatedCoursesList$: Observable<Course[]>) {
+    this.nextAmountOfCourses = 6;
     this.coursesList$ = updatedCoursesList$.pipe(
       map((courses: Course[]) => courses)
     );
@@ -86,7 +88,7 @@ export class CoursesListComponent implements OnInit {
       console.log(data, 'delete');
     });
     this.coursesList$ = this.courseService
-      .getCourses()
+      .getCourses(this.nextAmountOfCourses)
       .pipe(map((courses: Course[]) => courses));
   }
 }

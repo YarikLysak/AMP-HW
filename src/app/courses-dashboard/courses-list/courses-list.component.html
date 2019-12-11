@@ -1,7 +1,7 @@
 <div class="course-list-wrapper">
   <div class="custom-container">
-    <div class="courses-list">
-      <app-search-bar (updatedCoursesList$)="onSearch($event)"></app-search-bar>
+    <app-search-bar (updatedCoursesList$)="onSearch($event)"></app-search-bar>
+    <div class="courses-list" *ngIf="coursesList$ | async as coursesList">
       <div class="courses-list-header">
         <div (click)="onToggleFilter()">
           <i
@@ -30,14 +30,13 @@
         </button>
       </div>
       <app-course
-        *ngFor="
-          let course of coursesList$ | async | orderBy: 'date':filterStatus
-        "
+        *ngFor="let course of coursesList | orderBy: 'date':filterStatus"
         [course]="course"
         (deleted)="onDelete($event)"
       >
       </app-course>
       <app-load-more
+        *ngIf="coursesList.length >= nextAmountOfCourses - 3"
         [nextAmountOfCourses]="nextAmountOfCourses"
         (updatedCoursesList$)="onLoadMore($event)"
       ></app-load-more>

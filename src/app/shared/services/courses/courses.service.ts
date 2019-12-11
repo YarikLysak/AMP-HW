@@ -30,14 +30,16 @@ export class CoursesService {
     });
   }
 
-  searchCourses(searchString: string) {
+  searchCourses(searchString: string, count: number) {
+    this.searchingParams.count = `${count}`;
     this.searchingParams.textFragment = searchString;
     return this.http.get<Course[]>(this.COURSES_URL, {
       params: this.searchingParams
     });
   }
 
-  getCourses(): Observable<Course[]> {
+  getCourses(count: number): Observable<Course[]> {
+    this.searchingParams.count = `${count}`;
     return this.http.get<Course[]>(this.COURSES_URL, {
       params: this.searchingParams
     });

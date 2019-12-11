@@ -18,9 +18,11 @@ export class OrderByPipe implements PipeTransform {
     }
   }
   transform(courses: Course[], by: string, order: Order): Course[] {
-    const sortedArr = [...courses].sort((prev, next) =>
-      this.compareNumeric(prev[by], next[by])
-    );
-    return order === 'asc' ? sortedArr.reverse() : sortedArr;
+    if (courses) {
+      const sortedArr = [...courses].sort((prev, next) =>
+        this.compareNumeric(prev[by], next[by])
+      );
+      return order === 'asc' ? sortedArr.reverse() : sortedArr;
+    }
   }
 }
