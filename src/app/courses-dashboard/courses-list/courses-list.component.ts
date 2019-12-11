@@ -18,6 +18,7 @@ export class CoursesListComponent implements OnInit {
   public coursesList$: Observable<Course[]>;
   public needToDelete$: Observable<Course>;
   public isNeedNew = true;
+  public isCanBeMore = true;
   public nextAmountOfCourses = 3;
   public filterStatus: Order = 'asc';
   private modalRef: BsModalRef;
@@ -25,7 +26,7 @@ export class CoursesListComponent implements OnInit {
   @ViewChild('modal', { static: false }) modalTemplateRef: ElementRef;
 
   constructor(
-    private courseService: CoursesService,
+    private coursesService: CoursesService,
     private modalService: BsModalService,
     private breadcrumbsService: BreadcrumbsService,
     private route: ActivatedRoute
@@ -35,24 +36,28 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.coursesList$ = this.courseService
+    this.coursesList$ = this.coursesService
       .getCourses(this.nextAmountOfCourses)
       .pipe(map((courses: Course[]) => courses));
-    this.nextAmountOfCourses += 3;
   }
 
-  onSearch(updatedCoursesList$: Observable<Course[]>) {
-    this.nextAmountOfCourses = 6;
-    this.coursesList$ = updatedCoursesList$.pipe(
-      map((courses: Course[]) => courses)
-    );
+  onSearch(searchString: string) {
+    this.nextAmountOfCourses = 3;
+    this.coursesList$ = this.coursesService
+      .searchCourses(searchString, this.nextAmountOfCourses)
+      .pipe(map((courses: Course[]) => courses));
   }
 
-  onLoadMore(updatedCoursesList$: Observable<Course[]>) {
+  onLoadMore() {
     this.nextAmountOfCourses += 3;
-    this.coursesList$ = updatedCoursesList$.pipe(
-      map((updatedCourses: Course[]) => updatedCourses)
-    );
+    this.coursesList$ = this.coursesService
+      .loadMoreCourses(this.nextAmountOfCourses)
+      .pipe(
+        map((updatedCourses: Course[]) => {
+          this.isCanBeMore = updatedCourses.length >= this.nextAmountOfCourses;
+          return updatedCourses;
+        })
+      );
   }
 
   onToggleFilter() {
@@ -84,10 +89,10 @@ export class CoursesListComponent implements OnInit {
   }
 
   private deleteCourse(id: number) {
-    this.courseService.removeCourse(id).subscribe(data => {
+    this.coursesService.removeCourse(id).subscribe(data => {
       console.log(data, 'delete');
     });
-    this.coursesList$ = this.courseService
+    this.coursesList$ = this.coursesService
       .getCourses(this.nextAmountOfCourses)
       .pipe(map((courses: Course[]) => courses));
   }

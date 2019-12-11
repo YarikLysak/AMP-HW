@@ -18,14 +18,9 @@ import { Course } from '../../shared/models/course.model';
 })
 export class SearchBarComponent {
   public searchField = new FormControl('');
-
-  @Output() updatedCoursesList$ = new EventEmitter<Observable<Course[]>>();
-
-  constructor(private courseService: CoursesService) {}
+  @Output() searchString = new EventEmitter<string>();
 
   searchCourses() {
-    this.updatedCoursesList$.emit(
-      this.courseService.searchCourses(this.searchField.value, 3)
-    );
+    this.searchString.emit(this.searchField.value);
   }
 }

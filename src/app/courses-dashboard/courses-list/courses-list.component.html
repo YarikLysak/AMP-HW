@@ -1,6 +1,6 @@
 <div class="course-list-wrapper">
   <div class="custom-container">
-    <app-search-bar (updatedCoursesList$)="onSearch($event)"></app-search-bar>
+    <app-search-bar (searchString)="onSearch($event)"></app-search-bar>
     <div class="courses-list" *ngIf="coursesList$ | async as coursesList">
       <div class="courses-list-header">
         <div (click)="onToggleFilter()">
@@ -36,9 +36,8 @@
       >
       </app-course>
       <app-load-more
-        *ngIf="coursesList.length >= nextAmountOfCourses - 3"
-        [nextAmountOfCourses]="nextAmountOfCourses"
-        (updatedCoursesList$)="onLoadMore($event)"
+        *ngIf="isCanBeMore"
+        (updatedCoursesList)="onLoadMore($event)"
       ></app-load-more>
     </div>
   </div>

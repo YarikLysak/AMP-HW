@@ -17,15 +17,10 @@ import { Course } from '../../shared/models/course.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class LoadMoreComponent {
-  @Input() nextAmountOfCourses: number;
-  @Output() updatedCoursesList$ = new EventEmitter<Observable<Course[]>>();
-
-  constructor(private coursesService: CoursesService) {}
+  @Output() updatedCoursesList = new EventEmitter<void>();
 
   loadMore() {
-    this.updatedCoursesList$.emit(
-      this.coursesService.loadMoreCourses(this.nextAmountOfCourses)
-    );
+    this.updatedCoursesList.emit();
     console.log('load more');
   }
 }
