@@ -6,6 +6,7 @@ import {
 } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
+import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap';
 
 import { CoursesListComponent } from './courses-list.component';
@@ -17,7 +18,6 @@ import { CoursesService } from '../../shared/services/courses/courses.service';
 import { IsFreshStatusDirective } from '../../shared/directives/isFreshStatus.directive';
 import { DurationPipe } from '../../shared/pipes/duration/duration.pipe';
 import { OrderByPipe } from '../../shared/pipes/orderBy/order-by.pipe';
-import { FilterCoursePipe } from '../../shared/pipes/filterCourse/filterCourse.pipe';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 
 describe('CoursesListComponent', () => {
@@ -28,16 +28,16 @@ describe('CoursesListComponent', () => {
 
   const mockCourse = {
     id: 2,
-    title: `Video Course 2. Name tag`,
+    name: `Video Course 2. Name tag`,
     description: `Learn about where you can find course descriptions,what information they include,
     how they work, and details about various components of a course description.`,
-    creationDate: new Date(2019, 8, 1)
+    date: new Date(2019, 8, 1)
       .toLocaleDateString()
       .split('/')
       .join('-'),
-    duration: 115,
+    length: 115,
     isTopRated: false,
-    authors: ''
+    authors: [{ id: 1, name: '', lastName: '' }]
   };
 
   beforeEach(async(() => {
@@ -51,8 +51,13 @@ describe('CoursesListComponent', () => {
         DurationPipe,
         OrderByPipe
       ],
-      providers: [CoursesService, BreadcrumbsService, FilterCoursePipe],
-      imports: [RouterTestingModule, ReactiveFormsModule, ModalModule.forRoot()]
+      providers: [CoursesService, BreadcrumbsService],
+      imports: [
+        RouterTestingModule,
+        ReactiveFormsModule,
+        HttpClientModule,
+        ModalModule.forRoot()
+      ]
     })
       .compileComponents()
       .then(() => {
@@ -102,18 +107,5 @@ describe('CoursesListComponent', () => {
     });
 
     courseComponent.onDelete();
-  });
-
-  it('should contain showFiltered', done => {
-    const searchComponent = new SearchBarComponent(
-      new CoursesService(),
-      new FilterCoursePipe()
-    );
-
-    searchComponent.filtered.subscribe(data => {
-      expect(data).toBeTruthy();
-      done();
-    });
-    searchComponent.searchCourses();
   });
 });

@@ -2,25 +2,24 @@
   <div class="container-white form-container">
     <div class="login-form-head">
       <h2>Login</h2>
-      <span class="login-form__error">Wrong e-mail or password</span>
+      <span class="login-form__error">Wrong login or password</span>
     </div>
     <form
       [formGroup]="loginForm"
       class="form-column login-form"
       (ngSubmit)="onSubmit()"
     >
-      <label for="email" class="form-label">
-        <span class="login-form-label-text">E-mail:</span>
+      <label for="login" class="form-label">
+        <span class="login-form-label-text">Login:</span>
         <span class="form-hint">*required</span>
       </label>
       <input
         class="common-input"
-        type="email"
-        id="email"
-        formControlName="email"
-        placeholder="Enter e-mail"
+        type="login"
+        id="login"
+        formControlName="login"
+        placeholder="Enter login"
         required
-        email
       />
       <label for="password" class="form-label">
         <span class="login-form-label-text">Password</span>

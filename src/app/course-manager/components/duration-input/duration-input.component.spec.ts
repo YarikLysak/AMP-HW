@@ -30,7 +30,7 @@ describe('DurationInputComponent', () => {
     fixture = TestBed.createComponent(DurationInputComponent);
     component = fixture.componentInstance;
     component.parentForm = fb.group({
-      duration: ['', Validators.required]
+      length: ['', Validators.required]
     });
     fixture.detectChanges();
   }));

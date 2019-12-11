@@ -1,13 +1,28 @@
 @import '../../shared/styles'
 
 .course-list-wrapper
-    background: $pale-grey
+    background: $pale-gray
     padding: 20px 0
 
 .courses-list
     display: flex
     flex-direction: column
     max-height: 40%
+
+    &-header
+        display: flex
+        justify-content: space-between
+
+        & > div
+            display: flex
+            align-items: center
+            padding-left: 15px
+            position: relative
+
+        & .sort
+            position: absolute
+            left: 0
+
 
 .add-course-btn
     line-height: 2.57
@@ -23,3 +38,9 @@
 
     &>button
         margin-left: 20px
+
+.sort-active
+    color: $dark-sky-blue
+
+.sort-disabled
+    color: $gray

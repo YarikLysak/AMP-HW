@@ -1,10 +1,13 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { ActivatedRoute } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { CoursesService } from '../../shared/services/courses/courses.service';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
-import { Course } from '../../shared/course.model';
+import { Course } from '../../shared/models/course.model';
+import { Order } from '../../shared/pipes/orderBy/order.type';
 
 @Component({
   selector: 'app-courses-list',
@@ -12,16 +15,18 @@ import { Course } from '../../shared/course.model';
   styleUrls: ['./courses-list.component.sass']
 })
 export class CoursesListComponent implements OnInit {
-  public coursesList: Course[];
-  public fromNew = 'new';
-  public fromOld = 'old';
-  public needToDelete: Course = null;
+  public coursesList$: Observable<Course[]>;
+  public needToDelete$: Observable<Course>;
+  public isNeedNew = true;
+  public isCanBeMore = true;
+  public nextAmountOfCourses = 3;
+  public filterStatus: Order = 'asc';
   private modalRef: BsModalRef;
 
   @ViewChild('modal', { static: false }) modalTemplateRef: ElementRef;
 
   constructor(
-    private courseService: CoursesService,
+    private coursesService: CoursesService,
     private modalService: BsModalService,
     private breadcrumbsService: BreadcrumbsService,
     private route: ActivatedRoute
@@ -31,20 +36,40 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.coursesList = this.courseService.getCourses();
+    this.coursesList$ = this.coursesService
+      .getCourses(this.nextAmountOfCourses)
+      .pipe(map((courses: Course[]) => courses));
   }
 
-  showFiltered(filteredCoursesList: Course[]) {
-    this.coursesList = filteredCoursesList;
+  onSearch(searchString: string) {
+    this.nextAmountOfCourses = 3;
+    this.coursesList$ = this.coursesService
+      .searchCourses(searchString, this.nextAmountOfCourses)
+      .pipe(map((courses: Course[]) => courses));
+  }
+
+  onLoadMore() {
+    this.nextAmountOfCourses += 3;
+    this.coursesList$ = this.coursesService
+      .loadMoreCourses(this.nextAmountOfCourses)
+      .pipe(
+        map((updatedCourses: Course[]) => {
+          this.isCanBeMore = updatedCourses.length >= this.nextAmountOfCourses;
+          return updatedCourses;
+        })
+      );
+  }
+
+  onToggleFilter() {
+    this.isNeedNew = !this.isNeedNew;
+    this.filterStatus = this.isNeedNew ? 'asc' : 'desc';
   }
 
   onDelete(deletedId: number) {
-    this.needToDelete = this.coursesList.find(({ id }) => id === deletedId);
+    this.needToDelete$ = this.coursesList$.pipe(
+      map((courses: Course[]) => courses.find(({ id }) => id === deletedId))
+    );
     this.openModal();
-  }
-
-  private deleteCourse(id: number) {
-    this.coursesList = this.courseService.removeCourse(id);
   }
 
   openModal() {
@@ -53,13 +78,22 @@ export class CoursesListComponent implements OnInit {
     });
   }
 
-  confirm(): void {
+  onConfirm(id: number): void {
     this.modalRef.hide();
-    this.deleteCourse(this.needToDelete.id);
+    this.deleteCourse(id);
   }
 
-  decline(): void {
-    this.needToDelete = null;
+  onDecline(): void {
+    this.needToDelete$ = null;
     this.modalRef.hide();
+  }
+
+  private deleteCourse(id: number) {
+    this.coursesService.removeCourse(id).subscribe(data => {
+      console.log(data, 'delete');
+    });
+    this.coursesList$ = this.coursesService
+      .getCourses(this.nextAmountOfCourses)
+      .pipe(map((courses: Course[]) => courses));
   }
 }

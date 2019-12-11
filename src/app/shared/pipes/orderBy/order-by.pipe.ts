@@ -1,5 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Course } from '../../course.model';
+import { Course } from '../../models/course.model';
+import { Order } from './order.type';
 
 @Pipe({
   name: 'orderBy'
@@ -16,8 +17,12 @@ export class OrderByPipe implements PipeTransform {
       return -1;
     }
   }
-  transform(courses: Course[], desc): Course[] {
-    const sortedArr = [...courses].sort(this.compareNumeric);
-    return desc === 'new' ? sortedArr.reverse() : sortedArr;
+  transform(courses: Course[], by: string, order: Order): Course[] {
+    if (courses) {
+      const sortedArr = [...courses].sort((prev, next) =>
+        this.compareNumeric(prev[by], next[by])
+      );
+      return order === 'asc' ? sortedArr.reverse() : sortedArr;
+    }
   }
 }
