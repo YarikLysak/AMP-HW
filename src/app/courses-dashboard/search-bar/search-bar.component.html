@@ -6,13 +6,11 @@
       class="ic_search"
     />
     <input
+      (keyup)="searchCourses()"
       [formControl]="searchField"
       type="text"
       placeholder="Text to search"
       class="search-input"
     />
   </label>
-  <button type="button" class="accept-btn search-btn" (click)="searchCourses()">
-    Search
-  </button>
 </div>
