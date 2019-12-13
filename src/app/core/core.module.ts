@@ -8,6 +8,7 @@ import { UserToolsComponent } from './user-tools/user-tools.component';
 import { BreadcrumbsComponent } from './breadcrumbs/breadcrumbs.component';
 import { FooterComponent } from './footer/footer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
+import { SpinnerComponent } from './spinner/spinner.component';
 
 @NgModule({
   declarations: [
@@ -16,9 +17,15 @@ import { NotFoundComponent } from './not-found/not-found.component';
     UserToolsComponent,
     BreadcrumbsComponent,
     FooterComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    SpinnerComponent
   ],
   imports: [CommonModule, AppRoutingModule],
-  exports: [HeaderComponent, BreadcrumbsComponent, FooterComponent]
+  exports: [
+    HeaderComponent,
+    BreadcrumbsComponent,
+    FooterComponent,
+    SpinnerComponent
+  ]
 })
 export class CoreModule {}
