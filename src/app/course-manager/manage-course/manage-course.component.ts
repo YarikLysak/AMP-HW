@@ -3,9 +3,10 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
+import { Course } from '../../shared/models/course.model';
 import { CoursesService } from '../../shared/services/courses/courses.service';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
-import { Course } from '../../shared/models/course.model';
+import { SpinnerService } from '../../shared/services/spinner/spinner.service';
 
 @Component({
   selector: 'app-manage-course',
@@ -33,9 +34,10 @@ export class ManageCourseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private courseService: CoursesService,
+    private datePipe: DatePipe,
+    private coursesService: CoursesService,
     private breadcrumbsService: BreadcrumbsService,
-    private datePipe: DatePipe
+    private spinner: SpinnerService
   ) {
     const paramId = this.route.snapshot.paramMap.get('id');
     this.breadcrumb = this.route.snapshot.data.breadcrumbs;
@@ -49,7 +51,8 @@ export class ManageCourseComponent implements OnInit {
 
   ngOnInit() {
     if (this.editCourseId) {
-      this.courseService.getCourseById(this.editCourseId).subscribe(course => {
+      this.spinner.startStinner();
+      this.coursesService.getCourseById(this.editCourseId).subscribe(course => {
         this.editCourse = course;
         this.breadcrumbsService.setBreadcrumb(
           this.breadcrumb,
@@ -62,31 +65,37 @@ export class ManageCourseComponent implements OnInit {
           date: this.datePipe.transform(this.editCourse.date, 'd MMM, yyyy'),
           authors: this.editCourse.authors
         });
+        this.spinner.stopSpinner();
       });
     }
   }
 
   onSubmit() {
+    this.spinner.startStinner();
     if (this.editCourseId) {
-      this.courseService
+      this.coursesService
         .updateCourse({
           ...this.editCourse,
           ...this.manageCourseForm.value,
           date: new Date(this.manageCourseForm.controls.date.value)
         })
         .subscribe(
-          () => {},
+          () => {
+            this.spinner.stopSpinner();
+          },
           err => console.error(err)
         );
     } else {
-      this.courseService
+      this.coursesService
         .addCourse({
           ...this.manageCourseForm.value,
           date: new Date(this.manageCourseForm.controls.date.value),
           isTopRated: false
         })
         .subscribe(
-          () => {},
+          () => {
+            this.spinner.stopSpinner();
+          },
           err => console.error(err)
         );
     }
