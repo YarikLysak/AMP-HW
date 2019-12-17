@@ -6,7 +6,6 @@ import { DatePipe } from '@angular/common';
 import { Course } from '../../shared/models/course.model';
 import { CoursesService } from '../../shared/services/courses/courses.service';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
-import { SpinnerService } from '../../shared/services/spinner/spinner.service';
 
 @Component({
   selector: 'app-manage-course',
@@ -36,8 +35,7 @@ export class ManageCourseComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     private coursesService: CoursesService,
-    private breadcrumbsService: BreadcrumbsService,
-    private spinner: SpinnerService
+    private breadcrumbsService: BreadcrumbsService
   ) {
     const paramId = this.route.snapshot.paramMap.get('id');
     this.breadcrumb = this.route.snapshot.data.breadcrumbs;
@@ -51,7 +49,6 @@ export class ManageCourseComponent implements OnInit {
 
   ngOnInit() {
     if (this.editCourseId) {
-      this.spinner.startStinner();
       this.coursesService.getCourseById(this.editCourseId).subscribe(course => {
         this.editCourse = course;
         this.breadcrumbsService.setBreadcrumb(
@@ -65,13 +62,11 @@ export class ManageCourseComponent implements OnInit {
           date: this.datePipe.transform(this.editCourse.date, 'd MMM, yyyy'),
           authors: this.editCourse.authors
         });
-        this.spinner.stopSpinner();
       });
     }
   }
 
   onSubmit() {
-    this.spinner.startStinner();
     if (this.editCourseId) {
       this.coursesService
         .updateCourse({
@@ -80,9 +75,7 @@ export class ManageCourseComponent implements OnInit {
           date: new Date(this.manageCourseForm.controls.date.value)
         })
         .subscribe(
-          () => {
-            this.spinner.stopSpinner();
-          },
+          () => {},
           err => console.error(err)
         );
     } else {
@@ -93,9 +86,7 @@ export class ManageCourseComponent implements OnInit {
           isTopRated: false
         })
         .subscribe(
-          () => {
-            this.spinner.stopSpinner();
-          },
+          () => {},
           err => console.error(err)
         );
     }

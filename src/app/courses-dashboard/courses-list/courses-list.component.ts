@@ -8,7 +8,6 @@ import { Course } from '../../shared/models/course.model';
 import { Order } from '../../shared/pipes/orderBy/order.type';
 import { CoursesService } from '../../shared/services/courses/courses.service';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
-import { SpinnerService } from '../../shared/services/spinner/spinner.service';
 
 @Component({
   selector: 'app-courses-list',
@@ -30,46 +29,39 @@ export class CoursesListComponent implements OnInit {
     private route: ActivatedRoute,
     private modalService: BsModalService,
     private coursesService: CoursesService,
-    private breadcrumbsService: BreadcrumbsService,
-    private spinner: SpinnerService
+    private breadcrumbsService: BreadcrumbsService
   ) {
     const breadcrumb = this.route.snapshot.data.breadcrumbs;
     this.breadcrumbsService.setBreadcrumb(breadcrumb);
   }
 
   ngOnInit() {
-    this.spinner.startStinner();
     this.coursesList$ = this.coursesService
       .getCourses(this.nextAmountOfCourses)
       .pipe(
         map((courses: Course[]) => {
-          this.spinner.stopSpinner();
           return courses;
         })
       );
   }
 
   onSearch(searchString: string) {
-    this.spinner.startStinner();
     this.nextAmountOfCourses = 3;
     this.coursesList$ = this.coursesService
       .searchCourses(searchString, this.nextAmountOfCourses)
       .pipe(
         map((courses: Course[]) => {
-          this.spinner.stopSpinner();
           return courses;
         })
       );
   }
 
   onLoadMore() {
-    this.spinner.startStinner();
     this.nextAmountOfCourses += 3;
     this.coursesList$ = this.coursesService
       .loadMoreCourses(this.nextAmountOfCourses)
       .pipe(
         map((updatedCourses: Course[]) => {
-          this.spinner.stopSpinner();
           this.isCanBeMore = updatedCourses.length >= this.nextAmountOfCourses;
           return updatedCourses;
         })
@@ -105,16 +97,14 @@ export class CoursesListComponent implements OnInit {
   }
 
   private deleteCourse(id: number) {
-    this.spinner.startStinner();
-    this.coursesService.removeCourse(id).subscribe(() => {});
-
-    this.coursesList$ = this.coursesService
-      .getCourses(this.nextAmountOfCourses)
-      .pipe(
-        map((courses: Course[]) => {
-          this.spinner.stopSpinner();
-          return courses;
-        })
-      );
+    this.coursesService.removeCourse(id).subscribe(() => {
+      this.coursesList$ = this.coursesService
+        .getCourses(this.nextAmountOfCourses)
+        .pipe(
+          map((courses: Course[]) => {
+            return courses;
+          })
+        );
+    });
   }
 }

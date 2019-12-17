@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class SpinnerService {
   public isShow = new BehaviorSubject<boolean>(true);
 
-  startStinner() {
+  startSpinner() {
     this.isShow.next(true);
   }
 

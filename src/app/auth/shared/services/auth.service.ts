@@ -4,7 +4,6 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { User } from '../models/user.model';
-import { SpinnerService } from '../../../shared/services/spinner/spinner.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,23 +13,17 @@ export class AuthService {
   public currentUser = new BehaviorSubject<User>(null);
   private USERS_URL = 'http://localhost:3004/users';
 
-  constructor(
-    private httpClient: HttpClient,
-    private router: Router,
-    private spinner: SpinnerService
-  ) {
+  constructor(private httpClient: HttpClient, private router: Router) {
     this.loginByToken();
   }
 
   login(authData): void {
-    this.spinner.startStinner();
     this.httpClient
       .get(`${this.USERS_URL}/?login=${authData.login}`)
       .subscribe(([user]: User[]) => {
         if (!user) {
           console.log('no such user!!!');
           this.isAuth.next(false);
-          this.spinner.stopSpinner();
           return;
         }
 
@@ -38,19 +31,16 @@ export class AuthService {
         this.isAuth.next(isPasswordCorrect);
         if (!isPasswordCorrect) {
           console.log('wrong password!');
-          this.spinner.stopSpinner();
           return;
         }
 
         localStorage.setItem('user-token', user.fakeToken);
         this.currentUser.next(user);
-        this.spinner.stopSpinner();
         this.router.navigate(['/courses']);
       });
   }
 
   private loginByToken() {
-    this.spinner.startStinner();
     const fakeToken = localStorage.getItem('user-token');
     if (fakeToken) {
       this.httpClient
@@ -59,7 +49,6 @@ export class AuthService {
           if (user) {
             this.currentUser.next(user);
             this.isAuth.next(true);
-            this.spinner.stopSpinner();
             this.router.navigate(['/courses']);
           }
         });

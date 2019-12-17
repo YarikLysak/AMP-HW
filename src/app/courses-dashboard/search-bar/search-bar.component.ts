@@ -20,11 +20,13 @@ export class SearchBarComponent {
   searchCourses() {
     this.searchField.valueChanges
       .pipe(
-        debounceTime(500),
-        filter(searchFieldData => searchFieldData.length > 2),
-        debounceTime(800),
-        map(data => data)
+        debounceTime(750),
+        filter(
+          searchFieldData =>
+            searchFieldData.length > 2 || searchFieldData.length === 0
+        ),
+        map(searchData => searchData)
       )
-      .subscribe(data => this.searchString.emit(data));
+      .subscribe(searchData => this.searchString.emit(searchData));
   }
 }
