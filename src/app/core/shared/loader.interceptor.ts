@@ -6,22 +6,22 @@ import {
   HttpEvent
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { tap, finalize } from 'rxjs/operators';
+import { finalize, tap } from 'rxjs/operators';
 
-import { SpinnerService } from './spinner.service';
+import { LoaderService } from './loader.service';
 
 @Injectable()
-export class SpinnerInterceptor implements HttpInterceptor {
-  constructor(private spinner: SpinnerService) {}
+export class LoaderInterceptor implements HttpInterceptor {
+  constructor(private loaderService: LoaderService) {}
 
   intercept(
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.spinner.startSpinner();
+    this.loaderService.startLoading();
 
     return next
       .handle(request)
-      .pipe(finalize(() => this.spinner.stopSpinner()));
+      .pipe(finalize(() => this.loaderService.stopLoading()));
   }
 }

@@ -1,17 +1,9 @@
-import { Component } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { SpinnerService } from '../shared/spinner.service';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 
 @Component({
   selector: 'app-spinner',
   templateUrl: './spinner.component.html',
-  styleUrls: ['./spinner.component.sass']
+  styleUrls: ['./spinner.component.sass'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class SpinnerComponent {
-  public isShow$: Observable<boolean>;
-
-  constructor(private spinner: SpinnerService) {
-    this.isShow$ = this.spinner.getSpinnerStatus();
-  }
-}
+export class SpinnerComponent {}

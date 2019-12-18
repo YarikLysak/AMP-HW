@@ -11,7 +11,7 @@ import { FooterComponent } from './footer/footer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 
-import { SpinnerInterceptor } from './shared/spinner.interceptor';
+import { LoaderInterceptor } from './shared/loader.interceptor';
 
 @NgModule({
   declarations: [
@@ -31,7 +31,7 @@ import { SpinnerInterceptor } from './shared/spinner.interceptor';
     SpinnerComponent
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
   ]
 })
 export class CoreModule {}
