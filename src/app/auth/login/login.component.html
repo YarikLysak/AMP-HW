@@ -2,7 +2,9 @@
   <div class="container-white form-container">
     <div class="login-form-head">
       <h2>Login</h2>
-      <span class="login-form__error">Wrong login or password</span>
+      <span class="login-form__error" *ngIf="error$ | async as error"
+        >Wrong {{ error }}</span
+      >
     </div>
     <form
       [formGroup]="loginForm"
