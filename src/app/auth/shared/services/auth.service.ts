@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { User } from '../models/user.model';
+import { LoaderService } from '../../../core/shared/loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,11 @@ export class AuthService {
   public currentUser = new BehaviorSubject<User>(null);
   private USERS_URL = 'http://localhost:3004/users';
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private loaderService: LoaderService
+  ) {
     this.loginByToken();
   }
 
@@ -52,6 +57,8 @@ export class AuthService {
             this.router.navigate(['/courses']);
           }
         });
+    } else {
+      this.loaderService.stopLoading();
     }
   }
 
