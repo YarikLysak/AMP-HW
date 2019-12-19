@@ -80,7 +80,7 @@ describe('CoursesListComponent', () => {
   });
 
   it('should create a coursesList', () => {
-    const coursesList = testBedService.getCourses();
+    const coursesList = testBedService.getCourses(3);
     expect(coursesList).toBeTruthy();
   });
 
