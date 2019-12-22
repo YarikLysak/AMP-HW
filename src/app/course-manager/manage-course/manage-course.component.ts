@@ -3,9 +3,9 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
+import { Course } from '../../shared/models/course.model';
 import { CoursesService } from '../../shared/services/courses/courses.service';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
-import { Course } from '../../shared/models/course.model';
 
 @Component({
   selector: 'app-manage-course',
@@ -33,9 +33,9 @@ export class ManageCourseComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private courseService: CoursesService,
-    private breadcrumbsService: BreadcrumbsService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private coursesService: CoursesService,
+    private breadcrumbsService: BreadcrumbsService
   ) {
     const paramId = this.route.snapshot.paramMap.get('id');
     this.breadcrumb = this.route.snapshot.data.breadcrumbs;
@@ -49,7 +49,7 @@ export class ManageCourseComponent implements OnInit {
 
   ngOnInit() {
     if (this.editCourseId) {
-      this.courseService.getCourseById(this.editCourseId).subscribe(course => {
+      this.coursesService.getCourseById(this.editCourseId).subscribe(course => {
         this.editCourse = course;
         this.breadcrumbsService.setBreadcrumb(
           this.breadcrumb,
@@ -68,7 +68,7 @@ export class ManageCourseComponent implements OnInit {
 
   onSubmit() {
     if (this.editCourseId) {
-      this.courseService
+      this.coursesService
         .updateCourse({
           ...this.editCourse,
           ...this.manageCourseForm.value,
@@ -79,7 +79,7 @@ export class ManageCourseComponent implements OnInit {
           err => console.error(err)
         );
     } else {
-      this.courseService
+      this.coursesService
         .addCourse({
           ...this.manageCourseForm.value,
           date: new Date(this.manageCourseForm.controls.date.value),

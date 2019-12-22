@@ -4,10 +4,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { CoursesService } from '../../shared/services/courses/courses.service';
-import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 import { Course } from '../../shared/models/course.model';
 import { Order } from '../../shared/pipes/orderBy/order.type';
+import { CoursesService } from '../../shared/services/courses/courses.service';
+import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 
 @Component({
   selector: 'app-courses-list',
@@ -26,10 +26,10 @@ export class CoursesListComponent implements OnInit {
   @ViewChild('modal', { static: false }) modalTemplateRef: ElementRef;
 
   constructor(
-    private coursesService: CoursesService,
+    private route: ActivatedRoute,
     private modalService: BsModalService,
-    private breadcrumbsService: BreadcrumbsService,
-    private route: ActivatedRoute
+    private coursesService: CoursesService,
+    private breadcrumbsService: BreadcrumbsService
   ) {
     const breadcrumb = this.route.snapshot.data.breadcrumbs;
     this.breadcrumbsService.setBreadcrumb(breadcrumb);
@@ -38,14 +38,22 @@ export class CoursesListComponent implements OnInit {
   ngOnInit() {
     this.coursesList$ = this.coursesService
       .getCourses(this.nextAmountOfCourses)
-      .pipe(map((courses: Course[]) => courses));
+      .pipe(
+        map((courses: Course[]) => {
+          return courses;
+        })
+      );
   }
 
   onSearch(searchString: string) {
     this.nextAmountOfCourses = 3;
     this.coursesList$ = this.coursesService
       .searchCourses(searchString, this.nextAmountOfCourses)
-      .pipe(map((courses: Course[]) => courses));
+      .pipe(
+        map((courses: Course[]) => {
+          return courses;
+        })
+      );
   }
 
   onLoadMore() {
@@ -89,11 +97,14 @@ export class CoursesListComponent implements OnInit {
   }
 
   private deleteCourse(id: number) {
-    this.coursesService.removeCourse(id).subscribe(data => {
-      console.log(data, 'delete');
+    this.coursesService.removeCourse(id).subscribe(() => {
+      this.coursesList$ = this.coursesService
+        .getCourses(this.nextAmountOfCourses)
+        .pipe(
+          map((courses: Course[]) => {
+            return courses;
+          })
+        );
     });
-    this.coursesList$ = this.coursesService
-      .getCourses(this.nextAmountOfCourses)
-      .pipe(map((courses: Course[]) => courses));
   }
 }

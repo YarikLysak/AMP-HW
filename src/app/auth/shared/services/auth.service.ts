@@ -4,6 +4,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 
 import { User } from '../models/user.model';
+import { LoaderService } from '../../../core/shared/loader.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,13 @@ export class AuthService {
   public isAuth = new BehaviorSubject<boolean>(false);
   public currentUser = new BehaviorSubject<User>(null);
   private USERS_URL = 'http://localhost:3004/users';
+  private error$ = new BehaviorSubject<string>('');
 
-  constructor(private httpClient: HttpClient, private router: Router) {
+  constructor(
+    private httpClient: HttpClient,
+    private router: Router,
+    private loaderService: LoaderService
+  ) {
     this.loginByToken();
   }
 
@@ -22,6 +28,7 @@ export class AuthService {
       .get(`${this.USERS_URL}/?login=${authData.login}`)
       .subscribe(([user]: User[]) => {
         if (!user) {
+          this.setError('login');
           console.log('no such user!!!');
           this.isAuth.next(false);
           return;
@@ -30,10 +37,10 @@ export class AuthService {
         const isPasswordCorrect = user.password === authData.password;
         this.isAuth.next(isPasswordCorrect);
         if (!isPasswordCorrect) {
+          this.setError('password');
           console.log('wrong password!');
           return;
         }
-
         localStorage.setItem('user-token', user.fakeToken);
         this.currentUser.next(user);
         this.router.navigate(['/courses']);
@@ -52,14 +59,25 @@ export class AuthService {
             this.router.navigate(['/courses']);
           }
         });
+    } else {
+      this.loaderService.stopLoading();
     }
   }
 
   logout() {
+    this.setError('');
     localStorage.removeItem('user-token');
     this.currentUser.next(null);
     this.isAuth.next(false);
     this.router.navigate(['/login']);
+  }
+
+  private setError(error: string) {
+    this.error$.next(error);
+  }
+
+  getError(): Observable<string> {
+    return this.error$.asObservable();
   }
 
   isAuthenticated(): Observable<boolean> {

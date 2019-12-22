@@ -24,15 +24,4 @@ describe('SearchBarComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should emit search click', () => {
-    const searchSpy = spyOn(component, 'searchCourses');
-    const debugEl = fixture.debugElement.nativeElement;
-    const searchBnt = debugEl.querySelector('.search-btn');
-
-    searchBnt.click();
-    fixture.detectChanges();
-
-    expect(searchSpy).toHaveBeenCalled();
-  });
 });

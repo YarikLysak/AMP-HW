@@ -5,10 +5,7 @@ import {
   ChangeDetectionStrategy
 } from '@angular/core';
 import { FormControl } from '@angular/forms';
-import { Observable } from 'rxjs';
-
-import { CoursesService } from '../../shared/services/courses/courses.service';
-import { Course } from '../../shared/models/course.model';
+import { map, filter, debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search-bar',
@@ -21,6 +18,15 @@ export class SearchBarComponent {
   @Output() searchString = new EventEmitter<string>();
 
   searchCourses() {
-    this.searchString.emit(this.searchField.value);
+    this.searchField.valueChanges
+      .pipe(
+        debounceTime(750),
+        filter(
+          searchFieldData =>
+            searchFieldData.length > 2 || searchFieldData.length === 0
+        ),
+        map(searchData => searchData)
+      )
+      .subscribe(searchData => this.searchString.emit(searchData));
   }
 }

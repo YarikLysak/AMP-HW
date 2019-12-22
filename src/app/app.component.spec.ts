@@ -10,6 +10,7 @@ import { FooterComponent } from './core/footer/footer.component';
 import { LogoComponent } from './core/logo/logo.component';
 import { UserToolsComponent } from './core/user-tools/user-tools.component';
 import { BreadcrumbsComponent } from './core/breadcrumbs/breadcrumbs.component';
+import { SpinnerComponent } from './core/spinner/spinner.component';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
@@ -22,7 +23,8 @@ describe('AppComponent', () => {
         UserToolsComponent,
         FooterComponent,
         BreadcrumbsComponent,
-        SearchBarComponent
+        SearchBarComponent,
+        SpinnerComponent
       ],
       providers: []
     }).compileComponents();
