@@ -12,7 +12,6 @@ import { AuthModule } from './auth/auth.module';
 import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
-import { simpleReducer } from './reducers/simple.reducer';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,8 +22,7 @@ import { simpleReducer } from './reducers/simple.reducer';
     CoreModule,
     AuthModule,
     SharedModule,
-    ModalModule.forRoot(),
-    StoreModule.forRoot({ message: simpleReducer })
+    ModalModule.forRoot()
   ],
   providers: [BsModalService],
   bootstrap: [AppComponent]
