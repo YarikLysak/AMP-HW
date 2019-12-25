@@ -3,6 +3,8 @@ import { Observable } from 'rxjs';
 
 import { AuthService } from './auth/shared/services/auth.service';
 import { LoaderService } from './core/shared/loader.service';
+import { Store, select } from '@ngrx/store';
+import { AuthState } from './auth/shared/models/auth-state.model';
 
 @Component({
   selector: 'app-root',
@@ -11,16 +13,15 @@ import { LoaderService } from './core/shared/loader.service';
 })
 export class AppComponent implements OnInit {
   public title = 'AMP-HW';
-  public isAuth$: Observable<boolean>;
+  public isAuth$: Observable<boolean> = this.store.pipe(select('isAuth'));
   public loadStatus$: Observable<boolean>;
 
   constructor(
-    private auth: AuthService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private store: Store<AuthState>
   ) {}
 
   ngOnInit() {
-    this.isAuth$ = this.auth.isAuthenticated();
     this.loadStatus$ = this.loaderService.getLoaderStatus();
   }
 }

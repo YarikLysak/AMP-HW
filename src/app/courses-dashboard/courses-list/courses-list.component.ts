@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 
-import { CourseListState } from '../../shared/models/course-state.model';
+import { CourseListState } from '../../shared/models/courses-list-state.model';
 import { Course } from '../../shared/models/course.model';
 import { Order } from '../../shared/pipes/orderBy/order.type';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';

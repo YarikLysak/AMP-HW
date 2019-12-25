@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-
-import { AuthService } from '../shared/services/auth.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+
+import { AuthState } from '../shared/models/auth-state.model';
+import { loginAction } from '../shared/store/auth/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +12,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent {
-  isUserAuthenticated = false;
   returnUrl = '';
   error$: Observable<string>;
 
@@ -19,11 +20,12 @@ export class LoginComponent {
     password: new FormControl('')
   });
 
-  constructor(private auth: AuthService) {}
+  constructor(private store: Store<AuthState>) {
+    this.error$ = this.store.select('error');
+  }
 
   onSubmit() {
-    this.error$ = this.auth.getError();
-    this.auth.login(this.loginForm.value);
+    this.store.dispatch(loginAction({ loginData: this.loginForm.value }));
     this.loginForm.reset();
   }
 }
