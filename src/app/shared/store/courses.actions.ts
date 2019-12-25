@@ -10,6 +10,11 @@ export const getCoursesSuccessAction = createAction(
   props<{ courses: Course[] }>()
 );
 
+export const getSearchedAction = createAction(
+  '[COURSES] Get Searched Courses',
+  props<{ searchString: string; count: number }>()
+);
+
 export const addCourseAction = createAction('[COURSES] Add Course');
 export const addCourseSuccessAction = createAction(
   '[COURSES] Add Course Success',

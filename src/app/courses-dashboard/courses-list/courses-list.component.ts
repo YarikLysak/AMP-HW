@@ -11,7 +11,8 @@ import { Order } from '../../shared/pipes/orderBy/order.type';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 import {
   getCoursesAction,
-  deleteCourseAction
+  deleteCourseAction,
+  getSearchedAction
 } from '../../shared/store/courses.actions';
 
 @Component({
@@ -46,14 +47,12 @@ export class CoursesListComponent implements OnInit {
     this.store.dispatch(getCoursesAction({ count: this.nextAmountOfCourses }));
   }
 
-  // onSearch(searchString: string) {
-  //   this.nextAmountOfCourses = 3;
-  //   this.coursesService
-  //     .searchCourses(searchString, this.nextAmountOfCourses)
-  //     .subscribe((courses: Course[]) => {
-  //       this.store.dispatch(getCoursesAction({ courses }));
-  //     });
-  // }
+  onSearch(searchString: string) {
+    this.nextAmountOfCourses = 3;
+    this.store.dispatch(
+      getSearchedAction({ searchString, count: this.nextAmountOfCourses })
+    );
+  }
 
   onLoadMore() {
     this.nextAmountOfCourses += 3;

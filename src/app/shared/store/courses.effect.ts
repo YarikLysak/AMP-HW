@@ -7,7 +7,8 @@ import { Course } from '../models/course.model';
 import {
   getCoursesAction,
   deleteCourseAction,
-  getCoursesSuccessAction
+  getCoursesSuccessAction,
+  getSearchedAction
 } from './courses.actions';
 
 @Injectable()
@@ -18,6 +19,19 @@ export class CoursesListEffects {
       mergeMap(({ count }) =>
         this.coursesService
           .getCourses(count)
+          .pipe(
+            map((courses: Course[]) => getCoursesSuccessAction({ courses }))
+          )
+      )
+    )
+  );
+
+  getSearched$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getSearchedAction),
+      mergeMap(({ searchString, count }) =>
+        this.coursesService
+          .searchCourses(searchString, count)
           .pipe(
             map((courses: Course[]) => getCoursesSuccessAction({ courses }))
           )
