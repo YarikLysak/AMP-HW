@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { mergeMap, map } from 'rxjs/operators';
 
@@ -8,7 +9,12 @@ import {
   getCoursesAction,
   deleteCourseAction,
   getCoursesSuccessAction,
-  getSearchedAction
+  getSearchedAction,
+  getCourseByIdAction,
+  getCourseByIdSuccessAction,
+  addCourseAction,
+  editCourseAction,
+  manageCourseSuccessAction
 } from './courses.actions';
 
 @Injectable()
@@ -39,6 +45,45 @@ export class CoursesListEffects {
     )
   );
 
+  getCourseById$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getCourseByIdAction),
+      mergeMap(({ id }) =>
+        this.coursesService
+          .getCourseById(id)
+          .pipe(map((course: Course) => getCourseByIdSuccessAction({ course })))
+      )
+    )
+  );
+
+  addCourse$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(addCourseAction),
+      mergeMap(({ course }) =>
+        this.coursesService.addCourse(course).pipe(
+          map(() => {
+            this.router.navigate(['/courses']);
+            return manageCourseSuccessAction({ course });
+          })
+        )
+      )
+    )
+  );
+  editCourse$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(editCourseAction),
+      mergeMap(({ course }) => {
+        console.log(course);
+        return this.coursesService.updateCourse(course).pipe(
+          map(() => {
+            this.router.navigate(['/courses']);
+            return manageCourseSuccessAction({ course });
+          })
+        );
+      })
+    )
+  );
+
   deleteCourse$ = createEffect(() =>
     this.actions$.pipe(
       ofType(deleteCourseAction),
@@ -52,6 +97,7 @@ export class CoursesListEffects {
 
   constructor(
     private actions$: Actions,
-    private coursesService: CoursesService
+    private coursesService: CoursesService,
+    private router: Router
   ) {}
 }

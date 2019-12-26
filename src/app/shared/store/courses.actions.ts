@@ -15,9 +15,26 @@ export const getSearchedAction = createAction(
   props<{ searchString: string; count: number }>()
 );
 
-export const addCourseAction = createAction('[COURSES] Add Course');
-export const addCourseSuccessAction = createAction(
-  '[COURSES] Add Course Success',
+export const getCourseByIdAction = createAction(
+  '[COURSES] Get Course By Id',
+  props<{ id: number }>()
+);
+export const getCourseByIdSuccessAction = createAction(
+  '[COURSES] Get Course By Id Success',
+  props<{ course: Course }>()
+);
+
+export const addCourseAction = createAction(
+  '[COURSES] Add Course',
+  props<{ course: Course }>()
+);
+export const editCourseAction = createAction(
+  '[COURSES] Edit Course',
+  props<{ course: Course }>()
+);
+
+export const manageCourseSuccessAction = createAction(
+  '[COURSES] Add/Edit Course Success',
   props<{ course: Course }>()
 );
 

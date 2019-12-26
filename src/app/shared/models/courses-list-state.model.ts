@@ -1,5 +1,6 @@
 import { Course } from './course.model';
 
-export interface CourseListState {
+export interface CoursesState {
   coursesList: Course[];
+  course: Course;
 }

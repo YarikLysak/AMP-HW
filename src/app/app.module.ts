@@ -15,6 +15,7 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 
 import { coursesListReducer } from './shared/store/coursesList.reducer';
+import { courseReducer } from './shared/store/course.reducer';
 import { CoursesListEffects } from './shared/store/courses.effect';
 import { authReducer } from './auth/shared/store/auth/auth.reducer';
 import { errorsReducer } from './auth/shared/store/errors/errors.reducer';
@@ -33,6 +34,7 @@ import { AuthEffects } from './auth/shared/store/auth/auth.effect';
     ModalModule.forRoot(),
     StoreModule.forRoot({
       coursesList: coursesListReducer,
+      course: courseReducer,
       user: authReducer,
       errors: errorsReducer,
       isAuth: isAuthReducer

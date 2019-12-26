@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { mergeMap, map, tap } from 'rxjs/operators';
 
@@ -11,7 +12,6 @@ import {
 } from './auth.actions';
 import { User } from '../../models/user.model';
 import { errorsAction } from '../errors/errors.actions';
-import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthEffects {

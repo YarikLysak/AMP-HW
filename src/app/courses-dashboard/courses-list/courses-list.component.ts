@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Store, select } from '@ngrx/store';
 
-import { CourseListState } from '../../shared/models/courses-list-state.model';
+import { CoursesState } from '../../shared/models/courses-list-state.model';
 import { Course } from '../../shared/models/course.model';
 import { Order } from '../../shared/pipes/orderBy/order.type';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
@@ -34,7 +34,7 @@ export class CoursesListComponent implements OnInit {
   @ViewChild('modal', { static: false }) modalTemplateRef: ElementRef;
 
   constructor(
-    private store: Store<CourseListState>,
+    private store: Store<CoursesState>,
     private route: ActivatedRoute,
     private modalService: BsModalService,
     private breadcrumbsService: BreadcrumbsService
