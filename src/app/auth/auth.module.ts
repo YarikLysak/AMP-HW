@@ -16,7 +16,7 @@ import { isAuthReducer } from './shared/store/auth/isAuth.reducer';
     CommonModule,
     ReactiveFormsModule,
     StoreModule.forRoot({
-      auth: authReducer,
+      user: authReducer,
       errors: errorsReducer,
       isAuth: isAuthReducer
     }),

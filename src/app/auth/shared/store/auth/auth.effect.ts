@@ -40,25 +40,20 @@ export class AuthEffects {
   loggedInAction$ = createEffect(() =>
     this.actions$.pipe(
       ofType(loginSuccessAction),
-      tap(({ user }) => {
+      map(({ user, isAuth }) => {
         localStorage.setItem('user-token', user.fakeToken);
         this.router.navigate(['/courses']);
+        return setIsAuthAction({ isAuth });
       })
-    )
-  );
-
-  setIsAuth$ = createEffect(() =>
-    this.actions$.pipe(
-      ofType(loginSuccessAction),
-      map(({ isAuth }) => setIsAuthAction({ isAuth }))
     )
   );
 
   logout$ = createEffect(() =>
     this.actions$.pipe(
       ofType(logoutAction),
-      tap(() => {
+      map(({ isAuth }) => {
         this.auth.logout();
+        return setIsAuthAction({ isAuth });
       })
     )
   );

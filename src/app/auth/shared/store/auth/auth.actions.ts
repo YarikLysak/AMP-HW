@@ -19,4 +19,7 @@ export const loginErrorsAction = createAction(
   props<{ error: string }>()
 );
 
-export const logoutAction = createAction('[AUTH] Logout');
+export const logoutAction = createAction(
+  '[AUTH] Logout',
+  props<{ isAuth: boolean }>()
+);
