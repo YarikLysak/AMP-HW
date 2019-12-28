@@ -5,7 +5,7 @@ import { getCourseByIdSuccessAction } from './courses.actions';
 
 export const initialState: Course | null = null;
 
-const courseSubReduser = createReducer(
+const courseSubReducer = createReducer(
   initialState,
   on(getCourseByIdSuccessAction, (state, action) => {
     return { ...action.course };
@@ -13,5 +13,5 @@ const courseSubReduser = createReducer(
 );
 
 export function courseReducer(state, action) {
-  return courseSubReduser(state, action);
+  return courseSubReducer(state, action);
 }

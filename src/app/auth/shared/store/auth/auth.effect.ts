@@ -13,6 +13,18 @@ import {
 import { User } from '../../models/user.model';
 import { errorsAction } from '../errors/errors.actions';
 
+const onGetUser = (user: User, { password }) => {
+  if (!user) {
+    console.log('no such user!!!');
+    return errorsAction({ error: 'login' });
+  } else if (user.password !== password) {
+    console.log('wrong password!');
+    return errorsAction({ error: 'password' });
+  } else {
+    return loginSuccessAction({ user, isAuth: true });
+  }
+};
+
 @Injectable()
 export class AuthEffects {
   login$ = createEffect(() =>
@@ -22,15 +34,7 @@ export class AuthEffects {
         this.auth.login(loginData).pipe(
           map(([user]: User[]) => {
             console.log(user);
-            if (!user) {
-              console.log('no such user!!!');
-              return errorsAction({ error: 'login' });
-            } else if (user.password !== loginData.password) {
-              console.log('wrong password!');
-              return errorsAction({ error: 'password' });
-            } else {
-              return loginSuccessAction({ user, isAuth: true });
-            }
+            return onGetUser(user, loginData);
           })
         )
       )
