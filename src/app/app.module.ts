@@ -14,12 +14,7 @@ import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
 
-import { coursesListReducer } from './shared/store/coursesList.reducer';
-import { courseReducer } from './shared/store/course.reducer';
 import { CoursesListEffects } from './shared/store/courses.effect';
-import { authReducer } from './auth/shared/store/auth/auth.reducer';
-import { errorsReducer } from './auth/shared/store/errors/errors.reducer';
-import { isAuthReducer } from './auth/shared/store/auth/isAuth.reducer';
 import { AuthEffects } from './auth/shared/store/auth/auth.effect';
 
 @NgModule({
@@ -32,13 +27,7 @@ import { AuthEffects } from './auth/shared/store/auth/auth.effect';
     AuthModule,
     SharedModule,
     ModalModule.forRoot(),
-    StoreModule.forRoot({
-      coursesList: coursesListReducer,
-      course: courseReducer,
-      user: authReducer,
-      errors: errorsReducer,
-      isAuth: isAuthReducer
-    }),
+    StoreModule.forRoot({}),
     EffectsModule.forRoot([CoursesListEffects, AuthEffects])
   ],
   providers: [BsModalService],

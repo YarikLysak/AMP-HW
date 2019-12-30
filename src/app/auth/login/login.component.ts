@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { AuthState } from '../shared/store/auth-state.model';
+import { AppState } from '../../store/app-state.model';
 import { login } from '../shared/store/auth/auth.actions';
 import { getError } from '../shared/store/auth.selectors';
 
@@ -21,7 +21,7 @@ export class LoginComponent {
     password: new FormControl('')
   });
 
-  constructor(private store: Store<AuthState>) {
+  constructor(private store: Store<AppState>) {
     this.error$ = this.store.select(getError);
   }
 

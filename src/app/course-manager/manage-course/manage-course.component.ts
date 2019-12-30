@@ -12,7 +12,7 @@ import {
   addCourse,
   getCourseById
 } from '../../shared/store/courses.actions';
-import { CoursesState } from '../../shared/store/courses-state.model';
+import { AppState } from '../../store/app-state.model';
 import { getCourse } from '../../shared/store/courses.selectors';
 
 @Component({
@@ -42,7 +42,7 @@ export class ManageCourseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private store: Store<CoursesState>,
+    private store: Store<AppState>,
     private breadcrumbsService: BreadcrumbsService
   ) {
     const paramId = this.route.snapshot.paramMap.get('id');

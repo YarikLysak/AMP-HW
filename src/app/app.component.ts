@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { LoaderService } from './core/shared/loader.service';
-import { AuthState } from './auth/shared/store/auth-state.model';
+import { AppState } from './store/app-state.model';
 import { getIsAuth } from './auth/shared/store/auth.selectors';
 
 @Component({
@@ -18,7 +18,7 @@ export class AppComponent implements OnInit {
 
   constructor(
     private loaderService: LoaderService,
-    private store: Store<AuthState>
+    private store: Store<AppState>
   ) {}
 
   ngOnInit() {
