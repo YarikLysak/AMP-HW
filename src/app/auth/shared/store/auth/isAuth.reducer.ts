@@ -1,11 +1,11 @@
 import { on, createReducer } from '@ngrx/store';
-import { setIsAuthAction } from './auth.actions';
+import { setIsAuth } from './auth.actions';
 
 export const initialState = false;
 
 const isAuthSubReducer = createReducer(
   initialState,
-  on(setIsAuthAction, (state, action) => {
+  on(setIsAuth, (state, action) => {
     return action.isAuth;
   })
 );

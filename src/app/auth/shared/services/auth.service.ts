@@ -1,13 +1,13 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { User } from '../models/user.model';
 import { Login } from '../models/login.model';
-import { Store } from '@ngrx/store';
-import { AuthState } from '../models/auth-state.model';
-import { loginSuccessAction } from '../store/auth/auth.actions';
+import { AuthState } from '../store/auth-state.model';
+import { loginSuccess } from '../store/auth/auth.actions';
 
 @Injectable({
   providedIn: 'root'
@@ -37,7 +37,7 @@ export class AuthService {
         .get(`${this.USERS_URL}/?fakeToken=${fakeToken}`)
         .subscribe(([user]: User[]) => {
           if (user) {
-            this.store.dispatch(loginSuccessAction({ user, isAuth: true }));
+            this.store.dispatch(loginSuccess({ user, isAuth: true }));
           }
         });
     }

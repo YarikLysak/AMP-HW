@@ -8,11 +8,12 @@ import { Observable } from 'rxjs';
 import { Course } from '../../shared/models/course.model';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 import {
-  editCourseAction,
-  addCourseAction,
-  getCourseByIdAction
+  editCourse,
+  addCourse,
+  getCourseById
 } from '../../shared/store/courses.actions';
-import { CoursesState } from '../../shared/models/courses-list-state.model';
+import { CoursesState } from '../../shared/store/courses-state.model';
+import { getCourse } from '../../shared/store/courses.selectors';
 
 @Component({
   selector: 'app-manage-course',
@@ -20,7 +21,7 @@ import { CoursesState } from '../../shared/models/courses-list-state.model';
   styleUrls: ['./manage-course.component.sass']
 })
 export class ManageCourseComponent implements OnInit {
-  public editCourse$: Observable<Course> = this.store.pipe(select('course'));
+  public editCourse$: Observable<Course> = this.store.select(getCourse);
   public editCourseId: number | null = null;
   private breadcrumb = '';
 
@@ -48,7 +49,7 @@ export class ManageCourseComponent implements OnInit {
     this.breadcrumb = this.route.snapshot.data.breadcrumbs;
     if (paramId) {
       this.editCourseId = +paramId;
-      this.store.dispatch(getCourseByIdAction({ id: this.editCourseId }));
+      this.store.dispatch(getCourseById({ id: this.editCourseId }));
     } else {
       this.editCourseId = null;
       this.breadcrumbsService.setBreadcrumb(this.breadcrumb);
@@ -80,7 +81,7 @@ export class ManageCourseComponent implements OnInit {
           ...this.manageCourseForm.value,
           date: new Date(this.manageCourseForm.controls.date.value)
         };
-        this.store.dispatch(editCourseAction({ course: newCourse }));
+        this.store.dispatch(editCourse({ course: newCourse }));
       });
     } else {
       newCourse = {
@@ -88,7 +89,7 @@ export class ManageCourseComponent implements OnInit {
         date: new Date(this.manageCourseForm.controls.date.value),
         isTopRated: false
       };
-      this.store.dispatch(addCourseAction({ course: newCourse }));
+      this.store.dispatch(addCourse({ course: newCourse }));
     }
     this.manageCourseForm.reset();
   }

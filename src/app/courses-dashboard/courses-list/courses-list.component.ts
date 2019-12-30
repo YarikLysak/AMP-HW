@@ -1,19 +1,20 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
 
-import { CoursesState } from '../../shared/models/courses-list-state.model';
+import { CoursesState } from '../../shared/store/courses-state.model';
 import { Course } from '../../shared/models/course.model';
 import { Order } from '../../shared/pipes/orderBy/order.type';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 import {
-  getCoursesAction,
-  deleteCourseAction,
-  getSearchedAction
+  getCourses,
+  deleteCourse,
+  getSearched
 } from '../../shared/store/courses.actions';
+import { getCoursesList } from '../../shared/store/courses.selectors';
 
 @Component({
   selector: 'app-courses-list',
@@ -21,9 +22,7 @@ import {
   styleUrls: ['./courses-list.component.sass']
 })
 export class CoursesListComponent implements OnInit {
-  public coursesList$: Observable<Course[]> = this.store.pipe(
-    select('coursesList')
-  );
+  public coursesList$: Observable<Course[]> = this.store.select(getCoursesList);
   public needToDelete$: Observable<Course>;
   public isNeedNew = true;
   public isCanBeMore = true;
@@ -44,19 +43,19 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.store.dispatch(getCoursesAction({ count: this.nextAmountOfCourses }));
+    this.store.dispatch(getCourses({ count: this.nextAmountOfCourses }));
   }
 
   onSearch(searchString: string) {
     this.nextAmountOfCourses = 3;
     this.store.dispatch(
-      getSearchedAction({ searchString, count: this.nextAmountOfCourses })
+      getSearched({ searchString, count: this.nextAmountOfCourses })
     );
   }
 
   onLoadMore() {
     this.nextAmountOfCourses += 3;
-    this.store.dispatch(getCoursesAction({ count: this.nextAmountOfCourses }));
+    this.store.dispatch(getCourses({ count: this.nextAmountOfCourses }));
   }
 
   onToggleFilter() {
@@ -79,7 +78,7 @@ export class CoursesListComponent implements OnInit {
 
   onConfirm(id: number): void {
     this.modalRef.hide();
-    this.store.dispatch(deleteCourseAction({ id }));
+    this.store.dispatch(deleteCourse({ id }));
   }
 
   onDecline(): void {

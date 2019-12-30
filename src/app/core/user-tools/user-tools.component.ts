@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { Store, select } from '@ngrx/store';
 
-import { AuthState } from '../../auth/shared/models/auth-state.model';
-import { logoutAction } from '../../auth/shared/store/auth/auth.actions';
+import { AuthState } from '../../auth/shared/store/auth-state.model';
+import { logout } from '../../auth/shared/store/auth/auth.actions';
+import { getIsAuth, getUser } from '../../auth/shared/store/auth.selectors';
 
 @Component({
   selector: 'app-user-tools',
@@ -12,12 +13,11 @@ import { logoutAction } from '../../auth/shared/store/auth/auth.actions';
   styleUrls: ['./user-tools.component.sass']
 })
 export class UserToolsComponent {
-  public isAuth$: Observable<boolean> = this.store.pipe(select('isAuth'));
+  public isAuth$: Observable<boolean> = this.store.select(getIsAuth);
   public userName$: Observable<{
     first: string;
     last: string;
-  }> = this.store.pipe(
-    select('user'),
+  }> = this.store.select(getUser).pipe(
     map(({ name }) => {
       return name;
     })
@@ -26,6 +26,6 @@ export class UserToolsComponent {
   constructor(private store: Store<AuthState>) {}
 
   onLogOff() {
-    this.store.dispatch(logoutAction({ isAuth: false }));
+    this.store.dispatch(logout({ isAuth: false }));
   }
 }

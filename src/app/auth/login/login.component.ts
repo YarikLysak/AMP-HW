@@ -3,8 +3,9 @@ import { FormGroup, FormControl } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { AuthState } from '../shared/models/auth-state.model';
-import { loginAction } from '../shared/store/auth/auth.actions';
+import { AuthState } from '../shared/store/auth-state.model';
+import { login } from '../shared/store/auth/auth.actions';
+import { getError } from '../shared/store/auth.selectors';
 
 @Component({
   selector: 'app-login',
@@ -21,11 +22,11 @@ export class LoginComponent {
   });
 
   constructor(private store: Store<AuthState>) {
-    this.error$ = this.store.select('error');
+    this.error$ = this.store.select(getError);
   }
 
   onSubmit() {
-    this.store.dispatch(loginAction({ loginData: this.loginForm.value }));
+    this.store.dispatch(login({ loginData: this.loginForm.value }));
     this.loginForm.reset();
   }
 }

@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { AuthService } from './auth/shared/services/auth.service';
 import { LoaderService } from './core/shared/loader.service';
-import { Store, select } from '@ngrx/store';
-import { AuthState } from './auth/shared/models/auth-state.model';
+import { AuthState } from './auth/shared/store/auth-state.model';
+import { getIsAuth } from './auth/shared/store/auth.selectors';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +13,7 @@ import { AuthState } from './auth/shared/models/auth-state.model';
 })
 export class AppComponent implements OnInit {
   public title = 'AMP-HW';
-  public isAuth$: Observable<boolean> = this.store.pipe(select('isAuth'));
+  public isAuth$: Observable<boolean> = this.store.select(getIsAuth);
   public loadStatus$: Observable<boolean>;
 
   constructor(

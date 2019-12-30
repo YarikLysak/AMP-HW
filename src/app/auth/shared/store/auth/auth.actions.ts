@@ -2,24 +2,24 @@ import { createAction, props } from '@ngrx/store';
 import { User } from '../../models/user.model';
 import { Login } from '../../models/login.model';
 
-export const loginAction = createAction(
+export const login = createAction(
   '[AUTH] Login',
   props<{ loginData: Login }>()
 );
-export const loginSuccessAction = createAction(
+export const loginSuccess = createAction(
   '[AUTH] Login Success',
   props<{ user: User; isAuth: boolean }>()
 );
-export const setIsAuthAction = createAction(
+export const setIsAuth = createAction(
   '[AUTH] Set isAuth',
   props<{ isAuth: boolean }>()
 );
-export const loginErrorsAction = createAction(
+export const loginErrors = createAction(
   '[AUTH] Login Error',
   props<{ error: string }>()
 );
 
-export const logoutAction = createAction(
+export const logout = createAction(
   '[AUTH] Logout',
   props<{ isAuth: boolean }>()
 );

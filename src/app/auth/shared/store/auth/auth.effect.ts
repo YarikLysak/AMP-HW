@@ -4,12 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { mergeMap, map, tap } from 'rxjs/operators';
 
 import { AuthService } from '../../services/auth.service';
-import {
-  loginAction,
-  loginSuccessAction,
-  logoutAction,
-  setIsAuthAction
-} from './auth.actions';
+import { login, loginSuccess, logout, setIsAuth } from './auth.actions';
 import { User } from '../../models/user.model';
 import { errorsAction } from '../errors/errors.actions';
 
@@ -21,7 +16,7 @@ const onGetUser = (user: User, { password }) => {
     console.log('wrong password!');
     return errorsAction({ error: 'password' });
   } else {
-    return loginSuccessAction({ user, isAuth: true });
+    return loginSuccess({ user, isAuth: true });
   }
 };
 
@@ -29,7 +24,7 @@ const onGetUser = (user: User, { password }) => {
 export class AuthEffects {
   login$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loginAction),
+      ofType(login),
       mergeMap(({ loginData }) =>
         this.auth.login(loginData).pipe(
           map(([user]: User[]) => {
@@ -43,21 +38,21 @@ export class AuthEffects {
 
   loggedInAction$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loginSuccessAction),
+      ofType(loginSuccess),
       map(({ user, isAuth }) => {
         localStorage.setItem('user-token', user.fakeToken);
         this.router.navigate(['/courses']);
-        return setIsAuthAction({ isAuth });
+        return setIsAuth({ isAuth });
       })
     )
   );
 
   logout$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(logoutAction),
+      ofType(logout),
       map(({ isAuth }) => {
         this.auth.logout();
-        return setIsAuthAction({ isAuth });
+        return setIsAuth({ isAuth });
       })
     )
   );
