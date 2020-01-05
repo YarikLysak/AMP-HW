@@ -6,6 +6,11 @@ export const login = createAction(
   '[AUTH] Login',
   props<{ loginData: Login }>()
 );
+export const findToken = createAction('[AUTH] Find Token');
+export const loginByToken = createAction(
+  '[AUTH] Login By Token',
+  props<{ token: string }>()
+);
 export const loginSuccess = createAction(
   '[AUTH] Login Success',
   props<{ user: User; isAuth: boolean }>()

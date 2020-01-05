@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppState } from '../../store/app-state.model';
-import { login } from '../store/auth.actions';
+import { login, findToken } from '../store/auth.actions';
 import { getError } from '../store/auth.selectors';
 
 @Component({
@@ -22,6 +22,7 @@ export class LoginComponent {
   });
 
   constructor(private store: Store<AppState>) {
+    this.store.dispatch(findToken());
     this.error$ = this.store.select(getError);
   }
 

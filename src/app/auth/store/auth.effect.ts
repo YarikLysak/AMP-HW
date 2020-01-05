@@ -9,7 +9,9 @@ import {
   loginSuccess,
   logout,
   setIsAuth,
-  errorsAction
+  errorsAction,
+  findToken,
+  loginByToken
 } from './auth.actions';
 import { User } from '../shared/models/user.model';
 
@@ -31,13 +33,31 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(login),
       mergeMap(({ loginData }) =>
-        this.auth.login(loginData).pipe(
-          map(([user]: User[]) => {
-            console.log(user);
-            return onGetUser(user, loginData);
-          })
-        )
+        this.auth
+          .login(loginData)
+          .pipe(map(([user]: User[]) => onGetUser(user, loginData)))
       )
+    )
+  );
+
+  findToken$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(findToken),
+      map(() => {
+        const token = localStorage.getItem('user-token');
+        return token ? loginByToken({ token }) : setIsAuth({ isAuth: false });
+      })
+    )
+  );
+
+  loginByToken$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loginByToken),
+      mergeMap(({ token }) => {
+        return this.auth
+          .getUserByToken(token)
+          .pipe(map(([user]: User[]) => loginSuccess({ user, isAuth: true })));
+      })
     )
   );
 
