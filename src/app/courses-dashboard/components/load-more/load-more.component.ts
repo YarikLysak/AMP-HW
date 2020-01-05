@@ -2,13 +2,8 @@ import {
   Component,
   ChangeDetectionStrategy,
   EventEmitter,
-  Output,
-  Input
+  Output
 } from '@angular/core';
-import { Observable } from 'rxjs';
-
-import { CoursesService } from '../../shared/services/courses/courses.service';
-import { Course } from '../../shared/models/course.model';
 
 @Component({
   selector: 'app-load-more',

@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Course } from '../../models/course.model';
+import { Course } from '../../../courses-dashboard/shared/models/course.model';
 import { Order } from './order.type';
 
 @Pipe({

@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { mergeMap, map, tap } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 
-import { AuthService } from '../../services/auth.service';
+import { AuthService } from '../../shared/services/auth.service';
 import { login, loginSuccess, logout, setIsAuth } from './auth.actions';
-import { User } from '../../models/user.model';
+import { User } from '../../shared/models/user.model';
 import { errorsAction } from '../errors/errors.actions';
 
 const onGetUser = (user: User, { password }) => {

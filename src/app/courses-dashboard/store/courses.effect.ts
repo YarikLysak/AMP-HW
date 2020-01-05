@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { mergeMap, map } from 'rxjs/operators';
 
-import { CoursesService } from '../services/courses/courses.service';
-import { Course } from '../models/course.model';
+import { CoursesService } from '../shared/services/courses.service';
+import { Course } from '../shared/models/course.model';
 import {
   getCourses,
   deleteCourse,
@@ -55,25 +55,34 @@ export class CoursesListEffects {
   addCourse$ = createEffect(() =>
     this.actions$.pipe(
       ofType(addCourse),
-      mergeMap(({ course }) =>
-        this.coursesService.addCourse(course).pipe(
+      mergeMap(({ courseForm }) => {
+        const newCourse = {
+          ...courseForm.value,
+          date: new Date(courseForm.controls.date.value),
+          isTopRated: false
+        };
+        return this.coursesService.addCourse(newCourse).pipe(
           map(() => {
             this.router.navigate(['/courses']);
-            return manageCourseSuccess({ course });
+            return manageCourseSuccess({ course: newCourse });
           })
-        )
-      )
+        );
+      })
     )
   );
   editCourse$ = createEffect(() =>
     this.actions$.pipe(
       ofType(editCourse),
-      mergeMap(({ course }) => {
-        console.log(course);
-        return this.coursesService.updateCourse(course).pipe(
+      mergeMap(({ course, courseForm }) => {
+        const updatedCourse = {
+          ...course,
+          ...courseForm.value,
+          date: new Date(courseForm.controls.date.value)
+        };
+        return this.coursesService.updateCourse(updatedCourse).pipe(
           map(() => {
             this.router.navigate(['/courses']);
-            return manageCourseSuccess({ course });
+            return manageCourseSuccess({ course: updatedCourse });
           })
         );
       })

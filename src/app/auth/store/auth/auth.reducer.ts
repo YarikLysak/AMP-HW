@@ -1,5 +1,5 @@
 import { on, createReducer } from '@ngrx/store';
-import { User } from '../../models/user.model';
+import { User } from '../../shared/models/user.model';
 import { loginSuccess } from './auth.actions';
 
 export const initialState: User = null;

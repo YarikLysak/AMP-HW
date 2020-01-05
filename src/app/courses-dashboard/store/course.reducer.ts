@@ -1,6 +1,6 @@
 import { on, createReducer } from '@ngrx/store';
 
-import { Course } from '../models/course.model';
+import { Course } from '../shared/models/course.model';
 import { getCourseByIdSuccess } from './courses.actions';
 
 export const initialState: Course | null = null;

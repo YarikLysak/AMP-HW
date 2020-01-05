@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AppState } from '../../../store/app-state.model';
-import { getIsAuth } from '../store/auth.selectors';
+import { getIsAuth } from '../../store/auth.selectors';
 
 @Injectable({
   providedIn: 'root'

@@ -10,11 +10,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { ModalModule } from 'ngx-bootstrap';
 
 import { CoursesListComponent } from './courses-list.component';
-import { SearchBarComponent } from '../search-bar/search-bar.component';
+import { SearchBarComponent } from '../components/search-bar/search-bar.component';
 import { CourseComponent } from '../course/course.component';
-import { LoadMoreComponent } from '../load-more/load-more.component';
+import { LoadMoreComponent } from '../components/load-more/load-more.component';
 
-import { CoursesService } from '../../shared/services/courses/courses.service';
+import { CoursesService } from '../shared/services/courses.service';
 import { IsFreshStatusDirective } from '../../shared/directives/isFreshStatus.directive';
 import { DurationPipe } from '../../shared/pipes/duration/duration.pipe';
 import { OrderByPipe } from '../../shared/pipes/orderBy/order-by.pipe';

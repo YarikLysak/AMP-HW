@@ -4,9 +4,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
 
 import { LoginComponent } from './login/login.component';
-import { isAuthReducer } from './shared/store/auth/isAuth.reducer';
-import { authReducer } from './shared/store/auth/auth.reducer';
-import { errorsReducer } from './shared/store/errors/errors.reducer';
+import { isAuthReducer } from './store/auth/isAuth.reducer';
+import { authReducer } from './store/auth/auth.reducer';
+import { errorsReducer } from './store/errors/errors.reducer';
 
 @NgModule({
   declarations: [LoginComponent],

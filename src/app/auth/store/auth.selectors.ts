@@ -1,6 +1,6 @@
 import { createSelector } from '@ngrx/store';
 
-import { AppState } from '../../../store/app-state.model';
+import { AppState } from '../../store/app-state.model';
 import { AuthState } from './auth-state.model';
 
 export const getUser = createSelector(

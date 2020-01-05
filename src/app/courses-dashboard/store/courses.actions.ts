@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { Course } from '../models/course.model';
+import { FormGroup } from '@angular/forms';
+import { Course } from '../shared/models/course.model';
 
 export const getCourses = createAction(
   '[COURSES] Get Courses',
@@ -26,11 +27,11 @@ export const getCourseByIdSuccess = createAction(
 
 export const addCourse = createAction(
   '[COURSES] Add Course',
-  props<{ course: Course }>()
+  props<{ courseForm: FormGroup }>()
 );
 export const editCourse = createAction(
   '[COURSES] Edit Course',
-  props<{ course: Course }>()
+  props<{ course: Course; courseForm: FormGroup }>()
 );
 
 export const manageCourseSuccess = createAction(

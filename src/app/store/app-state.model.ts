@@ -1,5 +1,5 @@
-import { CoursesState } from '../shared/store/courses-state.model';
-import { AuthState } from '../auth/shared/store/auth-state.model';
+import { CoursesState } from '../courses-dashboard/store/courses-state.model';
+import { AuthState } from '../auth/store/auth-state.model';
 
 export interface AppState {
   coursesFeature: CoursesState;

@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppState } from '../../store/app-state.model';
-import { login } from '../shared/store/auth/auth.actions';
-import { getError } from '../shared/store/auth.selectors';
+import { login } from '../store/auth/auth.actions';
+import { getError } from '../store/auth.selectors';
 
 @Component({
   selector: 'app-login',

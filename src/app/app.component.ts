@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { LoaderService } from './core/shared/loader.service';
 import { AppState } from './store/app-state.model';
-import { getIsAuth } from './auth/shared/store/auth.selectors';
+import { getIsAuth } from './auth/store/auth.selectors';
 
 @Component({
   selector: 'app-root',

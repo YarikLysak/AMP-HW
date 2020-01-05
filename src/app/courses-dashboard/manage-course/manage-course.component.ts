@@ -5,15 +5,11 @@ import { DatePipe } from '@angular/common';
 import { Store, select } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
-import { Course } from '../../shared/models/course.model';
+import { Course } from '../shared/models/course.model';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
-import {
-  editCourse,
-  addCourse,
-  getCourseById
-} from '../../shared/store/courses.actions';
+import { editCourse, addCourse, getCourseById } from '../store/courses.actions';
 import { AppState } from '../../store/app-state.model';
-import { getCourse } from '../../shared/store/courses.selectors';
+import { getCourse } from '../store/courses.selectors';
 
 @Component({
   selector: 'app-manage-course',
@@ -73,23 +69,14 @@ export class ManageCourseComponent implements OnInit {
   }
 
   onSubmit() {
-    let newCourse: Course;
     if (this.editCourseId) {
       this.editCourse$.subscribe(course => {
-        newCourse = {
-          ...course,
-          ...this.manageCourseForm.value,
-          date: new Date(this.manageCourseForm.controls.date.value)
-        };
-        this.store.dispatch(editCourse({ course: newCourse }));
+        this.store.dispatch(
+          editCourse({ course, courseForm: this.manageCourseForm })
+        );
       });
     } else {
-      newCourse = {
-        ...this.manageCourseForm.value,
-        date: new Date(this.manageCourseForm.controls.date.value),
-        isTopRated: false
-      };
-      this.store.dispatch(addCourse({ course: newCourse }));
+      this.store.dispatch(addCourse({ courseForm: this.manageCourseForm }));
     }
     this.manageCourseForm.reset();
   }

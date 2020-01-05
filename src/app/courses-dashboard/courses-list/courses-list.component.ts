@@ -6,15 +6,15 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AppState } from '../../store/app-state.model';
-import { Course } from '../../shared/models/course.model';
+import { Course } from '../shared/models/course.model';
 import { Order } from '../../shared/pipes/orderBy/order.type';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 import {
   getCourses,
   deleteCourse,
   getSearched
-} from '../../shared/store/courses.actions';
-import { getCoursesList } from '../../shared/store/courses.selectors';
+} from '../store/courses.actions';
+import { getCoursesList } from '../store/courses.selectors';
 
 @Component({
   selector: 'app-courses-list',
