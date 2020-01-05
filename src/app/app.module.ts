@@ -15,7 +15,7 @@ import { SharedModule } from './shared/shared.module';
 import { AppComponent } from './app.component';
 
 import { CoursesListEffects } from './courses-dashboard/store/courses.effect';
-import { AuthEffects } from './auth/store/auth/auth.effect';
+import { AuthEffects } from './auth/store/auth.effect';
 
 @NgModule({
   declarations: [AppComponent],

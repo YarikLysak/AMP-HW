@@ -7,7 +7,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 import { User } from '../models/user.model';
 import { Login } from '../models/login.model';
 import { AuthState } from '../../store/auth-state.model';
-import { loginSuccess } from '../../store/auth/auth.actions';
+import { loginSuccess } from '../../store/auth.actions';
 
 @Injectable({
   providedIn: 'root'

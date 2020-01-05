@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
 import { AppState } from '../../store/app-state.model';
-import { login } from '../store/auth/auth.actions';
+import { login } from '../store/auth.actions';
 import { getError } from '../store/auth.selectors';
 
 @Component({

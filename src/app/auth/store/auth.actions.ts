@@ -1,6 +1,6 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../../shared/models/user.model';
-import { Login } from '../../shared/models/login.model';
+import { User } from '../shared/models/user.model';
+import { Login } from '../shared/models/login.model';
 
 export const login = createAction(
   '[AUTH] Login',
@@ -18,7 +18,10 @@ export const loginErrors = createAction(
   '[AUTH] Login Error',
   props<{ error: string }>()
 );
-
+export const errorsAction = createAction(
+  '[AUTH] Error',
+  props<{ error: string }>()
+);
 export const logout = createAction(
   '[AUTH] Logout',
   props<{ isAuth: boolean }>()

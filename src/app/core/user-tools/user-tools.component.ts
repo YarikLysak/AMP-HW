@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { AppState } from '../../store/app-state.model';
-import { logout } from '../../auth/store/auth/auth.actions';
+import { logout } from '../../auth/store/auth.actions';
 import { getIsAuth, getUser } from '../../auth/store/auth.selectors';
 
 @Component({

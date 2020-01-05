@@ -16,8 +16,7 @@ import { DurationInputComponent } from './components/duration-input/duration-inp
 import { AuthorsListComponent } from './components/authors-list/authors-list.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 
-import { coursesListReducer } from './store/coursesList.reducer';
-import { courseReducer } from './store/course.reducer';
+import { courseReducer } from './store/courses.reducer';
 
 @NgModule({
   declarations: [
@@ -36,10 +35,7 @@ import { courseReducer } from './store/course.reducer';
     RouterModule,
     ReactiveFormsModule,
     SharedModule,
-    StoreModule.forFeature('coursesFeature', {
-      coursesList: coursesListReducer,
-      course: courseReducer
-    })
+    StoreModule.forFeature('coursesFeature', courseReducer)
   ]
 })
 export class CoursesDashboardModule {}

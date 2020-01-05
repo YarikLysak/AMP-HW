@@ -3,10 +3,15 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { mergeMap, map } from 'rxjs/operators';
 
-import { AuthService } from '../../shared/services/auth.service';
-import { login, loginSuccess, logout, setIsAuth } from './auth.actions';
-import { User } from '../../shared/models/user.model';
-import { errorsAction } from '../errors/errors.actions';
+import { AuthService } from '../shared/services/auth.service';
+import {
+  login,
+  loginSuccess,
+  logout,
+  setIsAuth,
+  errorsAction
+} from './auth.actions';
+import { User } from '../shared/models/user.model';
 
 const onGetUser = (user: User, { password }) => {
   if (!user) {
