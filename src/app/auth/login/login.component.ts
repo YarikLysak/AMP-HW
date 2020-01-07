@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
@@ -17,8 +17,8 @@ export class LoginComponent {
   error$: Observable<string>;
 
   public loginForm = new FormGroup({
-    login: new FormControl(''),
-    password: new FormControl('')
+    login: new FormControl('', Validators.required),
+    password: new FormControl('', Validators.required)
   });
 
   constructor(private store: Store<AppState>) {

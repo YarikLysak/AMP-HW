@@ -9,8 +9,10 @@
       (ngSubmit)="onSubmit()"
     >
       <div class="form-label">
-        <label for="title">Course Name:</label>
-        <span class="form-hint">*required</span>
+        <label for="title">Title:</label>
+        <span class="error failed-color" *ngIf="isError('name')">
+          {{ outputError('name') }}
+        </span>
       </div>
       <input
         formControlName="name"
@@ -18,10 +20,11 @@
         id="name"
         class="common-input"
         placeholder="Text nput"
+        [ngClass]="{ 'failed-field': isError('name') }"
       />
       <div class="form-label">
         <label for="description">Descripion:</label>
-        <span class="form-hint">*required</span>
+        <span class="error failed-color">*error</span>
       </div>
       <textarea
         formControlName="description"
@@ -38,7 +41,7 @@
         <button type="button" class="cancel-btn" (click)="onCancel()">
           Cancel
         </button>
-        <button type="submit" class="accept-btn">
+        <button type="submit" class="accept-btn" [disabled]="!form.valid">
           Save
         </button>
       </div>
