@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-
-import { AuthService } from '../shared/services/auth.service';
+import { FormGroup, FormControl } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+
+import { AppState } from '../../store/app-state.model';
+import { login, findToken } from '../store/auth.actions';
+import { getError } from '../store/auth.selectors';
 
 @Component({
   selector: 'app-login',
@@ -10,7 +13,6 @@ import { Observable } from 'rxjs';
   styleUrls: ['./login.component.sass']
 })
 export class LoginComponent {
-  isUserAuthenticated = false;
   returnUrl = '';
   error$: Observable<string>;
 
@@ -19,11 +21,13 @@ export class LoginComponent {
     password: new FormControl('')
   });
 
-  constructor(private auth: AuthService) {}
+  constructor(private store: Store<AppState>) {
+    this.store.dispatch(findToken());
+    this.error$ = this.store.select(getError);
+  }
 
   onSubmit() {
-    this.error$ = this.auth.getError();
-    this.auth.login(this.loginForm.value);
+    this.store.dispatch(login({ loginData: this.loginForm.value }));
     this.loginForm.reset();
   }
 }

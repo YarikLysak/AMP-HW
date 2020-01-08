@@ -2,10 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
+import { Store, select } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
-import { Course } from '../../shared/models/course.model';
-import { CoursesService } from '../../shared/services/courses/courses.service';
+import { Course } from '../shared/models/course.model';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
+import { editCourse, addCourse, getCourseById } from '../store/courses.actions';
+import { AppState } from '../../store/app-state.model';
+import { getCourse } from '../store/courses.selectors';
 
 @Component({
   selector: 'app-manage-course',
@@ -13,7 +17,7 @@ import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumb
   styleUrls: ['./manage-course.component.sass']
 })
 export class ManageCourseComponent implements OnInit {
-  public editCourse: Course = null;
+  public editCourse$: Observable<Course> = this.store.select(getCourse);
   public editCourseId: number | null = null;
   private breadcrumb = '';
 
@@ -34,13 +38,14 @@ export class ManageCourseComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private datePipe: DatePipe,
-    private coursesService: CoursesService,
+    private store: Store<AppState>,
     private breadcrumbsService: BreadcrumbsService
   ) {
     const paramId = this.route.snapshot.paramMap.get('id');
     this.breadcrumb = this.route.snapshot.data.breadcrumbs;
     if (paramId) {
       this.editCourseId = +paramId;
+      this.store.dispatch(getCourseById({ id: this.editCourseId }));
     } else {
       this.editCourseId = null;
       this.breadcrumbsService.setBreadcrumb(this.breadcrumb);
@@ -49,48 +54,30 @@ export class ManageCourseComponent implements OnInit {
 
   ngOnInit() {
     if (this.editCourseId) {
-      this.coursesService.getCourseById(this.editCourseId).subscribe(course => {
-        this.editCourse = course;
-        this.breadcrumbsService.setBreadcrumb(
-          this.breadcrumb,
-          this.editCourse.name
-        );
-        this.manageCourseForm.setValue({
-          name: this.editCourse.name,
-          description: this.editCourse.description.trim(),
-          length: this.editCourse.length,
-          date: this.datePipe.transform(this.editCourse.date, 'd MMM, yyyy'),
-          authors: this.editCourse.authors
-        });
+      this.editCourse$.subscribe(course => {
+        if (course) {
+          this.manageCourseForm.setValue({
+            name: course.name,
+            description: course.description.trim(),
+            length: course.length,
+            date: this.datePipe.transform(course.date, 'd MMM, yyyy'),
+            authors: course.authors
+          });
+        }
       });
     }
   }
 
   onSubmit() {
     if (this.editCourseId) {
-      this.coursesService
-        .updateCourse({
-          ...this.editCourse,
-          ...this.manageCourseForm.value,
-          date: new Date(this.manageCourseForm.controls.date.value)
-        })
-        .subscribe(
-          () => {},
-          err => console.error(err)
+      this.editCourse$.subscribe(course => {
+        this.store.dispatch(
+          editCourse({ course, courseForm: this.manageCourseForm })
         );
+      });
     } else {
-      this.coursesService
-        .addCourse({
-          ...this.manageCourseForm.value,
-          date: new Date(this.manageCourseForm.controls.date.value),
-          isTopRated: false
-        })
-        .subscribe(
-          () => {},
-          err => console.error(err)
-        );
+      this.store.dispatch(addCourse({ courseForm: this.manageCourseForm }));
     }
-    this.router.navigate(['/courses']);
     this.manageCourseForm.reset();
   }
 

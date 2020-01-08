@@ -1,13 +1,20 @@
 import { Component, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 import { ActivatedRoute } from '@angular/router';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-import { Course } from '../../shared/models/course.model';
+import { AppState } from '../../store/app-state.model';
+import { Course } from '../shared/models/course.model';
 import { Order } from '../../shared/pipes/orderBy/order.type';
-import { CoursesService } from '../../shared/services/courses/courses.service';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
+import {
+  getCourses,
+  deleteCourse,
+  getSearched
+} from '../store/courses.actions';
+import { getCoursesList } from '../store/courses.selectors';
 
 @Component({
   selector: 'app-courses-list',
@@ -15,7 +22,7 @@ import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumb
   styleUrls: ['./courses-list.component.sass']
 })
 export class CoursesListComponent implements OnInit {
-  public coursesList$: Observable<Course[]>;
+  public coursesList$: Observable<Course[]> = this.store.select(getCoursesList);
   public needToDelete$: Observable<Course>;
   public isNeedNew = true;
   public isCanBeMore = true;
@@ -26,9 +33,9 @@ export class CoursesListComponent implements OnInit {
   @ViewChild('modal', { static: false }) modalTemplateRef: ElementRef;
 
   constructor(
+    private store: Store<AppState>,
     private route: ActivatedRoute,
     private modalService: BsModalService,
-    private coursesService: CoursesService,
     private breadcrumbsService: BreadcrumbsService
   ) {
     const breadcrumb = this.route.snapshot.data.breadcrumbs;
@@ -36,36 +43,19 @@ export class CoursesListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.coursesList$ = this.coursesService
-      .getCourses(this.nextAmountOfCourses)
-      .pipe(
-        map((courses: Course[]) => {
-          return courses;
-        })
-      );
+    this.store.dispatch(getCourses({ count: this.nextAmountOfCourses }));
   }
 
   onSearch(searchString: string) {
     this.nextAmountOfCourses = 3;
-    this.coursesList$ = this.coursesService
-      .searchCourses(searchString, this.nextAmountOfCourses)
-      .pipe(
-        map((courses: Course[]) => {
-          return courses;
-        })
-      );
+    this.store.dispatch(
+      getSearched({ searchString, count: this.nextAmountOfCourses })
+    );
   }
 
   onLoadMore() {
     this.nextAmountOfCourses += 3;
-    this.coursesList$ = this.coursesService
-      .loadMoreCourses(this.nextAmountOfCourses)
-      .pipe(
-        map((updatedCourses: Course[]) => {
-          this.isCanBeMore = updatedCourses.length >= this.nextAmountOfCourses;
-          return updatedCourses;
-        })
-      );
+    this.store.dispatch(getCourses({ count: this.nextAmountOfCourses }));
   }
 
   onToggleFilter() {
@@ -88,23 +78,11 @@ export class CoursesListComponent implements OnInit {
 
   onConfirm(id: number): void {
     this.modalRef.hide();
-    this.deleteCourse(id);
+    this.store.dispatch(deleteCourse({ id }));
   }
 
   onDecline(): void {
     this.needToDelete$ = null;
     this.modalRef.hide();
-  }
-
-  private deleteCourse(id: number) {
-    this.coursesService.removeCourse(id).subscribe(() => {
-      this.coursesList$ = this.coursesService
-        .getCourses(this.nextAmountOfCourses)
-        .pipe(
-          map((courses: Course[]) => {
-            return courses;
-          })
-        );
-    });
   }
 }
