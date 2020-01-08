@@ -8,40 +8,77 @@
       class="form-column manage-course-form"
       (ngSubmit)="onSubmit()"
     >
-      <div class="form-label">
-        <label for="title">Title:</label>
-        <span class="error failed-color" *ngIf="isError('name')">
-          {{ outputError('name') }}
-        </span>
+      <div class="form-field">
+        <div class="form-label">
+          <label for="title">Title:</label>
+          <span class="form-error" *ngIf="isError('name')">
+            {{ outputError('name') }}
+          </span>
+        </div>
+        <input
+          formControlName="name"
+          type="text"
+          id="name"
+          class="common-input"
+          placeholder="Text nput"
+          [ngClass]="{ 'failed-input': isError('name') }"
+        />
       </div>
-      <input
-        formControlName="name"
-        type="text"
-        id="name"
-        class="common-input"
-        placeholder="Text nput"
-        [ngClass]="{ 'failed-field': isError('name') }"
-      />
-      <div class="form-label">
-        <label for="description">Descripion:</label>
-        <span class="error failed-color">*error</span>
+
+      <div class="form-field">
+        <div class="form-label">
+          <label for="description">Descripion:</label>
+          <span class="form-error" *ngIf="isError('description')">
+            {{ outputError('description') }}
+          </span>
+        </div>
+        <textarea
+          formControlName="description"
+          rows="4"
+          cols="45"
+          id="description"
+          class="common-input"
+          placeholder="Add description"
+          [ngClass]="{ 'failed-input': isError('description') }"
+        ></textarea>
       </div>
-      <textarea
-        formControlName="description"
-        rows="4"
-        cols="45"
-        id="description"
-        class="common-input"
-        placeholder="Add description"
-      ></textarea>
-      <app-duration-input [parentForm]="manageCourseForm"></app-duration-input>
-      <app-date-picker [parentForm]="manageCourseForm"></app-date-picker>
-      <app-authors-list [parentForm]="manageCourseForm"></app-authors-list>
+
+      <div class="form-field">
+        <app-duration-input
+          [parentForm]="manageCourseForm"
+          [isError]="isError('length')"
+          [outputError]="outputError('length')"
+        >
+        </app-duration-input>
+      </div>
+
+      <div class="form-field">
+        <app-date-picker
+          [parentForm]="manageCourseForm"
+          [isError]="isError('date')"
+          [outputError]="outputError('date')"
+        >
+        </app-date-picker>
+      </div>
+      <div class="form-field">
+        <app-authors-list
+          [parentForm]="manageCourseForm"
+          [isError]="isError('authors')"
+          [outputError]="outputError('authors')"
+          (searchAuthorsString)="onAuthorSearch($event)"
+        >
+        </app-authors-list>
+      </div>
+
       <div class="manage-course-bottom">
         <button type="button" class="cancel-btn" (click)="onCancel()">
           Cancel
         </button>
-        <button type="submit" class="accept-btn" [disabled]="!form.valid">
+        <button
+          type="submit"
+          class="accept-btn"
+          [disabled]="!manageCourseForm.valid"
+        >
           Save
         </button>
       </div>

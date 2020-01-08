@@ -14,3 +14,8 @@ export const getCourse = createSelector(
   coursesFeature,
   (state: CoursesState) => state.course
 );
+
+export const getAuthorsList = createSelector(
+  coursesFeature,
+  (state: CoursesState) => state.authors
+);

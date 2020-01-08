@@ -9,4 +9,6 @@ import { FormGroup } from '@angular/forms';
 })
 export class DurationInputComponent {
   @Input() parentForm: FormGroup;
+  @Input() isError: boolean;
+  @Input() outputError: string;
 }

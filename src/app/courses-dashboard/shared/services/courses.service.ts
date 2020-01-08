@@ -23,14 +23,14 @@ export class CoursesService {
 
   constructor(private http: HttpClient) {}
 
-  loadMoreCourses(next: number) {
+  loadMoreCourses(next: number): Observable<Course[]> {
     this.searchingParams.count = `${next}`;
     return this.http.get<Course[]>(this.COURSES_URL, {
       params: this.searchingParams
     });
   }
 
-  searchCourses(searchString: string, count: number) {
+  searchCourses(searchString: string, count: number): Observable<Course[]> {
     this.searchingParams.count = `${count}`;
     this.searchingParams.textFragment = searchString;
     return this.http.get<Course[]>(this.COURSES_URL, {

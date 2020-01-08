@@ -1,7 +1,9 @@
 <div class="form-input__short" [formGroup]="parentForm">
   <div class="form-label">
     <label for="duration">Duration:</label>
-    <span class="error failed-color">*error</span>
+    <span class="form-error" *ngIf="isError">
+      {{ outputError }}
+    </span>
   </div>
   <input
     formControlName="length"
@@ -9,6 +11,7 @@
     id="duration"
     class="common-input"
     placeholder="minutes"
+    [ngClass]="{ 'failed-input': isError }"
   />
 </div>
 <div class="duration-output">

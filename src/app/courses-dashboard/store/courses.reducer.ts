@@ -1,8 +1,13 @@
 import { on, createReducer } from '@ngrx/store';
 
-import { getCourseByIdSuccess, getCoursesSuccess } from './courses.actions';
+import {
+  getCourseByIdSuccess,
+  getCoursesSuccess,
+  getAuthorsSuccess
+} from './courses.actions';
 
 const initialState = {
+  authors: [],
   course: null,
   coursesList: []
 };
@@ -15,6 +20,10 @@ const reducer = createReducer(
 
   on(getCoursesSuccess, (state, { courses }) => {
     return { ...state, coursesList: [...courses] };
+  }),
+
+  on(getAuthorsSuccess, (state, { authors }) => {
+    return { ...state, authors: [...authors] };
   })
 );
 

@@ -18,3 +18,9 @@
 
 .common-input
     @include input
+
+
+.failed-input
+    box-shadow: inset 0px 0px 5px 0px $error
+    border-color: rgba(255, 78, 51, 0.25)
+    @include placeholder-color(rgba(255, 78, 51, 0.5))

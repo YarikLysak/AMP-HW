@@ -1,6 +1,16 @@
 import { createAction, props } from '@ngrx/store';
 import { FormGroup } from '@angular/forms';
 import { Course } from '../shared/models/course.model';
+import { Author } from '../shared/models/author.model';
+
+export const getAuthors = createAction(
+  '[COURSES] Get Authors',
+  props<{ searchAuthorsString: string }>()
+);
+export const getAuthorsSuccess = createAction(
+  '[COURSES] Get Authors',
+  props<{ authors: Author[] }>()
+);
 
 export const getCourses = createAction(
   '[COURSES] Get Courses',
@@ -33,7 +43,6 @@ export const editCourse = createAction(
   '[COURSES] Edit Course',
   props<{ course: Course; courseForm: FormGroup }>()
 );
-
 export const manageCourseSuccess = createAction(
   '[COURSES] Add/Edit Course Success',
   props<{ course: Course }>()

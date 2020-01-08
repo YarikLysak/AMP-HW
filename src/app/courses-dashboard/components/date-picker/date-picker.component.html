@@ -1,13 +1,16 @@
 <div class="form-input__short" [formGroup]="parentForm">
   <div class="form-label">
     <label for="date">Date:</label>
-    <span class="error failed-color">*error</span>
+    <span class="form-error" *ngIf="isError">
+      {{ outputError }}
+    </span>
   </div>
   <input
     formControlName="date"
     type="text"
     id="date"
     class="common-input"
-    placeholder="e.g. 4 Dec, 1995"
+    placeholder="d.mm.yyyy"
+    [ngClass]="{ 'failed-input': isError }"
   />
 </div>

@@ -4,7 +4,9 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { mergeMap, map } from 'rxjs/operators';
 
 import { CoursesService } from '../shared/services/courses.service';
+import { AuthorsService } from '../shared/services/authors.service';
 import { Course } from '../shared/models/course.model';
+import { Author } from '../shared/models/author.model';
 import {
   getCourses,
   deleteCourse,
@@ -14,11 +16,24 @@ import {
   getCourseByIdSuccess,
   addCourse,
   editCourse,
-  manageCourseSuccess
+  manageCourseSuccess,
+  getAuthors,
+  getAuthorsSuccess
 } from './courses.actions';
 
 @Injectable()
 export class CoursesListEffects {
+  getAuhtors$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(getAuthors),
+      mergeMap(({ searchAuthorsString }) =>
+        this.authorsService
+          .getAuthors(searchAuthorsString)
+          .pipe(map((authors: Author[]) => getAuthorsSuccess({ authors })))
+      )
+    )
+  );
+
   loadCoursesList$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getCourses),
@@ -103,6 +118,7 @@ export class CoursesListEffects {
   constructor(
     private actions$: Actions,
     private coursesService: CoursesService,
+    private authorsService: AuthorsService,
     private router: Router
   ) {}
 }

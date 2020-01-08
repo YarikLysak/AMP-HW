@@ -1,13 +1,17 @@
 <div class="form-input__medium" [formGroup]="parentForm">
   <div class="form-label">
     <label for="authors">Authors:</label>
-    <span class="error failed-color">*error</span>
+    <span class="form-error" *ngIf="isError">
+      {{ outputError }}
+    </span>
   </div>
   <input
+    (keyup)="searchAuthors()"
     formControlName="authors"
     type="text"
     id="authors"
     class="common-input"
     placeholder="Start typing"
+    [ngClass]="{ 'failed-input': isError }"
   />
 </div>
