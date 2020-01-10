@@ -11,4 +11,5 @@ export class DatePickerComponent {
   @Input() parentForm: FormGroup;
   @Input() isError: boolean;
   @Input() outputError: string;
+  @Input() dateFormat: string;
 }

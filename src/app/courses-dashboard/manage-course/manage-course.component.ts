@@ -16,6 +16,7 @@ import {
 import { AppState } from '../../store/app-state.model';
 import { getCourse, getAuthorsList } from '../store/courses.selectors';
 import { Author } from '../shared/models/author.model';
+import { dateValidator } from '../shared/validators/date-input.validator';
 
 @Component({
   selector: 'app-manage-course',
@@ -27,6 +28,7 @@ export class ManageCourseComponent implements OnInit {
   public editCourseId: number | null = null;
   private breadcrumb = '';
   public authors$: Observable<Author[]> = this.store.select(getAuthorsList);
+  public dateFormat = 'dd/MM/yyyy';
 
   public manageCourseForm = new FormGroup({
     name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
@@ -35,12 +37,7 @@ export class ManageCourseComponent implements OnInit {
       Validators.maxLength(500)
     ]),
     length: new FormControl('', [Validators.required]),
-    date: new FormControl('', [
-      Validators.required,
-      Validators.pattern(
-        /^(0?[1-9]|[12][0-9]|3[01])[\.](0?[1-9]|1[012])[\.]\d{4}$/
-      )
-    ]),
+    date: new FormControl('', [Validators.required, dateValidator]),
     authors: new FormControl('', [Validators.required])
   });
 
@@ -70,7 +67,7 @@ export class ManageCourseComponent implements OnInit {
             name: course.name,
             description: course.description.trim(),
             length: course.length,
-            date: this.datePipe.transform(course.date, 'dd.MM.yyyy'),
+            date: this.datePipe.transform(course.date, this.dateFormat),
             authors: course.authors
           });
         }
@@ -110,18 +107,9 @@ export class ManageCourseComponent implements OnInit {
   outputError(controlName): string {
     const formFieldErrors = this.formField(controlName).errors;
 
-    if (formFieldErrors) {
-      if (formFieldErrors.required) {
-        return this.checkError('required');
-      }
-      if (formFieldErrors.maxlength) {
-        return this.checkError(
-          'maxLength',
-          formFieldErrors.maxlength.requiredLength
-        );
-      }
-      if (formFieldErrors.pattern) {
-        return this.checkError('pattern');
+    for (const errorType in formFieldErrors) {
+      if (formFieldErrors.hasOwnProperty(errorType)) {
+        return this.checkError(errorType, formFieldErrors[errorType]);
       }
     }
   }
@@ -131,12 +119,14 @@ export class ManageCourseComponent implements OnInit {
     return field.touched && field.errors ? true : false;
   }
 
-  private checkError(type, error?) {
-    switch (type) {
+  private checkError(errorType, error?) {
+    switch (errorType) {
       case 'required':
         return 'This field is required!';
-      case 'maxLength':
-        return `Your field should be shorter than ${error} symbols.`;
+      case 'maxlength':
+        return `Your field should be shorter than ${error.requiredLength} symbols.`;
+      case 'validateDate':
+        return `Incorrect format! Try ${error.dateFormat}`;
       case 'pattern':
         return `Incorrect format! Try ${error}`;
       default:
