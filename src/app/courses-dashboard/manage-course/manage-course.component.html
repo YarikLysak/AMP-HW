@@ -66,6 +66,8 @@
           [parentForm]="manageCourseForm"
           [isError]="isError('authors')"
           [outputError]="outputError('authors')"
+          [authors$]="authors$"
+          [isFind]="isFind"
           (searchAuthorsString)="onAuthorSearch($event)"
         >
         </app-authors-list>

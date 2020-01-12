@@ -1,6 +1,6 @@
-<div class="form-input__medium" [formGroup]="parentForm">
+<div class="form-input__medium authors" [formGroup]="parentForm">
   <div class="form-label">
-    <label for="authors">Authors:</label>
+    <label for="authors-label">Authors:</label>
     <span class="form-error" *ngIf="isError">
       {{ outputError }}
     </span>
@@ -13,5 +13,14 @@
     class="common-input"
     placeholder="Start typing"
     [ngClass]="{ 'failed-input': isError }"
+    autocomplete="off"
   />
+  <div class="authors-suggester" *ngIf="isFind">
+    <span
+      *ngFor="let author of authors$ | async"
+      class="authors-suggester-pill"
+      (click)="onAuthorSelect(author)"
+      >{{ author.name }}</span
+    >
+  </div>
 </div>

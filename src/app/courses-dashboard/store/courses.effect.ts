@@ -26,9 +26,9 @@ export class CoursesListEffects {
   getAuhtors$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getAuthors),
-      mergeMap(({ searchAuthorsString }) =>
+      mergeMap(({ searchString }) =>
         this.authorsService
-          .getAuthors(searchAuthorsString)
+          .getAuthors(searchString)
           .pipe(map((authors: Author[]) => getAuthorsSuccess({ authors })))
       )
     )

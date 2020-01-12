@@ -7,6 +7,9 @@ import {
 } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { debounceTime, filter, map } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+
+import { Author } from '../../shared/models/author.model';
 
 @Component({
   selector: 'app-authors-list',
@@ -17,7 +20,9 @@ import { debounceTime, filter, map } from 'rxjs/operators';
 export class AuthorsListComponent {
   @Input() parentForm: FormGroup;
   @Input() isError: boolean;
+  @Input() isFind: boolean;
   @Input() outputError: string;
+  @Input() authors$: Observable<Author[]>;
 
   @Output() searchAuthorsString = new EventEmitter<string>();
 
@@ -31,5 +36,9 @@ export class AuthorsListComponent {
         map(searchString => searchString)
       )
       .subscribe(searchString => this.searchAuthorsString.emit(searchString));
+  }
+
+  onAuthorSelect(author: Author) {
+    console.log(author);
   }
 }

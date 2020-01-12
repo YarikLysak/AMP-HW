@@ -5,10 +5,10 @@ import { Author } from '../shared/models/author.model';
 
 export const getAuthors = createAction(
   '[COURSES] Get Authors',
-  props<{ searchAuthorsString: string }>()
+  props<{ searchString: string }>()
 );
 export const getAuthorsSuccess = createAction(
-  '[COURSES] Get Authors',
+  '[COURSES] Get Authors Success',
   props<{ authors: Author[] }>()
 );
 
