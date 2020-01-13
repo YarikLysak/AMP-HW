@@ -1,26 +1,38 @@
-<div class="form-input__medium authors" [formGroup]="parentForm">
+<div class="authors" [formGroup]="parentForm">
   <div class="form-label">
     <label for="authors-label">Authors:</label>
     <span class="form-error" *ngIf="isError">
       {{ outputError }}
     </span>
   </div>
-  <input
-    (keyup)="searchAuthors()"
-    formControlName="authors"
-    type="text"
-    id="authors"
-    class="common-input"
-    placeholder="Start typing"
-    [ngClass]="{ 'failed-input': isError }"
-    autocomplete="off"
-  />
-  <div class="authors-suggester" *ngIf="isFind">
-    <span
-      *ngFor="let author of authors$ | async"
-      class="authors-suggester-pill"
-      (click)="onAuthorSelect(author)"
-      >{{ author.name }}</span
-    >
+  <div class="common-input authors-pills" (click)="openSuggester()">
+    <span class="authors-pills-item">
+      John Wayne
+      <i class="fas fa-times"></i>
+    </span>
+    <span class="authors-pills-item">
+      John Wayne
+      <i class="fas fa-times"></i>
+    </span>
+  </div>
+  <div class="authors-suggester" *ngIf="suggesterStatus">
+    <input
+      (keyup)="searchAuthors()"
+      formControlName="authors"
+      type="text"
+      id="authors"
+      class="authors-suggester-input"
+      placeholder="Start typing"
+      autocomplete="off"
+    />
+    <!-- [ngClass]="{ 'failed-input': isError }" -->
+    <div class="authors-suggester-results">
+      <span
+        *ngFor="let author of authors$ | async"
+        class="authors-suggester-pill"
+        (click)="onAuthorSelect(author)"
+        >{{ author.name }}</span
+      >
+    </div>
   </div>
 </div>

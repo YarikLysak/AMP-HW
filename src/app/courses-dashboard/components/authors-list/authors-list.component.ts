@@ -18,6 +18,8 @@ import { Author } from '../../shared/models/author.model';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class AuthorsListComponent {
+  public suggesterStatus = false;
+
   @Input() parentForm: FormGroup;
   @Input() isError: boolean;
   @Input() isFind: boolean;
@@ -40,5 +42,9 @@ export class AuthorsListComponent {
 
   onAuthorSelect(author: Author) {
     console.log(author);
+  }
+
+  openSuggester() {
+    this.suggesterStatus = !this.suggesterStatus;
   }
 }
