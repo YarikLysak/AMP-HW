@@ -3,11 +3,7 @@
     <div class="manage-course-head">
       <h2>{{ editCourseId ? 'Edit Course' : 'New Course' }}</h2>
     </div>
-    <form
-      [formGroup]="manageCourseForm"
-      class="form-column manage-course-form"
-      (ngSubmit)="onSubmit()"
-    >
+    <form [formGroup]="manageCourseForm" class="form-column manage-course-form" (ngSubmit)="onSubmit()">
       <div class="form-field">
         <div class="form-label">
           <label for="title">Title:</label>
@@ -15,14 +11,8 @@
             {{ outputError('name') }}
           </span>
         </div>
-        <input
-          formControlName="name"
-          type="text"
-          id="name"
-          class="common-input"
-          placeholder="Text nput"
-          [ngClass]="{ 'failed-input': isError('name') }"
-        />
+        <input formControlName="name" type="text" id="name" class="common-input" placeholder="Text nput"
+          [ngClass]="{ 'failed-input': isError('name') }" />
       </div>
 
       <div class="form-field">
@@ -32,56 +22,37 @@
             {{ outputError('description') }}
           </span>
         </div>
-        <textarea
-          formControlName="description"
-          rows="4"
-          cols="45"
-          id="description"
-          class="common-input"
-          placeholder="Add description"
-          [ngClass]="{ 'failed-input': isError('description') }"
-        ></textarea>
+        <textarea formControlName="description" rows="4" cols="45" id="description" class="common-input"
+          placeholder="Add description" [ngClass]="{ 'failed-input': isError('description') }"></textarea>
       </div>
 
       <div class="form-field">
-        <app-duration-input
-          [parentForm]="manageCourseForm"
-          [isError]="isError('length')"
-          [outputError]="outputError('length')"
-        >
+        <app-duration-input [parentForm]="manageCourseForm" [isError]="isError('length')"
+          [outputError]="outputError('length')">
         </app-duration-input>
       </div>
 
       <div class="form-field">
-        <app-date-picker
-          [parentForm]="manageCourseForm"
-          [isError]="isError('date')"
-          [outputError]="outputError('date')"
-          [dateFormat]="dateFormat"
-        >
+        <app-date-picker [parentForm]="manageCourseForm" [isError]="isError('date')" [outputError]="outputError('date')"
+          [dateFormat]="dateFormat">
         </app-date-picker>
       </div>
       <div class="form-field">
-        <app-authors-list
-          [parentForm]="manageCourseForm"
-          [isError]="isError('authors')"
-          [outputError]="outputError('authors')"
-          [authors$]="authors$"
-          [isFind]="isFind"
-          (searchAuthorsString)="onAuthorSearch($event)"
-        >
+        <app-authors-list formControlName="authors">
         </app-authors-list>
+        <!-- [parentForm]="manageCourseForm"
+      [isError]="isError('authors')"
+      [outputError]="outputError('authors')"
+      [searchedAuthors]="searchedAuthors$ | async"
+      [isFind]="isFind"
+      (searchAuthorsString)="onAuthorSearch($event)" -->
       </div>
 
       <div class="manage-course-bottom">
         <button type="button" class="cancel-btn" (click)="onCancel()">
           Cancel
         </button>
-        <button
-          type="submit"
-          class="accept-btn"
-          [disabled]="!manageCourseForm.valid"
-        >
+        <button type="submit" class="accept-btn" [disabled]="!manageCourseForm.valid">
           Save
         </button>
       </div>
