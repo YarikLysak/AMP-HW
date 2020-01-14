@@ -5,7 +5,7 @@ import {
   Output,
   EventEmitter,
   forwardRef,
-  OnInit,
+  OnInit
 } from '@angular/core';
 import { FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { debounceTime, filter, map } from 'rxjs/operators';
@@ -26,7 +26,6 @@ import { Author } from '../../shared/models/author.model';
   ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-
 export class AuthorsListComponent {
   public authorsList: Author[] = [];
   public suggesterStatus = false;
@@ -49,7 +48,6 @@ export class AuthorsListComponent {
     // console.log('RT', fn);
   }
 
-
   // @Input() parentForm: FormGroup;
   // @Input() isError: boolean;
   // @Input() isFind: boolean;
@@ -58,7 +56,6 @@ export class AuthorsListComponent {
   // @Input() searchedAuthors: Author[];
 
   // @Output() searchAuthorsString = new EventEmitter<string>();
-
 
   // ngOnInit() {
   //   console.log(authors);
@@ -85,6 +82,8 @@ export class AuthorsListComponent {
   }
 
   deleteAuthor(needToDeleteAuthor: Author) {
-    this.authorsList = [...this.authorsList].filter(({ id }) => id !== needToDeleteAuthor.id);
+    this.authorsList = [...this.authorsList].filter(
+      ({ id }) => id !== needToDeleteAuthor.id
+    );
   }
 }

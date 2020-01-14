@@ -6,7 +6,11 @@
     </span>
   </div>
   <div class="common-input authors-pills" (click)="openSuggester()">
-    <span class="authors-pills-item" *ngFor="let author of authorsList" (click)="deleteAuthor()">
+    <span
+      class="authors-pills-item"
+      *ngFor="let author of authorsList"
+      (click)="deleteAuthor()"
+    >
       {{ author.name }}
       <i class="fas fa-times"></i>
     </span>
@@ -16,12 +20,22 @@
     </span> -->
   </div>
   <div class="authors-suggester" *ngIf="suggesterStatus">
-    <input (keyup)="searchAuthors()" type="text" id="authors" class="authors-suggester-input" placeholder="Start typing"
-      autocomplete="off" />
+    <input
+      (keyup)="searchAuthors()"
+      type="text"
+      id="authors"
+      class="authors-suggester-input"
+      placeholder="Start typing"
+      autocomplete="off"
+    />
     <!-- [ngClass]="{ 'failed-input': isError }" -->
     <div class="authors-suggester-results">
-      <span *ngFor="let searchedAuthor of searchedAuthors" class="authors-suggester-item"
-        (click)="onSearhcedAuthorSelect(searchedAuthor)">{{ searchedAuthor.name }}</span>
+      <span
+        *ngFor="let searchedAuthor of searchedAuthors"
+        class="authors-suggester-item"
+        (click)="onSearhcedAuthorSelect(searchedAuthor)"
+        >{{ searchedAuthor.name }}</span
+      >
     </div>
   </div>
 </div>

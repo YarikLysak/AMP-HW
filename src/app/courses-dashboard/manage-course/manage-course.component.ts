@@ -28,7 +28,9 @@ export class ManageCourseComponent implements OnInit {
   public editCourse$: Observable<Course> = this.store.select(getCourse);
   public editCourseId: number | null = null;
   private breadcrumb = '';
-  public searchedAuthors$: Observable<Author[]> = this.store.select(getAuthorsList);
+  public searchedAuthors$: Observable<Author[]> = this.store.select(
+    getAuthorsList
+  );
   public dateFormat = 'dd/MM/yyyy';
   public isFind = false;
 

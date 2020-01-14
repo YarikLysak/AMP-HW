@@ -5,6 +5,12 @@
       {{ outputError }}
     </span>
   </div>
-  <input formControlName="date" type="text" id="date" class="common-input" [placeholder]="dateFormat"
-    [ngClass]="{ 'failed-input': isError }" />
+  <input
+    formControlName="date"
+    type="text"
+    id="date"
+    class="common-input"
+    [placeholder]="dateFormat"
+    [ngClass]="{ 'failed-input': isError }"
+  />
 </div>
