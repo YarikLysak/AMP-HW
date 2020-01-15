@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { mergeMap, map } from 'rxjs/operators';
+import { mergeMap, map, switchMap } from 'rxjs/operators';
 
 import { CoursesService } from '../shared/services/courses.service';
 import { AuthorsService } from '../shared/services/authors.service';
@@ -28,7 +28,7 @@ export class CoursesListEffects {
   getAuhtors$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getAuthors),
-      mergeMap(({ searchString }) =>
+      switchMap(({ searchString }) =>
         this.authorsService
           .getAuthors(searchString)
           .pipe(map((authors: Author[]) => getAuthorsSuccess({ authors })))
@@ -57,7 +57,7 @@ export class CoursesListEffects {
   getSearched$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getSearched),
-      mergeMap(({ searchString, count }) =>
+      switchMap(({ searchString, count }) =>
         this.coursesService
           .searchCourses(searchString, count)
           .pipe(map((courses: Course[]) => getCoursesSuccess({ courses })))

@@ -19,8 +19,8 @@
     />
     <div class="authors-suggester-results">
       <span
-        *ngFor="let sAuthor of searchedAuthors$ | async"
         class="authors-suggester-item"
+        *ngFor="let sAuthor of searchedAuthors$ | async"
         (click)="onSearhcedAuthorSelect(sAuthor)"
         >{{ sAuthor.name }}</span
       >
