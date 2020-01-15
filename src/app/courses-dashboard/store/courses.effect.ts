@@ -18,7 +18,9 @@ import {
   editCourse,
   manageCourseSuccess,
   getAuthors,
-  getAuthorsSuccess
+  getAuthorsSuccess,
+  clearAuthorsSuccess,
+  clearAuthors
 } from './courses.actions';
 
 @Injectable()
@@ -31,6 +33,13 @@ export class CoursesListEffects {
           .getAuthors(searchString)
           .pipe(map((authors: Author[]) => getAuthorsSuccess({ authors })))
       )
+    )
+  );
+
+  clearAuthors$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(clearAuthors),
+      map(() => clearAuthorsSuccess({ authors: [] }))
     )
   );
 
@@ -71,9 +80,10 @@ export class CoursesListEffects {
     this.actions$.pipe(
       ofType(addCourse),
       mergeMap(({ courseForm }) => {
+        const dateArray = courseForm.date.split('/');
         const newCourse = {
-          ...courseForm.value,
-          date: new Date(courseForm.controls.date.value),
+          ...courseForm,
+          date: new Date(`${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`),
           isTopRated: false
         };
         return this.coursesService.addCourse(newCourse).pipe(
@@ -89,10 +99,11 @@ export class CoursesListEffects {
     this.actions$.pipe(
       ofType(editCourse),
       mergeMap(({ course, courseForm }) => {
+        const dateArray = courseForm.date.split('/');
         const updatedCourse = {
           ...course,
-          ...courseForm.value,
-          date: new Date(courseForm.controls.date.value)
+          ...courseForm,
+          date: new Date(`${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`)
         };
         return this.coursesService.updateCourse(updatedCourse).pipe(
           map(() => {

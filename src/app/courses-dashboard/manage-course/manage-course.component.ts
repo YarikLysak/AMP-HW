@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Component } from '@angular/core';
+import { Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
@@ -9,13 +9,12 @@ import {
   editCourse,
   addCourse,
   getCourseById,
-  getAuthors
+  clearAuthors
 } from '../store/courses.actions';
 import { AppState } from '../../store/app-state.model';
-import { getCourse, getAuthorsList } from '../store/courses.selectors';
+import { getCourse } from '../store/courses.selectors';
 
 import { Course } from '../shared/models/course.model';
-import { Author } from '../shared/models/author.model';
 import { dateValidator } from '../shared/validators/date-input.validator';
 import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 
@@ -24,25 +23,20 @@ import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumb
   templateUrl: './manage-course.component.html',
   styleUrls: ['./manage-course.component.sass']
 })
-export class ManageCourseComponent implements OnInit {
+export class ManageCourseComponent {
   public editCourse$: Observable<Course> = this.store.select(getCourse);
   public editCourseId: number | null = null;
   private breadcrumb = '';
-  public searchedAuthors$: Observable<Author[]> = this.store.select(
-    getAuthorsList
-  );
+
   public dateFormat = 'dd/MM/yyyy';
   public isFind = false;
 
-  public manageCourseForm = new FormGroup({
-    name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
-    description: new FormControl('', [
-      Validators.required,
-      Validators.maxLength(500)
-    ]),
-    length: new FormControl('', [Validators.required]),
-    date: new FormControl('', [Validators.required, dateValidator]),
-    authors: new FormControl('', [Validators.required])
+  public manageCourseForm = this.fb.group({
+    name: ['', [Validators.required, Validators.maxLength(50)]],
+    description: ['', [Validators.required, Validators.maxLength(500)]],
+    length: ['', [Validators.required]],
+    date: ['', [Validators.required, dateValidator]],
+    authors: [[], [Validators.required]]
   });
 
   constructor(
@@ -50,24 +44,17 @@ export class ManageCourseComponent implements OnInit {
     private router: Router,
     private datePipe: DatePipe,
     private store: Store<AppState>,
-    private breadcrumbsService: BreadcrumbsService
+    private breadcrumbsService: BreadcrumbsService,
+    private fb: FormBuilder
   ) {
     const paramId = this.route.snapshot.paramMap.get('id');
     this.breadcrumb = this.route.snapshot.data.breadcrumbs;
     if (paramId) {
       this.editCourseId = +paramId;
       this.store.dispatch(getCourseById({ id: this.editCourseId }));
-    } else {
-      this.editCourseId = null;
-      this.breadcrumbsService.setBreadcrumb(this.breadcrumb);
-    }
-  }
-
-  ngOnInit() {
-    if (this.editCourseId) {
       this.editCourse$.subscribe(course => {
         if (course) {
-          this.manageCourseForm.setValue({
+          this.manageCourseForm.patchValue({
             name: course.name,
             description: course.description.trim(),
             length: course.length,
@@ -76,32 +63,24 @@ export class ManageCourseComponent implements OnInit {
           });
         }
       });
-    }
-  }
-
-  onAuthorSearch(searchAuthorsString: string) {
-    if (searchAuthorsString.length !== 0) {
-      this.store.dispatch(getAuthors({ searchString: searchAuthorsString }));
-      this.searchedAuthors$.subscribe((searchedAuthors: Author[]) => {
-        console.log(searchedAuthors);
-        this.isFind = searchedAuthors.length > 0;
-      });
     } else {
-      this.isFind = false;
+      this.editCourseId = null;
+      this.breadcrumbsService.setBreadcrumb(this.breadcrumb);
     }
   }
 
   onSubmit() {
+    const courseForm = { ...this.manageCourseForm.value };
+
     if (this.editCourseId) {
       this.editCourse$.subscribe(course => {
-        this.store.dispatch(
-          editCourse({ course, courseForm: this.manageCourseForm })
-        );
+        this.store.dispatch(editCourse({ course, courseForm }));
       });
     } else {
-      this.store.dispatch(addCourse({ courseForm: this.manageCourseForm }));
+      this.store.dispatch(addCourse({ courseForm }));
     }
     this.manageCourseForm.reset();
+    this.store.dispatch(clearAuthors());
   }
 
   onCancel() {

@@ -1,40 +1,28 @@
 <div class="authors">
   <div class="form-label">
     <span>Authors:</span>
-    <span class="form-error" *ngIf="isError">
-      {{ outputError }}
-    </span>
   </div>
-  <div class="common-input authors-pills" (click)="openSuggester()">
-    <span
-      class="authors-pills-item"
-      *ngFor="let author of authorsList"
-      (click)="deleteAuthor()"
-    >
+  <div class="common-input authors-field" (click)="suggesterTrigger()">
+    <span class="authors-field-item" *ngFor="let author of authorsList">
       {{ author.name }}
-      <i class="fas fa-times"></i>
+      <i class="fas fa-times" (click)="deleteAuthor($event, author.id)"></i>
     </span>
-    <!-- <span class="authors-pills-item" (click)="deleteAuthor()">
-      author.name
-      <i class="fas fa-times"></i>
-    </span> -->
   </div>
   <div class="authors-suggester" *ngIf="suggesterStatus">
     <input
-      (keyup)="searchAuthors()"
+      (keyup)="onSearchAuthors()"
+      [formControl]="searchedAuthorsField"
       type="text"
-      id="authors"
       class="authors-suggester-input"
       placeholder="Start typing"
       autocomplete="off"
     />
-    <!-- [ngClass]="{ 'failed-input': isError }" -->
     <div class="authors-suggester-results">
       <span
-        *ngFor="let searchedAuthor of searchedAuthors"
+        *ngFor="let sAuthor of searchedAuthors$ | async"
         class="authors-suggester-item"
-        (click)="onSearhcedAuthorSelect(searchedAuthor)"
-        >{{ searchedAuthor.name }}</span
+        (click)="onSearhcedAuthorSelect(sAuthor)"
+        >{{ sAuthor.name }}</span
       >
     </div>
   </div>

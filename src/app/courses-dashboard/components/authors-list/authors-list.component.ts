@@ -1,17 +1,17 @@
+import { Component, forwardRef, OnDestroy } from '@angular/core';
 import {
-  Component,
-  Input,
-  ChangeDetectionStrategy,
-  Output,
-  EventEmitter,
-  forwardRef,
-  OnInit
-} from '@angular/core';
-import { FormGroup, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { debounceTime, filter, map } from 'rxjs/operators';
+  FormControl,
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor
+} from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { debounceTime, filter } from 'rxjs/operators';
 
 import { Author } from '../../shared/models/author.model';
+import { AppState } from '../../../store/app-state.model';
+import { getAuthors, clearAuthors } from '../../store/courses.actions';
+import { getAuthorsList } from '../../store/courses.selectors';
 
 @Component({
   selector: 'app-authors-list',
@@ -23,67 +23,65 @@ import { Author } from '../../shared/models/author.model';
       useExisting: forwardRef(() => AuthorsListComponent),
       multi: true
     }
-  ],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  ]
 })
-export class AuthorsListComponent {
+export class AuthorsListComponent implements ControlValueAccessor, OnDestroy {
   public authorsList: Author[] = [];
   public suggesterStatus = false;
+  public searchedAuthorsField = new FormControl('');
+  public searchedAuthors$: Observable<Author[]> = this.store.select(
+    getAuthorsList
+  );
 
-  onChange = (authors: Author[]) => {
-    console.log('onChange', authors);
-  };
+  private propagateChange = (_: any) => {};
 
-  writeValue(value: any) {
-    this.authorsList = value;
-    console.log('WV', this.authorsList);
-    this.onChange(this.authorsList);
+  constructor(private store: Store<AppState>) {}
+
+  onSearhcedAuthorSelect(author: Author) {
+    if (!this.authorsList.find(({ id }) => id === author.id)) {
+      this.authorsList = [...this.authorsList, author];
+      this.propagateChange(this.authorsList);
+    }
   }
 
-  registerOnChange(fn: any) {
-    this.onChange = fn;
+  onSearchAuthors() {
+    this.store.dispatch(clearAuthors());
+    this.searchedAuthorsField.valueChanges
+      .pipe(
+        debounceTime(750),
+        filter(searchStr => searchStr.length !== 0)
+      )
+      .subscribe(searchString =>
+        this.store.dispatch(getAuthors({ searchString }))
+      );
   }
 
-  registerOnTouched(fn: any) {
-    // console.log('RT', fn);
-  }
-
-  // @Input() parentForm: FormGroup;
-  // @Input() isError: boolean;
-  // @Input() isFind: boolean;
-  // @Input() outputError: string;
-
-  // @Input() searchedAuthors: Author[];
-
-  // @Output() searchAuthorsString = new EventEmitter<string>();
-
-  // ngOnInit() {
-  //   console.log(authors);
-  //   console.log(this.parentForm.controls.authors);
-  // }
-
-  // searchAuthors() {
-  //   this.parentForm.controls.authors.valueChanges
-  //     .pipe(
-  //       debounceTime(750),
-  //       filter(
-  //         searchString => searchString.length > 1 || searchString.length === 0
-  //       ),
-  //     )
-  //     .subscribe(searchString => this.searchAuthorsString.emit(searchString));
-  // }
-
-  // onSearhcedAuthorSelect(searchedAuthor: Author) {
-  //   console.log(searchedAuthor);
-  // }
-
-  openSuggester() {
+  suggesterTrigger() {
     this.suggesterStatus = !this.suggesterStatus;
   }
 
-  deleteAuthor(needToDeleteAuthor: Author) {
+  deleteAuthor(e, needToDeleteId: number) {
+    e.stopPropagation();
+
     this.authorsList = [...this.authorsList].filter(
-      ({ id }) => id !== needToDeleteAuthor.id
+      ({ id }) => id !== needToDeleteId
     );
+    this.propagateChange(this.authorsList);
+  }
+
+  writeValue(value: any) {
+    if (value) {
+      this.authorsList = [...value];
+    }
+  }
+
+  registerOnChange(fn: any) {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: any) {}
+
+  ngOnDestroy() {
+    this.store.dispatch(clearAuthors());
   }
 }
