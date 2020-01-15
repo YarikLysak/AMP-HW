@@ -51,7 +51,9 @@ export const manageCourseSuccess = createAction(
   '[COURSES] Add/Edit Course Success',
   props<{ course: Course }>()
 );
-
+export const cancelManageCourse = createAction(
+  '[COURSES] Cancel Manage Course'
+);
 export const deleteCourse = createAction(
   '[COURSES] Delete Course',
   props<{ id: number }>()

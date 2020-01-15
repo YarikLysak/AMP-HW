@@ -1,4 +1,4 @@
-import { Component, forwardRef, OnDestroy } from '@angular/core';
+import { Component, Input, forwardRef, OnDestroy } from '@angular/core';
 import {
   FormControl,
   NG_VALUE_ACCESSOR,
@@ -33,7 +33,11 @@ export class AuthorsListComponent implements ControlValueAccessor, OnDestroy {
     getAuthorsList
   );
 
+  @Input() isError: boolean;
+  @Input() outputError: string;
+
   private propagateChange = (_: any) => {};
+  private getTouched = () => {};
 
   constructor(private store: Store<AppState>) {}
 
@@ -58,6 +62,9 @@ export class AuthorsListComponent implements ControlValueAccessor, OnDestroy {
 
   suggesterTrigger() {
     this.suggesterStatus = !this.suggesterStatus;
+    if (this.suggesterStatus === false) {
+      this.getTouched();
+    }
   }
 
   deleteAuthor(e, needToDeleteId: number) {
@@ -79,7 +86,9 @@ export class AuthorsListComponent implements ControlValueAccessor, OnDestroy {
     this.propagateChange = fn;
   }
 
-  registerOnTouched(fn: any) {}
+  registerOnTouched(fn: any) {
+    this.getTouched = fn;
+  }
 
   ngOnDestroy() {
     this.store.dispatch(clearAuthors());

@@ -1,8 +1,14 @@
 <div class="authors">
   <div class="form-label">
     <span>Authors:</span>
+    <span class="form-error" *ngIf="isError">
+      {{ outputError }}
+    </span>
   </div>
   <div class="common-input authors-field" (click)="suggesterTrigger()">
+    <span class="authors-field-placeholder" *ngIf="!authorsList.length">
+      Tap to choose authors
+    </span>
     <span class="authors-field-item" *ngFor="let author of authorsList">
       {{ author.name }}
       <i class="fas fa-times" (click)="deleteAuthor($event, author.id)"></i>

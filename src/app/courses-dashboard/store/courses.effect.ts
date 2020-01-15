@@ -17,10 +17,11 @@ import {
   addCourse,
   editCourse,
   manageCourseSuccess,
+  cancelManageCourse,
   getAuthors,
   getAuthorsSuccess,
-  clearAuthorsSuccess,
-  clearAuthors
+  clearAuthors,
+  clearAuthorsSuccess
 } from './courses.actions';
 
 @Injectable()
@@ -113,6 +114,14 @@ export class CoursesListEffects {
         );
       })
     )
+  );
+  cancelManageCourse$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(cancelManageCourse),
+        switchMap(() => this.router.navigateByUrl('/courses'))
+      ),
+    { dispatch: false }
   );
 
   deleteCourse$ = createEffect(() =>

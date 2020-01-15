@@ -17,7 +17,6 @@ import { AuthorsListComponent } from './components/authors-list/authors-list.com
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 
 import { courseReducer } from './store/courses.reducer';
-import { IsErrorPipe } from './shared/pipes/is-error.pipe';
 import { OutputErrorPipe } from './shared/pipes/output-error.pipe';
 
 @NgModule({
@@ -31,7 +30,6 @@ import { OutputErrorPipe } from './shared/pipes/output-error.pipe';
     DatePickerComponent,
     DurationInputComponent,
     AuthorsListComponent,
-    IsErrorPipe,
     OutputErrorPipe
   ],
   imports: [
