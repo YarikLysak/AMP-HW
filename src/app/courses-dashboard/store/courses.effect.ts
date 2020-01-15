@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { mergeMap, map } from 'rxjs/operators';
+import { mergeMap, map, switchMap } from 'rxjs/operators';
 
 import { CoursesService } from '../shared/services/courses.service';
 import { AuthorsService } from '../shared/services/authors.service';
@@ -17,8 +17,11 @@ import {
   addCourse,
   editCourse,
   manageCourseSuccess,
+  cancelManageCourse,
   getAuthors,
-  getAuthorsSuccess
+  getAuthorsSuccess,
+  clearAuthors,
+  clearAuthorsSuccess
 } from './courses.actions';
 
 @Injectable()
@@ -26,11 +29,18 @@ export class CoursesListEffects {
   getAuhtors$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getAuthors),
-      mergeMap(({ searchString }) =>
+      switchMap(({ searchString }) =>
         this.authorsService
           .getAuthors(searchString)
           .pipe(map((authors: Author[]) => getAuthorsSuccess({ authors })))
       )
+    )
+  );
+
+  clearAuthors$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(clearAuthors),
+      map(() => clearAuthorsSuccess({ authors: [] }))
     )
   );
 
@@ -48,7 +58,7 @@ export class CoursesListEffects {
   getSearched$ = createEffect(() =>
     this.actions$.pipe(
       ofType(getSearched),
-      mergeMap(({ searchString, count }) =>
+      switchMap(({ searchString, count }) =>
         this.coursesService
           .searchCourses(searchString, count)
           .pipe(map((courses: Course[]) => getCoursesSuccess({ courses })))
@@ -71,9 +81,10 @@ export class CoursesListEffects {
     this.actions$.pipe(
       ofType(addCourse),
       mergeMap(({ courseForm }) => {
+        const dateArray = courseForm.date.split('/');
         const newCourse = {
-          ...courseForm.value,
-          date: new Date(courseForm.controls.date.value),
+          ...courseForm,
+          date: new Date(`${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`),
           isTopRated: false
         };
         return this.coursesService.addCourse(newCourse).pipe(
@@ -89,10 +100,11 @@ export class CoursesListEffects {
     this.actions$.pipe(
       ofType(editCourse),
       mergeMap(({ course, courseForm }) => {
+        const dateArray = courseForm.date.split('/');
         const updatedCourse = {
           ...course,
-          ...courseForm.value,
-          date: new Date(courseForm.controls.date.value)
+          ...courseForm,
+          date: new Date(`${dateArray[2]}-${dateArray[1]}-${dateArray[0]}`)
         };
         return this.coursesService.updateCourse(updatedCourse).pipe(
           map(() => {
@@ -102,6 +114,14 @@ export class CoursesListEffects {
         );
       })
     )
+  );
+  cancelManageCourse$ = createEffect(
+    () =>
+      this.actions$.pipe(
+        ofType(cancelManageCourse),
+        switchMap(() => this.router.navigateByUrl('/courses'))
+      ),
+    { dispatch: false }
   );
 
   deleteCourse$ = createEffect(() =>

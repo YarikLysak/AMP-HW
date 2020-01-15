@@ -11,8 +11,11 @@
       <div class="form-field">
         <div class="form-label">
           <label for="title">Title:</label>
-          <span class="form-error" *ngIf="isError('name')">
-            {{ outputError('name') }}
+          <span
+            class="form-error"
+            *ngIf="formControls.name.touched && formControls.name.errors"
+          >
+            {{ formControls.name.errors | outputError }}
           </span>
         </div>
         <input
@@ -21,15 +24,24 @@
           id="name"
           class="common-input"
           placeholder="Text nput"
-          [ngClass]="{ 'failed-input': isError('name') }"
+          [ngClass]="{
+            'failed-input':
+              formControls.name.touched && formControls.name.errors
+          }"
         />
       </div>
 
       <div class="form-field">
         <div class="form-label">
           <label for="description">Descripion:</label>
-          <span class="form-error" *ngIf="isError('description')">
-            {{ outputError('description') }}
+          <span
+            class="form-error"
+            *ngIf="
+              formControls.description.touched &&
+              formControls.description.errors
+            "
+          >
+            {{ formControls.description.errors | outputError }}
           </span>
         </div>
         <textarea
@@ -39,36 +51,38 @@
           id="description"
           class="common-input"
           placeholder="Add description"
-          [ngClass]="{ 'failed-input': isError('description') }"
+          [ngClass]="{
+            'failed-input':
+              formControls.description.touched &&
+              formControls.description.errors
+          }"
         ></textarea>
       </div>
 
       <div class="form-field">
         <app-duration-input
           [parentForm]="manageCourseForm"
-          [isError]="isError('length')"
-          [outputError]="outputError('length')"
+          [isError]="formControls.length.touched && formControls.length.errors"
+          [outputError]="formControls.length.errors | outputError"
         >
         </app-duration-input>
       </div>
-
       <div class="form-field">
         <app-date-picker
           [parentForm]="manageCourseForm"
-          [isError]="isError('date')"
-          [outputError]="outputError('date')"
+          [isError]="formControls.date.touched && formControls.date.errors"
+          [outputError]="formControls.date.errors | outputError"
           [dateFormat]="dateFormat"
         >
         </app-date-picker>
       </div>
       <div class="form-field">
         <app-authors-list
-          [parentForm]="manageCourseForm"
-          [isError]="isError('authors')"
-          [outputError]="outputError('authors')"
-          [authors$]="authors$"
-          [isFind]="isFind"
-          (searchAuthorsString)="onAuthorSearch($event)"
+          formControlName="authors"
+          [isError]="
+            formControls.authors.touched && formControls.authors.errors
+          "
+          [outputError]="formControls.authors.errors | outputError"
         >
         </app-authors-list>
       </div>

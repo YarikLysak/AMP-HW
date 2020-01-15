@@ -26,16 +26,22 @@
             flex-direction: column
             max-height: 4.5em
 
-        &-pill
+        &-item
             padding-left: 10px
             cursor: pointer
 
             &:hover
                 background: $gray
 
-.authors-pills
-    margin-top: 3px
+.authors-field
+    display: flex
+    align-items: center
+    min-height: 2.7em
     line-height: 1.5
+    cursor: pointer
+
+    &-placeholder
+        color: $silver
 
     &-item
         display: inline-flex
@@ -49,10 +55,9 @@
         color: $battleship-grey
         cursor: pointer
 
-        &:hover
-            & > i
-                color: $dark-sky-blue
-
         & > i
             margin-left: 3px
             color: $gray
+
+            &:hover
+                color: $dark-sky-blue

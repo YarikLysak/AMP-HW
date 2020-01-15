@@ -17,6 +17,7 @@ import { AuthorsListComponent } from './components/authors-list/authors-list.com
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 
 import { courseReducer } from './store/courses.reducer';
+import { OutputErrorPipe } from './shared/pipes/output-error.pipe';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { courseReducer } from './store/courses.reducer';
     ManageCourseComponent,
     DatePickerComponent,
     DurationInputComponent,
-    AuthorsListComponent
+    AuthorsListComponent,
+    OutputErrorPipe
   ],
   imports: [
     CommonModule,
