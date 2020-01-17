@@ -2,7 +2,7 @@
   <div class="container-white form-container">
     <div class="login-form-head">
       <h2>Login</h2>
-      <span class="login-form__error" *ngIf="error$ | async as error"
+      <span class="form-error" *ngIf="error$ | async as error"
         >Wrong {{ error }}</span
       >
     </div>
@@ -11,30 +11,34 @@
       class="form-column login-form"
       (ngSubmit)="onSubmit()"
     >
-      <label for="login" class="form-label">
-        <span class="login-form-label-text">Login:</span>
-        <span class="form-hint">*required</span>
-      </label>
-      <input
-        class="common-input"
-        type="login"
-        id="login"
-        formControlName="login"
-        placeholder="Enter login"
-        required
-      />
-      <label for="password" class="form-label">
-        <span class="login-form-label-text">Password</span>
-        <span class="form-hint">*required</span>
-      </label>
-      <input
-        class="common-input"
-        type="password"
-        id="password"
-        formControlName="password"
-        placeholder="Enter password"
-        required
-      />
+      <div class="form-field">
+        <label for="login" class="form-label">
+          <span class="login-form-label-text">Login:</span>
+        </label>
+        <input
+          class="common-input"
+          type="login"
+          id="login"
+          formControlName="login"
+          placeholder="Enter login"
+          required
+        />
+      </div>
+
+      <div class="form-field">
+        <label for="password" class="form-label">
+          <span class="login-form-label-text">Password</span>
+        </label>
+        <input
+          class="common-input"
+          type="password"
+          id="password"
+          formControlName="password"
+          placeholder="Enter password"
+          required
+        />
+      </div>
+
       <div class="login-form-bottom">
         <a href="#" class="login-form__help">Forgot password?</a>
         <button type="submit" class="accept-btn" [disabled]="!loginForm.valid">

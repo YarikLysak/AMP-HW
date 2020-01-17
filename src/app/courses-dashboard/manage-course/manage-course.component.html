@@ -8,37 +8,94 @@
       class="form-column manage-course-form"
       (ngSubmit)="onSubmit()"
     >
-      <div class="form-label">
-        <label for="title">Course Name:</label>
-        <span class="form-hint">*required</span>
+      <div class="form-field">
+        <div class="form-label">
+          <label for="title">Title:</label>
+          <span
+            class="form-error"
+            *ngIf="formControls.name.touched && formControls.name.errors"
+          >
+            {{ formControls.name.errors | outputError }}
+          </span>
+        </div>
+        <input
+          formControlName="name"
+          type="text"
+          id="name"
+          class="common-input"
+          placeholder="Text nput"
+          [ngClass]="{
+            'failed-input':
+              formControls.name.touched && formControls.name.errors
+          }"
+        />
       </div>
-      <input
-        formControlName="name"
-        type="text"
-        id="name"
-        class="common-input"
-        placeholder="Text nput"
-      />
-      <div class="form-label">
-        <label for="description">Descripion:</label>
-        <span class="form-hint">*required</span>
+
+      <div class="form-field">
+        <div class="form-label">
+          <label for="description">Descripion:</label>
+          <span
+            class="form-error"
+            *ngIf="
+              formControls.description.touched &&
+              formControls.description.errors
+            "
+          >
+            {{ formControls.description.errors | outputError }}
+          </span>
+        </div>
+        <textarea
+          formControlName="description"
+          rows="4"
+          cols="45"
+          id="description"
+          class="common-input"
+          placeholder="Add description"
+          [ngClass]="{
+            'failed-input':
+              formControls.description.touched &&
+              formControls.description.errors
+          }"
+        ></textarea>
       </div>
-      <textarea
-        formControlName="description"
-        rows="4"
-        cols="45"
-        id="description"
-        class="common-input"
-        placeholder="Add description"
-      ></textarea>
-      <app-duration-input [parentForm]="manageCourseForm"></app-duration-input>
-      <app-date-picker [parentForm]="manageCourseForm"></app-date-picker>
-      <app-authors-list [parentForm]="manageCourseForm"></app-authors-list>
+
+      <div class="form-field">
+        <app-duration-input
+          [parentForm]="manageCourseForm"
+          [isError]="formControls.length.touched && formControls.length.errors"
+          [outputError]="formControls.length.errors | outputError"
+        >
+        </app-duration-input>
+      </div>
+      <div class="form-field">
+        <app-date-picker
+          [parentForm]="manageCourseForm"
+          [isError]="formControls.date.touched && formControls.date.errors"
+          [outputError]="formControls.date.errors | outputError"
+          [dateFormat]="dateFormat"
+        >
+        </app-date-picker>
+      </div>
+      <div class="form-field">
+        <app-authors-list
+          formControlName="authors"
+          [isError]="
+            formControls.authors.touched && formControls.authors.errors
+          "
+          [outputError]="formControls.authors.errors | outputError"
+        >
+        </app-authors-list>
+      </div>
+
       <div class="manage-course-bottom">
         <button type="button" class="cancel-btn" (click)="onCancel()">
           Cancel
         </button>
-        <button type="submit" class="accept-btn">
+        <button
+          type="submit"
+          class="accept-btn"
+          [disabled]="!manageCourseForm.valid"
+        >
           Save
         </button>
       </div>

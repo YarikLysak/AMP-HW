@@ -1,0 +1,63 @@
+@import '../../../shared/styles'
+
+.authors
+    position: relative
+
+    &-suggester
+        position: absolute
+        top: 68px
+        left: 0
+        display: flex
+        flex-direction: column
+        width: 50%
+        border: 1px solid $gray
+        background: $white
+        overflow-y: auto
+
+        &-input
+            border: none
+            padding-left: 10px
+
+            &:focus
+                outline: none
+
+        &-results
+            display: flex
+            flex-direction: column
+            max-height: 4.5em
+
+        &-item
+            padding-left: 10px
+            cursor: pointer
+
+            &:hover
+                background: $gray
+
+.authors-field
+    display: flex
+    align-items: center
+    min-height: 2.7em
+    line-height: 1.5
+    cursor: pointer
+
+    &-placeholder
+        color: $silver
+
+    &-item
+        display: inline-flex
+        align-items: center
+        border: 1px solid $pale-gray
+        border-radius: 3px
+        padding: 3px
+        margin-right: 5px
+        font-size: 12px
+        background: $pale-gray
+        color: $battleship-grey
+        cursor: pointer
+
+        & > i
+            margin-left: 3px
+            color: $gray
+
+            &:hover
+                color: $dark-sky-blue
