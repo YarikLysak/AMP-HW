@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 import { AppRoutingModule } from '../app-routing.module';
 
 import { HeaderComponent } from './header/header.component';
@@ -23,7 +24,7 @@ import { LoaderInterceptor } from './shared/loader.interceptor';
     NotFoundComponent,
     SpinnerComponent
   ],
-  imports: [CommonModule, AppRoutingModule],
+  imports: [CommonModule, AppRoutingModule, TranslateModule],
   exports: [
     HeaderComponent,
     BreadcrumbsComponent,

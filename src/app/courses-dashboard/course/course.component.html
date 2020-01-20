@@ -28,14 +28,14 @@
         type="button"
         class="common-btn edit-btn"
       >
-        <i class="fas fa-pen"></i>Edit
+        <i class="fas fa-pen"></i>{{ 'BASE.EDIT' | translate: { type: '' } }}
       </button>
       <button
         (click)="onDelete()"
         class="common-btn delete-btn"
         id="{{ course.id }}"
       >
-        <i class="fas fa-trash"></i>Delete
+        <i class="fas fa-trash"></i>{{ 'BASE.DELETE' | translate | titlecase }}
       </button>
     </div>
   </div>

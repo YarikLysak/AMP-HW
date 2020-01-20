@@ -1,0 +1,42 @@
+{
+  "BASE": {
+    "LOGIN": "логин",
+    "PASSWORD": "пароль",
+    "WRONG": "неверный",
+    "ENTER": "введите",
+    "FORGOT": "забыл пароль",
+    "LOGOFF": "Выйти",
+    "COURSE": "курс",
+    "COURSES": "курсы",
+    "ADD": "Добавить {{type}}",
+    "EDIT": "Редактировать {{type}}",
+    "DELETE": "удалить",
+    "LOAD MORE": "еще",
+    "MINUTES": "минуты",
+    "HOURS": "ч",
+
+    "ERR_REQUIRED": "Обязательное поле!",
+    "ERR_MAXLENGTH": "Выввели больше {{lentgh}} символов!",
+    "ERR_DAYFORMAT": "Неверный формат! Попробуйте {{dateFormat}}",
+
+    "TITLE": "заголовок",
+    "DESCRIPTION": "описание",
+    "DURATION": "длительность",
+    "DATE": "дата",
+    "AUTHORS": "авторы",
+
+    "SEARCH_PLACEHOLDER": "Введите для поиска",
+    "TEXT_PLACEHOLDER": "Введите текст",
+    "AUTHORS_PLACEHOLER": "Нажмите для выбора авторов",
+
+    "FILTERED_FROM": "Отфильтровано как",
+    "NEW": "новый {{type}}",
+    "OLD": "старые",
+    "ASK_DELETE": "Вы уверены что хотите {{actionType}} {{courseName}}",
+    "YES": "да",
+    "NO": "не",
+    "SAVE": "сохранить",
+    "CLOSE": "отмена",
+    "404": "page not found"
+  }
+}

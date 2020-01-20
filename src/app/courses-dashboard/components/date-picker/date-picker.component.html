@@ -1,6 +1,6 @@
 <div class="form-input__short" [formGroup]="parentForm">
   <div class="form-label">
-    <label for="date">Date:</label>
+    <label for="date">{{ 'BASE.DATE' | translate | titlecase }}:</label>
     <span class="form-error" *ngIf="isError">
       {{ outputError }}
     </span>

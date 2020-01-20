@@ -5,10 +5,10 @@
         [routerLink]="page | lowercase"
         *ngIf="page !== (currentPage$ | async); else currentPage"
       >
-        {{ page }}
+        {{ page | translate }}
       </a>
       <ng-template #currentPage>
-        <span class="active">{{ page }}</span>
+        <span class="active">{{ page | translate }}</span>
       </ng-template>
     </div>
   </div>
