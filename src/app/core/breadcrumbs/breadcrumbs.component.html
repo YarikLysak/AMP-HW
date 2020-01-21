@@ -5,10 +5,12 @@
         [routerLink]="page | lowercase"
         *ngIf="page !== (currentPage$ | async); else currentPage"
       >
-        {{ page | translate }}
+        {{ 'BASE.' + page.toUpperCase() | translate | titlecase }}
       </a>
       <ng-template #currentPage>
-        <span class="active">{{ page | translate }}</span>
+        <span class="active">{{
+          'BASE.' + page.toUpperCase() | translate | titlecase
+        }}</span>
       </ng-template>
     </div>
   </div>

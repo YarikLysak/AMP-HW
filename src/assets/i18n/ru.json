@@ -1,5 +1,8 @@
 {
   "BASE": {
+    "EN": "English",
+    "RU": "Русский",
+
     "LOGIN": "логин",
     "PASSWORD": "пароль",
     "WRONG": "неверный",
@@ -8,35 +11,34 @@
     "LOGOFF": "Выйти",
     "COURSE": "курс",
     "COURSES": "курсы",
+    "NEW COURSE": "новый курс",
     "ADD": "Добавить {{type}}",
     "EDIT": "Редактировать {{type}}",
+    "NEW": "new {{type}}",
+    "OLD": "старые",
     "DELETE": "удалить",
     "LOAD MORE": "еще",
     "MINUTES": "минуты",
     "HOURS": "ч",
-
-    "ERR_REQUIRED": "Обязательное поле!",
-    "ERR_MAXLENGTH": "Выввели больше {{lentgh}} символов!",
-    "ERR_DAYFORMAT": "Неверный формат! Попробуйте {{dateFormat}}",
+    "ASK_DELETE": "Вы уверены что хотите {{actionType}} {{courseName}}",
+    "YES": "да",
+    "NO": "нет",
+    "SAVE": "сохранить",
+    "CANCEL": "отмена",
+    "404": "page not found",
+    "FILTERED_FROM": "Отфильтровано как",
 
     "TITLE": "заголовок",
     "DESCRIPTION": "описание",
     "DURATION": "длительность",
     "DATE": "дата",
     "AUTHORS": "авторы",
-
     "SEARCH_PLACEHOLDER": "Введите для поиска",
     "TEXT_PLACEHOLDER": "Введите текст",
     "AUTHORS_PLACEHOLER": "Нажмите для выбора авторов",
 
-    "FILTERED_FROM": "Отфильтровано как",
-    "NEW": "новый {{type}}",
-    "OLD": "старые",
-    "ASK_DELETE": "Вы уверены что хотите {{actionType}} {{courseName}}",
-    "YES": "да",
-    "NO": "не",
-    "SAVE": "сохранить",
-    "CLOSE": "отмена",
-    "404": "page not found"
+    "ERR_REQUIRED": "Обязательное поле!",
+    "ERR_MAXLENGTH": "Выввели больше {{lentgh}} символов!",
+    "ERR_DAYFORMAT": "Неверный формат! Попробуйте {{dateFormat}}"
   }
 }

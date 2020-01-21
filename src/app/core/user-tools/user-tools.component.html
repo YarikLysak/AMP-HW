@@ -1,14 +1,14 @@
 <div class="user-tools">
   <select
     #selectedLang
-    class="lang"
+    class="user-tools-lang"
     (change)="translateService.use(selectedLang.value)"
   >
     <option
       *ngFor="let lang of translateService.getLangs()"
       [value]="lang"
       [selected]="lang === translateService.currentLang"
-      >{{ lang }}
+      >{{ 'BASE.' + lang.toUpperCase() | translate }}
     </option>
   </select>
   <div *ngIf="isAuth$ | async">
