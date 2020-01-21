@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
+import { StoreModule } from '@ngrx/store';
 import { AppRoutingModule } from '../app-routing.module';
 
 import { HeaderComponent } from './header/header.component';
@@ -12,7 +13,8 @@ import { FooterComponent } from './footer/footer.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { SpinnerComponent } from './spinner/spinner.component';
 
-import { LoaderInterceptor } from './shared/loader.interceptor';
+import { SpinnerInterceptor } from './shared/spinner.interceptor';
+import { toolsReducer } from './store/tools.reducer';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,12 @@ import { LoaderInterceptor } from './shared/loader.interceptor';
     NotFoundComponent,
     SpinnerComponent
   ],
-  imports: [CommonModule, AppRoutingModule, TranslateModule],
+  imports: [
+    CommonModule,
+    AppRoutingModule,
+    TranslateModule,
+    StoreModule.forFeature('toolsFeature', toolsReducer)
+  ],
   exports: [
     HeaderComponent,
     BreadcrumbsComponent,
@@ -32,7 +39,7 @@ import { LoaderInterceptor } from './shared/loader.interceptor';
     SpinnerComponent
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: LoaderInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: SpinnerInterceptor, multi: true }
   ]
 })
 export class CoreModule {}
