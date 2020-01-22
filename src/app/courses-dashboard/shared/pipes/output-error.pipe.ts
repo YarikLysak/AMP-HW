@@ -1,19 +1,24 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Pipe({
   name: 'outputError'
 })
-export class OutputErrorPipe implements PipeTransform {
+export class OutputErrorPipe extends TranslatePipe implements PipeTransform {
   transform(errors: any): string {
     for (const errorName in errors) {
       if (errors.hasOwnProperty(errorName)) {
         switch (errorName) {
           case 'required':
-            return 'This field is required!';
+            return super.transform('BASE.ERR_REQUIRED');
           case 'maxlength':
-            return `Your field should be shorter than ${errors[errorName].requiredLength} symbols.`;
+            return super.transform('BASE.ERR_MAXLENGTH', {
+              lentgh: errors[errorName].requiredLength
+            });
           case 'validateDate':
-            return `Incorrect format! Try ${errors[errorName].dateFormat}`;
+            return super.transform('BASE.ERR_DAYFORMAT', {
+              dateFormat: errors[errorName].dateFormat
+            });
           default:
             return '';
         }

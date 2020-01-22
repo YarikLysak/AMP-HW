@@ -1,6 +1,6 @@
 <div class="form-input__short" [formGroup]="parentForm">
   <div class="form-label">
-    <label for="duration">Duration:</label>
+    <label for="duration">{{ 'BASE.DURATION' | translate | titlecase }}:</label>
     <span class="form-error" *ngIf="isError">
       {{ outputError }}
     </span>
@@ -10,7 +10,7 @@
     type="number"
     id="duration"
     class="common-input"
-    placeholder="minutes"
+    placeholder="{{ 'BASE.MINUTES' | translate | titlecase }}"
     [ngClass]="{ 'failed-input': isError }"
   />
 </div>

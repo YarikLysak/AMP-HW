@@ -1,0 +1,44 @@
+{
+  "BASE": {
+    "EN": "English",
+    "RU": "Русский",
+
+    "LOGIN": "login",
+    "PASSWORD": "password",
+    "WRONG": "wrong",
+    "ENTER": "enter",
+    "FORGOT": "forgot password",
+    "LOGOFF": "log off",
+    "COURSE": "course",
+    "COURSES": "courses",
+    "NEW COURSE": "new course",
+    "ADD": "Add {{type}}",
+    "EDIT": "Edit {{type}}",
+    "NEW": "new {{type}}",
+    "OLD": "old",
+    "DELETE": "delete",
+    "LOAD MORE": "load more",
+    "MINUTES": "minutes",
+    "HOURS": "h",
+    "ASK_DELETE": "Do you want to {{actionType}} {{courseName}}",
+    "YES": "yes",
+    "NO": "no",
+    "SAVE": "save",
+    "CANCEL": "cancel",
+    "404": "page not found",
+    "FILTERED_FROM": "Filtered from",
+
+    "TITLE": "title",
+    "DESCRIPTION": "description",
+    "DURATION": "duration",
+    "DATE": "date",
+    "AUTHORS": "authors",
+    "SEARCH_PLACEHOLDER": "Type to search",
+    "TEXT_PLACEHOLDER": "Text input",
+    "AUTHORS_PLACEHOLER": "Tap to choose authors",
+
+    "ERR_REQUIRED": "This field is required!",
+    "ERR_MAXLENGTH": "Your field should be shorter than {{lentgh}} symbols!",
+    "ERR_DAYFORMAT": "Incorrect format! {{dateFormat}}"
+  }
+}

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 import { AppState } from '../../store/app-state.model';
 import { login, findToken } from '../store/auth.actions';
@@ -23,7 +24,11 @@ export class LoginComponent {
 
   constructor(private store: Store<AppState>) {
     this.store.dispatch(findToken());
-    this.error$ = this.store.select(getError);
+    this.error$ = this.store.select(getError).pipe(
+      map(error => {
+        return error ? `BASE.${error.toUpperCase()}` : '';
+      })
+    );
   }
 
   onSubmit() {

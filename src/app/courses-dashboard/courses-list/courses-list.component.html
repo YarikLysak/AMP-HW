@@ -18,7 +18,13 @@
               'sort-disabled': !isNeedNew
             }"
           ></i>
-          <span>Filtered from {{ filterStatus == 'asc' ? 'new' : 'old' }}</span>
+          <span
+            >{{ 'BASE.FILTERED_FROM' | translate }}
+            {{
+              (filterStatus == 'asc' ? 'BASE.NEW' : 'BASE.OLD')
+                | translate: { type: '' }
+            }}</span
+          >
         </div>
         <button
           routerLink="/courses/new"
@@ -26,7 +32,7 @@
           class="common-btn add-course-btn"
         >
           <i class="fa fa-plus fa-lg"></i>
-          Add course
+          {{ 'BASE.ADD' | translate: { type: 'BASE.COURSE' | translate } }}
         </button>
       </div>
       <app-course
@@ -47,15 +53,22 @@
   <div class="modal-body text-center" *ngIf="needToDelete$ | async as course">
     <div class="modal-header">
       <h4 class="modal-title pull-left">
-        Do you want to delete {{ course.name }}?
+        {{
+          'BASE.ASK_DELETE'
+            | translate
+              : {
+                  actionType: 'BASE.DELETE' | translate,
+                  courseName: course.name
+                }
+        }}?
       </h4>
     </div>
     <div class="modal-buttons">
       <button type="button" class="accept-btn" (click)="onConfirm(course.id)">
-        Yes
+        {{ 'BASE.YES' | translate | titlecase }}
       </button>
       <button type="button" class="common-btn" (click)="onDecline()">
-        No
+        {{ 'BASE.NO' | translate | titlecase }}
       </button>
     </div>
   </div>

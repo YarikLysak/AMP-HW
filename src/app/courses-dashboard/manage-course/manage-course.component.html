@@ -1,7 +1,13 @@
 <div class="manage-course-wrapper">
   <div class="container-white form-container manage-course">
     <div class="manage-course-head">
-      <h2>{{ editCourseId ? 'Edit Course' : 'New Course' }}</h2>
+      <h2>
+        {{
+          (editCourseId ? 'BASE.EDIT' : 'BASE.NEW' + ' COURSE')
+            | translate: { type: 'BASE.COURSE' | translate }
+            | titlecase
+        }}
+      </h2>
     </div>
     <form
       [formGroup]="manageCourseForm"
@@ -10,7 +16,7 @@
     >
       <div class="form-field">
         <div class="form-label">
-          <label for="title">Title:</label>
+          <label for="title">{{ 'BASE.TITLE' | translate | titlecase }}:</label>
           <span
             class="form-error"
             *ngIf="formControls.name.touched && formControls.name.errors"
@@ -23,7 +29,7 @@
           type="text"
           id="name"
           class="common-input"
-          placeholder="Text nput"
+          placeholder="{{ 'BASE.TEXT_PLACEHOLDER' | translate }}"
           [ngClass]="{
             'failed-input':
               formControls.name.touched && formControls.name.errors
@@ -33,7 +39,9 @@
 
       <div class="form-field">
         <div class="form-label">
-          <label for="description">Descripion:</label>
+          <label for="description"
+            >{{ 'BASE.DESCRIPTION' | translate | titlecase }}:</label
+          >
           <span
             class="form-error"
             *ngIf="
@@ -50,7 +58,9 @@
           cols="45"
           id="description"
           class="common-input"
-          placeholder="Add description"
+          placeholder="{{
+            'BASE.ADD' | translate: { type: 'BASE.DESCRIPTION' | translate }
+          }}"
           [ngClass]="{
             'failed-input':
               formControls.description.touched &&
@@ -89,14 +99,14 @@
 
       <div class="manage-course-bottom">
         <button type="button" class="cancel-btn" (click)="onCancel()">
-          Cancel
+          {{ 'BASE.CANCEL' | translate | titlecase }}
         </button>
         <button
           type="submit"
           class="accept-btn"
           [disabled]="!manageCourseForm.valid"
         >
-          Save
+          {{ 'BASE.SAVE' | translate | titlecase }}
         </button>
       </div>
     </form>

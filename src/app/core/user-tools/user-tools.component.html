@@ -1,8 +1,23 @@
-<div class="user-tools" *ngIf="isAuth$ | async">
-  <span class="user-tools-item" *ngIf="userName$ | async as userName">
-    <i class="fas fa-user"></i> {{ userName.first }} {{ userName.last }}
-  </span>
-  <span class="user-tools-item" (click)="onLogOff()">
-    <i class="fas fa-sign-out-alt"></i> Log off
-  </span>
+<div class="user-tools">
+  <select
+    #selectedLang
+    class="user-tools-lang"
+    (change)="translateService.use(selectedLang.value)"
+  >
+    <option
+      *ngFor="let lang of translateService.getLangs()"
+      [value]="lang"
+      [selected]="lang === translateService.currentLang"
+      >{{ 'BASE.' + lang.toUpperCase() | translate }}
+    </option>
+  </select>
+  <div *ngIf="isAuth$ | async">
+    <span class="user-tools-item" *ngIf="userName$ | async as userName">
+      <i class="fas fa-user"></i> {{ userName.first }} {{ userName.last }}
+    </span>
+    <span class="user-tools-item" (click)="onLogOff()">
+      <i class="fas fa-sign-out-alt"></i>
+      {{ 'BASE.LOGOFF' | translate | titlecase }}
+    </span>
+  </div>
 </div>

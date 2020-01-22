@@ -1,10 +1,10 @@
 <div class="login-wrapper">
   <div class="container-white form-container">
-    <div class="login-form-head">
-      <h2>Login</h2>
-      <span class="form-error" *ngIf="error$ | async as error"
-        >Wrong {{ error }}</span
-      >
+    <div class="capitalize login-form-head">
+      <h2>{{ 'BASE.LOGIN' | translate }}</h2>
+      <span class="form-error" *ngIf="error$ | async as error">
+        {{ 'WRONG' | translate | titlecase }} {{ error | translate }}
+      </span>
     </div>
     <form
       [formGroup]="loginForm"
@@ -13,36 +13,50 @@
     >
       <div class="form-field">
         <label for="login" class="form-label">
-          <span class="login-form-label-text">Login:</span>
+          <span class="login-form-label-text">{{
+            'BASE.LOGIN' | translate | titlecase
+          }}</span>
         </label>
         <input
           class="common-input"
           type="login"
           id="login"
           formControlName="login"
-          placeholder="Enter login"
+          placeholder="{{ 'BASE.ENTER' | translate | titlecase }} {{
+            'BASE.LOGIN' | translate
+          }}"
           required
         />
       </div>
 
       <div class="form-field">
         <label for="password" class="form-label">
-          <span class="login-form-label-text">Password</span>
+          <span class="login-form-label-text">{{
+            'BASE.PASSWORD' | translate | titlecase
+          }}</span>
         </label>
         <input
           class="common-input"
           type="password"
           id="password"
           formControlName="password"
-          placeholder="Enter password"
+          placeholder="{{ 'BASE.ENTER' | translate | titlecase }} {{
+            'BASE.PASSWORD' | translate
+          }}"
           required
         />
       </div>
 
       <div class="login-form-bottom">
-        <a href="#" class="login-form__help">Forgot password?</a>
-        <button type="submit" class="accept-btn" [disabled]="!loginForm.valid">
-          Login
+        <a href="#" class="login-form__help"
+          >{{ 'BASE.FORGOT' | translate | titlecase }}?</a
+        >
+        <button
+          type="submit"
+          class="capitalize accept-btn"
+          [disabled]="!loginForm.valid"
+        >
+          {{ 'BASE.LOGIN' | translate }}
         </button>
       </div>
     </form>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 import { AppState } from '../../store/app-state.model';
 import { logout } from '../../auth/store/auth.actions';
@@ -23,7 +24,10 @@ export class UserToolsComponent {
     })
   );
 
-  constructor(private store: Store<AppState>) {}
+  constructor(
+    private store: Store<AppState>,
+    public translateService: TranslateService
+  ) {}
 
   onLogOff() {
     this.store.dispatch(logout({ isAuth: false }));
