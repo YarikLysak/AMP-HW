@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { TranslateModule } from '@ngx-translate/core';
 import { StoreModule } from '@ngrx/store';
+
 import { AppRoutingModule } from '../app-routing.module';
 
 import { HeaderComponent } from './header/header.component';
