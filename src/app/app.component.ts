@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
 import { AppState } from './store/app-state.model';
 import { getIsAuth } from './auth/store/auth.selectors';
 import { getSpinnerStatus } from './core/store/tools.selector';
-import { stopSpinner } from './core/store/tools.actions';
 
 @Component({
   selector: 'app-root',
@@ -27,6 +26,5 @@ export class AppComponent {
     translate.addLangs(['en', 'ru']);
     translate.setDefaultLang('en');
     translate.use('en');
-    this.store.dispatch(stopSpinner({ isSpin: false }));
   }
 }

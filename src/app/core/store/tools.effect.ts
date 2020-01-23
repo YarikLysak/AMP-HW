@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Actions, ofType } from '@ngrx/effects';
+import { Actions, ofType, createEffect } from '@ngrx/effects';
 import { map } from 'rxjs/operators';
 import {
   startSpinner,
@@ -10,13 +10,17 @@ import {
 
 @Injectable()
 export class ToolsEffects {
-  startSpin$ = this.actions.pipe(
-    ofType(startSpinner),
-    map(({ isSpin }) => startSpinnerSuccess({ isSpin }))
+  startSpin$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(startSpinner),
+      map(() => startSpinnerSuccess({ isSpin: true }))
+    )
   );
-  stopSpin$ = this.actions.pipe(
-    ofType(stopSpinner),
-    map(({ isSpin }) => stopSpinnerSuccess({ isSpin }))
+  stopSpin$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(stopSpinner),
+      map(() => stopSpinnerSuccess({ isSpin: false }))
+    )
   );
   constructor(private actions: Actions) {}
 }

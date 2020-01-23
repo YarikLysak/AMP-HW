@@ -9,8 +9,6 @@ const initialState = {
 const reducer = createReducer(
   initialState,
   on(startSpinnerSuccess, (state, { isSpin }) => {
-    console.log(isSpin);
-
     return { ...state, isSpin };
   }),
   on(stopSpinnerSuccess, (state, { isSpin }) => {
