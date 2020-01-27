@@ -23,7 +23,8 @@ export class AppComponent {
     private store: Store<AppState>,
     private translate: TranslateService
   ) {
-    translate.addLangs(['en', 'ru']);
-    translate.setDefaultLang('en');
-    translate.use('en');
+    this.translate.addLangs(['en', 'ru']);
+    this.translate.setDefaultLang('en');
+    this.translate.use('en');
+  }
 }

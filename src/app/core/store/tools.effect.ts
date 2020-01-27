@@ -5,7 +5,10 @@ import {
   startSpinner,
   startSpinnerSuccess,
   stopSpinner,
-  stopSpinnerSuccess
+  stopSpinnerSuccess,
+  setBreadcrumbs,
+  setBreadcrumbsSuccess,
+  clearBreadcrumbs
 } from './tools.actions';
 
 @Injectable()
@@ -20,6 +23,19 @@ export class ToolsEffects {
     this.actions.pipe(
       ofType(stopSpinner),
       map(() => stopSpinnerSuccess({ isSpin: false }))
+    )
+  );
+
+  setBreadcrumbs$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(setBreadcrumbs),
+      map(({ breadcrumb }) => setBreadcrumbsSuccess({ breadcrumb }))
+    )
+  );
+  clearBreadcrumbs$ = createEffect(() =>
+    this.actions.pipe(
+      ofType(clearBreadcrumbs),
+      map(() => setBreadcrumbsSuccess({ breadcrumb: '' }))
     )
   );
   constructor(private actions: Actions) {}

@@ -9,3 +9,8 @@ export const getSpinnerStatus = createSelector(
   toolsFeature,
   (state: ToolsState) => state.isSpin
 );
+
+export const getBreadcrums = createSelector(
+  toolsFeature,
+  (state: ToolsState) => state.breadcrumbs
+);
