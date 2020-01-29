@@ -18,6 +18,7 @@ export class AppComponent {
   public spinnerStatus$: Observable<boolean> = this.store.select(
     getSpinnerStatus
   );
+  isSpin: boolean;
 
   constructor(
     private store: Store<AppState>,
@@ -26,5 +27,10 @@ export class AppComponent {
     this.translate.addLangs(['en', 'ru']);
     this.translate.setDefaultLang('en');
     this.translate.use('en');
+    this.spinnerStatus$.subscribe(isSpin => {
+      setTimeout(() => {
+        this.isSpin = isSpin;
+      });
+    });
   }
 }
