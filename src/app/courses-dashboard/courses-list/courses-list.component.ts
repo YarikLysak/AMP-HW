@@ -8,12 +8,12 @@ import { map } from 'rxjs/operators';
 import { AppState } from '../../store/app-state.model';
 import { Course } from '../shared/models/course.model';
 import { Order } from '../../shared/pipes/orderBy/order.type';
-import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 import {
   getCourses,
   deleteCourse,
   getSearched
 } from '../store/courses.actions';
+import { setBreadcrumbs } from '../../core/store/tools.actions';
 import { getCoursesList } from '../store/courses.selectors';
 
 @Component({
@@ -35,11 +35,10 @@ export class CoursesListComponent implements OnInit {
   constructor(
     private store: Store<AppState>,
     private route: ActivatedRoute,
-    private modalService: BsModalService,
-    private breadcrumbsService: BreadcrumbsService
+    private modalService: BsModalService
   ) {
     const breadcrumb = this.route.snapshot.data.breadcrumbs;
-    this.breadcrumbsService.setBreadcrumb(breadcrumb);
+    this.store.dispatch(setBreadcrumbs({ breadcrumb }));
   }
 
   ngOnInit() {

@@ -1,8 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
 
-import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
+import { AppState } from '../../store/app-state.model';
+import { getBreadcrums } from '../store/tools.selector';
+import { clearBreadcrumbs } from '../store/tools.actions';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -10,19 +13,18 @@ import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumb
   styleUrls: ['./breadcrumbs.component.sass']
 })
 export class BreadcrumbsComponent implements OnInit, OnDestroy {
-  public crumbsArray$: Observable<string[]>;
+  public crumbsArray$: Observable<string[]> = this.store.select(getBreadcrums);
   public currentPage$: Observable<string>;
 
-  constructor(private breadcrumbsService: BreadcrumbsService) {}
+  constructor(private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.crumbsArray$ = this.breadcrumbsService.getBreadcrumbs();
-    this.currentPage$ = this.breadcrumbsService
-      .getBreadcrumbs()
-      .pipe(map(crumbs => crumbs[crumbs.length - 1]));
+    this.currentPage$ = this.crumbsArray$.pipe(
+      map(crumbs => crumbs[crumbs.length - 1])
+    );
   }
 
   ngOnDestroy() {
-    this.breadcrumbsService.removeBreadcrumbs();
+    this.store.dispatch(clearBreadcrumbs());
   }
 }

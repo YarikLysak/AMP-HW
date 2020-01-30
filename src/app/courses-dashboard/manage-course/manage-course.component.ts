@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 
+import { AppState } from '../../store/app-state.model';
+import { Course } from '../shared/models/course.model';
+import { getCourse } from '../store/courses.selectors';
 import {
   editCourse,
   addCourse,
@@ -12,12 +15,8 @@ import {
   clearAuthors,
   cancelManageCourse
 } from '../store/courses.actions';
-import { AppState } from '../../store/app-state.model';
-import { getCourse } from '../store/courses.selectors';
-
-import { Course } from '../shared/models/course.model';
+import { setBreadcrumbs } from '../../core/store/tools.actions';
 import { dateValidator } from '../shared/validators/date-input.validator';
-import { BreadcrumbsService } from '../../shared/services/breadcrumbs/breadcrumbs.service';
 
 @Component({
   selector: 'app-manage-course',
@@ -28,7 +27,6 @@ export class ManageCourseComponent implements OnInit {
   public editCourse$: Observable<Course> = this.store.select(getCourse);
   public editCourseId: number | null = null;
   public dateFormat = 'dd/MM/yyyy';
-  private breadcrumb = '';
 
   public manageCourseForm = this.fb.group({
     name: ['', [Validators.required, Validators.maxLength(50)]],
@@ -42,17 +40,15 @@ export class ManageCourseComponent implements OnInit {
     private route: ActivatedRoute,
     private datePipe: DatePipe,
     private store: Store<AppState>,
-    private breadcrumbsService: BreadcrumbsService,
     private fb: FormBuilder
   ) {
     const paramId = this.route.snapshot.paramMap.get('id');
-    this.breadcrumb = this.route.snapshot.data.breadcrumbs;
+    const breadcrumb = this.route.snapshot.data.breadcrumbs;
 
+    this.store.dispatch(setBreadcrumbs({ breadcrumb }));
     if (paramId) {
       this.editCourseId = +paramId;
       this.store.dispatch(getCourseById({ id: this.editCourseId }));
-    } else {
-      this.breadcrumbsService.setBreadcrumb(this.breadcrumb);
     }
   }
 

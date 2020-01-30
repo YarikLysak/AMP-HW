@@ -12,6 +12,7 @@
     "COURSE": "course",
     "COURSES": "courses",
     "NEW COURSE": "new course",
+    "EDIT COURSE": "edit course",
     "ADD": "Add {{type}}",
     "EDIT": "Edit {{type}}",
     "NEW": "new {{type}}",

@@ -18,6 +18,7 @@ import { AppComponent } from './app.component';
 
 import { CoursesListEffects } from './courses-dashboard/store/courses.effect';
 import { AuthEffects } from './auth/store/auth.effect';
+import { ToolsEffects } from './core/store/tools.effect';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -34,7 +35,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SharedModule,
     ModalModule.forRoot(),
     StoreModule.forRoot({}),
-    EffectsModule.forRoot([CoursesListEffects, AuthEffects]),
+    EffectsModule.forRoot([CoursesListEffects, AuthEffects, ToolsEffects]),
+
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
